@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="200dp"
+    android:background="@color/PrimaryDark2"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/ivDashboard"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:src="@drawable/dashboard_user"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="5dp"/>
+
+    <TextView
+        android:id="@+id/tvDashboardUser"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="User"
+        android:layout_marginTop="10dp"
+        android:textColor="@color/white"
+        android:textSize="25sp"
+        android:layout_gravity="center_horizontal"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/tvDashboardMobile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:textColor="@color/white"
+        android:text="Mobile Number"
+        android:layout_gravity="center_horizontal"
+        android:textSize="20sp"/>
+
+
+
+
+</LinearLayout>
