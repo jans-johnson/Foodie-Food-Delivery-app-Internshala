@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LoginActivity">
+    tools:context=".activity.LoginActivity">
 
     <ImageView
         android:id="@+id/imageView3"
@@ -50,10 +50,12 @@
             app:tabIndicatorColor="@color/PrimaryDark2"
             app:tabSelectedTextColor="@color/PrimaryDark2"
             app:tabTextColor="@color/PrimaryDark1"/>
+
         <androidx.viewpager.widget.ViewPager
+            android:id="@+id/vpLogin"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/vpLogin"/>
+            android:layout_height="wrap_content" />
+
     </LinearLayout>
 
 </RelativeLayout>

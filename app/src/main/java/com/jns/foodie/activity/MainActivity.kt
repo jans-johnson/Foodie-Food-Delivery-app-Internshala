@@ -1,7 +1,8 @@
-package com.jns.foodie
+package com.jns.foodie.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.jns.foodie.R
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
