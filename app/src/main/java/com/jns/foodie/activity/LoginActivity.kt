@@ -41,4 +41,9 @@ class LoginActivity : AppCompatActivity() {
             }
         })
     }
+    fun selectSignup()
+    {
+        val tab = tlLogin.getTabAt(1)
+        tab?.select()
+    }
 }

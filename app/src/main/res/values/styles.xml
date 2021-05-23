@@ -2,8 +2,8 @@
     <!-- Base application theme. -->
     <style name="Theme.Foodie" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/PrimaryDark1</item>
-        <item name="colorPrimaryVariant">@color/PrimaryDark2</item>
+        <item name="colorPrimary">@color/PrimaryDark2</item>
+        <item name="colorPrimaryVariant">@color/PrimaryDark1</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/teal_200</item>

@@ -9,6 +9,8 @@
         android:roundIcon="@mipmap/ic_logo_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Foodie">
+        <activity android:name=".activity.ResetPasswordActivity"></activity>
+        <activity android:name=".activity.ForgotPasswordActivity" />
         <activity android:name=".activity.SplashScreenActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -16,8 +18,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.LoginActivity">
-        </activity>
+        <activity android:name=".activity.LoginActivity" />
         <activity android:name=".activity.MainActivity" />
 
         <meta-data
