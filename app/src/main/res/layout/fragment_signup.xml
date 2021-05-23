@@ -17,11 +17,12 @@
         android:layout_weight="1"
         android:background="@drawable/custom_input"
         android:drawableStart="@drawable/ic_user"
-        android:drawablePadding="20dp"
+        android:drawablePadding="10dp"
         android:ems="10"
         android:hint="Name"
         android:inputType="textPersonName"
-        android:paddingLeft="30dp" />
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp" />
 
     <EditText
         android:id="@+id/etRegEmail"
@@ -33,11 +34,12 @@
         android:layout_weight="1"
         android:background="@drawable/custom_input"
         android:drawableStart="@drawable/ic_email"
-        android:drawablePadding="20dp"
+        android:drawablePadding="10dp"
         android:ems="10"
         android:hint="Email Address"
         android:inputType="textEmailAddress"
-        android:paddingLeft="30dp" />
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp" />
 
     <EditText
         android:id="@+id/etRegPhone"
@@ -49,11 +51,12 @@
         android:layout_weight="1"
         android:background="@drawable/custom_input"
         android:drawableStart="@drawable/ic_mobile"
-        android:drawablePadding="20dp"
+        android:drawablePadding="10dp"
         android:ems="10"
         android:hint="Mobile Number"
         android:inputType="phone"
-        android:paddingLeft="30dp" />
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp" />
 
     <EditText
         android:id="@+id/etRegAddress"
@@ -65,11 +68,12 @@
         android:layout_weight="1"
         android:background="@drawable/custom_input"
         android:drawableStart="@drawable/ic_location"
-        android:drawablePadding="20dp"
+        android:drawablePadding="10dp"
         android:ems="10"
         android:hint="Delivery Address"
         android:inputType="textPersonName"
-        android:paddingLeft="30dp" />
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp" />
 
     <EditText
         android:id="@+id/etRegPassword"
@@ -81,11 +85,12 @@
         android:layout_weight="1"
         android:background="@drawable/custom_input"
         android:drawableStart="@drawable/ic_lock"
-        android:drawablePadding="20dp"
+        android:drawablePadding="10dp"
         android:ems="10"
         android:hint="Password"
         android:inputType="numberPassword"
-        android:paddingLeft="30dp" />
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp" />
 
     <EditText
         android:id="@+id/etRegCPassword"
@@ -97,11 +102,12 @@
         android:layout_weight="1"
         android:background="@drawable/custom_input"
         android:drawableStart="@drawable/ic_lock"
-        android:drawablePadding="20dp"
+        android:drawablePadding="10dp"
         android:ems="10"
         android:hint="Confirm Password"
         android:inputType="numberPassword"
-        android:paddingLeft="30dp" />
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp" />
 
     <Button
         android:id="@+id/button"
