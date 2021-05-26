@@ -1,14 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/PrimaryLight2"
     tools:context=".fragment.HomeFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:id="@+id/homeProgresBarLayout"
+        android:background="@color/white"
+        android:elevation="1dp"
+        android:visibility="invisible">
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true" />
+    </RelativeLayout>
 
-</FrameLayout>
+    <RelativeLayout
+        android:id="@+id/RLSearch"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_centerHorizontal="true"
+        android:background="@color/PrimaryDark2"
+        android:padding="10dp">
+
+        <EditText
+            android:id="@+id/etSearch"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_centerInParent="true"
+            android:background="@drawable/custom_input"
+            android:drawableStart="@drawable/ic_search"
+            android:hint="Search Restaurants"
+            android:drawablePadding="5dp"
+            android:maxLines="1"
+            android:padding="5dp"
+            android:paddingStart="10dp" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/cantFind"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/RLSearch"
+        android:background="@color/white"
+        android:elevation="1dp"
+        android:visibility="invisible">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="15dp"
+            android:text="Can't Find Restaurant"
+            android:textColor="@color/black"
+            android:textSize="20sp" />
+    </RelativeLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewHome"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/RLSearch"
+        android:focusable="true"
+        android:focusableInTouchMode="true" />
+
+</RelativeLayout>
