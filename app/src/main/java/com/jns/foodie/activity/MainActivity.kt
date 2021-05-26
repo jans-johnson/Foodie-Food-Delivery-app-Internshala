@@ -1,17 +1,22 @@
 package com.jns.foodie.activity
 
+import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.FrameLayout
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.coordinatorlayout.widget.CoordinatorLayout
+import androidx.core.app.ActivityCompat
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
 import com.jns.foodie.R
+import com.jns.foodie.fragment.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -22,6 +27,9 @@ class MainActivity : AppCompatActivity() {
     lateinit var drawerLayout: DrawerLayout
     lateinit var tvDashboardUser: TextView
     lateinit var tvDashboardMobile: TextView
+    lateinit var sharedPreferences: SharedPreferences
+
+    var previousMenuItemSelected: MenuItem? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,8 +42,19 @@ class MainActivity : AppCompatActivity() {
         navigationView = findViewById(R.id.navigationView)
         drawerLayout = findViewById(R.id.drawerLayout)
 
+        val headerView=navigationView.getHeaderView(0)
+        tvDashboardUser=headerView.findViewById(R.id.tvDashboardUser)
+        tvDashboardMobile=headerView.findViewById(R.id.tvDashboardMobile)
+
+        sharedPreferences=getSharedPreferences("UserDetails",Context.MODE_PRIVATE)
+
         setToolBar()
 
+        tvDashboardUser.text=sharedPreferences.getString("name","UserName")
+        tvDashboardMobile.text=sharedPreferences.getString("mobile_number","9999999999")
+
+
+        //for the hamburger icon
         val actionBarDrawerToggle = ActionBarDrawerToggle(
                 this,
                 drawerLayout,
@@ -44,6 +63,84 @@ class MainActivity : AppCompatActivity() {
         )
         drawerLayout.addDrawerListener(actionBarDrawerToggle)
         actionBarDrawerToggle.syncState()
+
+        navigationView.setNavigationItemSelectedListener {
+            if (previousMenuItemSelected!=null){
+                previousMenuItemSelected?.isChecked=false
+            }
+
+            previousMenuItemSelected = it
+            it.isCheckable = true
+            it.isChecked = true
+
+
+            when (it.itemId) {
+                R.id.itemHome -> {
+                    openDashboard()
+                    drawerLayout.closeDrawers()
+                }
+                R.id.itemProfile -> {
+                    supportFragmentManager.beginTransaction()
+                        .replace(
+                            R.id.frameLayout,
+                            ProfileFragment()
+                        ).commit()
+
+                    supportActionBar?.title = "My Profile"
+                    drawerLayout.closeDrawers()
+                }
+                R.id.itemFavourite -> {
+                    supportFragmentManager.beginTransaction()
+                        .replace(
+                            R.id.frameLayout,
+                            FavouriteFragment()
+                        ).commit()
+
+                    supportActionBar?.title = "Favourites"
+                    drawerLayout.closeDrawers()
+                }
+                R.id.itemHistory -> {
+                    supportFragmentManager.beginTransaction()
+                        .replace(
+                            R.id.frameLayout,
+                            HistoryFragment()
+                        ).commit()
+
+                    supportActionBar?.title = "Order History"
+                    drawerLayout.closeDrawers()
+                }
+                R.id.itemFAQ -> {
+                    supportFragmentManager.beginTransaction()
+                        .replace(
+                            R.id.frameLayout,
+                            FaqFragment()
+                        ).commit()
+
+                    supportActionBar?.title = "FAQs"
+                    drawerLayout.closeDrawers()
+                }
+                R.id.itemLogout -> {
+                    drawerLayout.closeDrawers()
+
+                    val alterDialog = androidx.appcompat.app.AlertDialog.Builder(this)
+                    alterDialog.setMessage("Are you sure you want to to log out?")
+                    alterDialog.setPositiveButton("Yes") { _, _ ->
+                        sharedPreferences.edit().clear().apply()
+                        val intent=Intent(this,LoginActivity::class.java)
+                        startActivity(intent)
+                        this.finish()
+                    }
+                    alterDialog.setNegativeButton("No") { _, _ ->
+
+                    }
+                    alterDialog.create()
+                    alterDialog.show()
+                }
+            }
+
+            return@setNavigationItemSelectedListener true
+        }
+        openDashboard()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -53,10 +150,30 @@ class MainActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
+    override fun onBackPressed() {
+        when (supportFragmentManager.findFragmentById(R.id.frameLayout)) {
+            !is HomeFragment -> {
+                navigationView.menu.getItem(0).isChecked = true
+                openDashboard()
+            }
+            else -> super.onBackPressed()
+        }
+    }
+
     fun setToolBar() {
         setSupportActionBar(toolbar)
         supportActionBar?.title = "All Restaurants"
         supportActionBar?.setHomeButtonEnabled(true)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+    }
+
+    fun openDashboard() {
+        supportFragmentManager.beginTransaction().replace(
+            R.id.frameLayout,
+            HomeFragment()
+        ).commit()
+
+        supportActionBar?.title = "All Restaurants"
+        navigationView.setCheckedItem(R.id.itemHome)
     }
 }

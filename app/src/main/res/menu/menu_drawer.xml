@@ -5,21 +5,27 @@
 
         <item
             android:id="@+id/itemHome"
+            android:icon="@drawable/ic_home"
             android:title="Home"/>
         <item
             android:id="@+id/itemProfile"
+            android:icon="@drawable/ic_user"
             android:title="Profile"/>
         <item
             android:id="@+id/itemFavourite"
+            android:icon="@drawable/ic_favourite_black"
             android:title="Favourite Restaurants"/>
         <item
             android:id="@+id/itemHistory"
+            android:icon="@drawable/ic_history"
             android:title="Order History"/>
         <item
             android:id="@+id/itemFAQ"
+            android:icon="@drawable/ic_faq"
             android:title="FAQs"/>
         <item
             android:id="@+id/itemLogout"
+            android:icon="@drawable/ic_logout"
             android:title="Log Out"/>
 
     </group>
