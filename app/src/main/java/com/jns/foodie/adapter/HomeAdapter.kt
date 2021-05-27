@@ -1,6 +1,7 @@
 package com.jns.foodie.adapter
 
 import android.content.Context
+import android.content.Intent
 import android.os.AsyncTask
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +13,7 @@ import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import androidx.room.Room
 import com.jns.foodie.R
+import com.jns.foodie.activity.RestaurantMenuActivity
 import com.jns.foodie.database.RestaurantDatabase
 import com.jns.foodie.database.RestaurantEntity
 import com.jns.foodie.model.Restaurant
@@ -39,10 +41,12 @@ class HomeAdapter(val context: Context,var itemList:ArrayList<Restaurant>): Recy
         return itemList.size
     }
 
+
     override fun onBindViewHolder(holder: ViewHolderDashboard, position: Int) {
 
         val restaurant=itemList[position]
         val restaurantEntity=RestaurantEntity(restaurant.restaurantId,restaurant.restaurantName)
+        var fav:Boolean=false
 
         holder.tvCardName.text=restaurant.restaurantName
         holder.tvCardPrice.text=restaurant.cost_for_one+"/person"
@@ -50,14 +54,31 @@ class HomeAdapter(val context: Context,var itemList:ArrayList<Restaurant>): Recy
 
         Picasso.get().load(restaurant.restaurantImage).error(R.drawable.restaurant_default).into(holder.ivCardRestaurant)
 
+        if(DBAsyncTask( context,restaurantEntity,1 ).execute().get()) {
+            holder.ivCardFavorite.setImageResource(R.drawable.ic_favourite_fill)
+            fav=true
+        }
+            else {
+            holder.ivCardFavorite.setImageResource(R.drawable.ic_favourite_red_border)
+            fav=false
+        }
+        holder.llContent.setOnClickListener {
+            val intent = Intent(context, RestaurantMenuActivity::class.java)
+            intent.putExtra("restaurantName", holder.tvCardName.text.toString())
+            intent.putExtra("restaurantId", restaurant.restaurantId)
+            intent.putExtra("restaurantRating",restaurant.restaurantRating)
+            intent.putExtra("isFav",fav)
+            context.startActivity(intent)
+        }
+
+
         holder.ivCardFavorite.setOnClickListener{
             if(!DBAsyncTask( context,restaurantEntity,1 ).execute().get()){
                 val result=DBAsyncTask(context,restaurantEntity,2).execute().get()
 
                 if (result) {
-                    Toast.makeText(context, "${restaurant.restaurantName} added to Favorites", Toast.LENGTH_SHORT).show()
                     holder.ivCardFavorite.setImageResource(R.drawable.ic_favourite_fill)
-
+                    fav=true
                 } else {
                     Toast.makeText(context, "Some error occurred", Toast.LENGTH_SHORT).show()
                 }
@@ -66,10 +87,8 @@ class HomeAdapter(val context: Context,var itemList:ArrayList<Restaurant>): Recy
             else {
                 val result = DBAsyncTask(context, restaurantEntity, 3).execute().get()
                 if (result) {
-
-                    Toast.makeText(context, "${restaurant.restaurantName} removed from Favorites", Toast.LENGTH_SHORT).show()
                     holder.ivCardFavorite.setImageResource(R.drawable.ic_favourite_red_border)
-
+                    fav=false
                 } else {
                     Toast.makeText(context, "Some error occurred", Toast.LENGTH_SHORT).show()
                 }
