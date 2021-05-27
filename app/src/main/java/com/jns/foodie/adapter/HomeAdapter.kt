@@ -44,5 +44,11 @@ class HomeAdapter(var itemList:ArrayList<Restaurant>): RecyclerView.Adapter<Home
         Picasso.get().load(restaurant.restaurantImage).error(R.drawable.restaurant_default).into(holder.ivCardRestaurant)
     }
 
+    //for the search option
+    fun filterList(filteredList: ArrayList<Restaurant>) {
+        itemList = filteredList
+        notifyDataSetChanged()
+    }
+
 
 }
