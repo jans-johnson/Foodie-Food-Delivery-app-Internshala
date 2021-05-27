@@ -5,10 +5,8 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.provider.Settings
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.*
-import android.widget.EditText
+import android.widget.RadioGroup
 import android.widget.RelativeLayout
 import android.widget.SearchView
 import android.widget.Toast
@@ -37,6 +35,7 @@ class HomeFragment() : Fragment() {
     lateinit var homeProgressBarLayout: RelativeLayout
     lateinit var cantFind: RelativeLayout
     lateinit var searchView:SearchView
+    lateinit var radioButtonView: View
 
     var restaurantList= arrayListOf<Restaurant>()
 
@@ -166,6 +165,42 @@ class HomeFragment() : Fragment() {
             alterDialog.show()
         }
         super.onResume()
+    }
+    
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+
+        when (item.itemId) {
+
+            R.id.action_sort -> {
+                radioButtonView = View.inflate(activity, R.layout.sort_menu, null)
+                val radioGroup=radioButtonView.findViewById<RadioGroup>(R.id.groupradio)
+                androidx.appcompat.app.AlertDialog.Builder(activity as Context)
+                        .setTitle("Sort By?")
+                        .setView(radioButtonView)
+                        .setPositiveButton("OK") { _, _ ->
+                            if (radioGroup.checkedRadioButtonId==R.id.radio_high_to_low) {
+                                Collections.sort(restaurantList, costComparator)
+                                restaurantList.reverse()
+                                homeAdapter.notifyDataSetChanged()
+                            }
+                            if (radioGroup.checkedRadioButtonId==R.id.radio_low_to_high) {
+                                Collections.sort(restaurantList, costComparator)
+                                homeAdapter.notifyDataSetChanged()
+                            }
+                            if (radioGroup.checkedRadioButtonId==R.id.radio_rating) {
+                                Collections.sort(restaurantList, ratingComparator)
+                                restaurantList.reverse()
+                                homeAdapter.notifyDataSetChanged()
+                            }
+                        }
+                        .setNegativeButton("Cancel") { _, _ ->
+
+                        }
+                        .create()
+                        .show()
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     fun searchFilter(query: String)

@@ -12,10 +12,6 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
-        <item name="actionOverflowButtonStyle">@style/ActionButtonOverflow</item>
     </style>
 
-    <style name="ActionButtonOverflow" parent="Widget.AppCompat.ActionButton.Overflow">
-        <item name="android:src">@drawable/ic_sort</item>
-    </style>
 </resources>
