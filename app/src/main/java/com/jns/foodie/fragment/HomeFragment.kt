@@ -70,7 +70,6 @@ class HomeFragment() : Fragment() {
             }
 
             override fun onQueryTextChange(query: String): Boolean {
-                // filter recycler view when text is changed
                 searchFilter(query)
                 return false
             }
@@ -113,7 +112,7 @@ class HomeFragment() : Fragment() {
                                                 restaurantJsonObject.getString("image_url")
                                         )
                                         restaurantList.add(restaurantObject)
-                                        homeAdapter = HomeAdapter(restaurantList)
+                                        homeAdapter = HomeAdapter(activity as Context,restaurantList)
                                         recyclerViewHome.adapter = homeAdapter
                                         recyclerViewHome.layoutManager = layoutManager
                                     }
