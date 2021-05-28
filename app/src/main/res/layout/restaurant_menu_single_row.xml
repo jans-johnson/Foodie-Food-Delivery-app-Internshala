@@ -18,7 +18,7 @@
             android:layout_weight="1.4">
 
             <TextView
-                android:id="@+id/txtSerialNumber"
+                android:id="@+id/tvSerialNumber"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
@@ -65,7 +65,7 @@
             android:layout_weight="1">
 
             <Button
-                android:id="@+id/btnProceedToCart"
+                android:id="@+id/btnAddToCart"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"

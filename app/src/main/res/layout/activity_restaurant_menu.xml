@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:background="?attr/colorPrimary"
         android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme" />
+        android:theme="@style/ThemeOverlay.AppCompat.Dark" />
     <RelativeLayout
         android:id="@+id/menuProgressLayout"
         android:layout_width="match_parent"
@@ -63,16 +63,16 @@
         android:id="@+id/RecyclerViewMenu"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/btnProceedToCart"
         android:layout_below="@id/llTopBar"
         android:background="@color/PrimaryLight1" />
 
     <Button
         android:id="@+id/btnProceedToCart"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="70dp"
         android:layout_alignParentBottom="true"
         android:text="Proceed To Cart"
-        android:visibility="invisible" />
+        android:translationY="5dp"
+        android:visibility="gone" />
 
 </RelativeLayout>
