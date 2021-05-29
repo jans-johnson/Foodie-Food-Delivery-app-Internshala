@@ -5,28 +5,36 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.Button
+import android.widget.FrameLayout
+import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import com.jns.foodie.R
+import com.jns.foodie.fragment.ForgotPasswordFragment
+import com.jns.foodie.fragment.ProfileFragment
 
 class ForgotPasswordActivity : AppCompatActivity() {
+    lateinit var frameForgotPassword: FrameLayout
     lateinit var tbForgotPassword:Toolbar
-    lateinit var btnNext:Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_forgot_password)
 
+        frameForgotPassword=findViewById(R.id.frameForgotPassword)
+
         tbForgotPassword=findViewById(R.id.tbForgotPassword)
-        btnNext=findViewById(R.id.btnNext)
 
         setSupportActionBar(tbForgotPassword)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setTitle("Forgot Password")
 
-        btnNext.setOnClickListener {
-            val intent=Intent(this,ResetPasswordActivity::class.java)
-            startActivity(intent)
-        }
+        supportFragmentManager.beginTransaction()
+            .replace(
+                R.id.frameForgotPassword,
+                ForgotPasswordFragment(supportFragmentManager)
+            ).commit()
+
+
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

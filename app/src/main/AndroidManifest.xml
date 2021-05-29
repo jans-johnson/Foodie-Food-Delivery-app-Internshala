@@ -13,8 +13,8 @@
         android:roundIcon="@mipmap/ic_logo_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Foodie">
-        <activity android:name=".activity.RestaurantMenuActivity"></activity>
-        <activity android:name=".activity.ResetPasswordActivity" />
+        <activity android:name=".activity.CartActivity"></activity>
+        <activity android:name=".activity.RestaurantMenuActivity" />
         <activity android:name=".activity.ForgotPasswordActivity" />
         <activity android:name=".activity.SplashScreenActivity">
             <intent-filter>

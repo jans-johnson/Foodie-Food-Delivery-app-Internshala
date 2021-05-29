@@ -49,8 +49,6 @@ class LoginFragment : Fragment() {
 
             if(etMobile.text.length<10)
                 etMobile.error="Enter a valid Mobile Number"
-            else if(etPassword.text.length<5)
-                etPassword.error="Password Length should be more than 4"
             else
                 loginUser()
         }

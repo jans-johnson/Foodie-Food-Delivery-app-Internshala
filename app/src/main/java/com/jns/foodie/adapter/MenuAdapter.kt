@@ -11,6 +11,7 @@ import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.jns.foodie.R
+import com.jns.foodie.activity.CartActivity
 import com.jns.foodie.model.RestaurantMenu
 
 class MenuAdapter (val context: Context,
@@ -41,18 +42,17 @@ class MenuAdapter (val context: Context,
     override fun getItemCount(): Int {
         return restaurantMenu.size
     }
-
     override fun onBindViewHolder(holder: ViewHolderMenu, position: Int) {
         val restaurantMenuItem = restaurantMenu[position]
         proceedToCart = buttonProceedToCart
 
-        /*buttonProceedToCart.setOnClickListener {
+        buttonProceedToCart.setOnClickListener {
             val intent = Intent(context, CartActivity::class.java)
             intent.putExtra("restaurantId", restaurantId)
             intent.putExtra("restaurantName", restaurantName)
             intent.putExtra("selectedItemsId", itemsSelectedId)
             context.startActivity(intent)
-        }*/
+        }
 
         holder.btnAddToCart.setOnClickListener {
 
