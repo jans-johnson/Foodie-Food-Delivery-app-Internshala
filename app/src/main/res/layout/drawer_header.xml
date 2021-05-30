@@ -10,9 +10,9 @@
         android:id="@+id/ivDashboard"
         android:layout_width="80dp"
         android:layout_height="80dp"
-        android:src="@drawable/dashboard_user"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="5dp"/>
+        android:layout_marginTop="15dp"
+        android:src="@drawable/dashboard_user" />
 
     <TextView
         android:id="@+id/tvDashboardUser"
@@ -29,11 +29,12 @@
         android:id="@+id/tvDashboardMobile"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:textColor="@color/white"
-        android:text="Mobile Number"
         android:layout_gravity="center_horizontal"
-        android:textSize="20sp"/>
+        android:layout_marginTop="10dp"
+        android:text="Mobile Number"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:textStyle="italic" />
 
 
 
