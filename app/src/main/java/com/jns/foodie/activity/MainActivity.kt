@@ -3,10 +3,12 @@ package com.jns.foodie.activity
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.FrameLayout
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
@@ -14,8 +16,10 @@ import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.app.ActivityCompat
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import com.amulyakhare.textdrawable.TextDrawable
 import com.google.android.material.navigation.NavigationView
 import com.jns.foodie.R
+import com.jns.foodie.adapter.HomeAdapter
 import com.jns.foodie.fragment.*
 
 class MainActivity : AppCompatActivity() {
@@ -27,6 +31,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var drawerLayout: DrawerLayout
     lateinit var tvDashboardUser: TextView
     lateinit var tvDashboardMobile: TextView
+    lateinit var ivDashboard: ImageView
     lateinit var sharedPreferences: SharedPreferences
 
     var previousMenuItemSelected: MenuItem? = null
@@ -45,6 +50,8 @@ class MainActivity : AppCompatActivity() {
         val headerView=navigationView.getHeaderView(0)
         tvDashboardUser=headerView.findViewById(R.id.tvDashboardUser)
         tvDashboardMobile=headerView.findViewById(R.id.tvDashboardMobile)
+        ivDashboard=headerView.findViewById(R.id.ivDashboard)
+
 
         sharedPreferences=getSharedPreferences("UserDetails",Context.MODE_PRIVATE)
 
@@ -52,6 +59,9 @@ class MainActivity : AppCompatActivity() {
 
         tvDashboardUser.text=sharedPreferences.getString("name","UserName")
         tvDashboardMobile.text=sharedPreferences.getString("mobile_number","9999999999")
+
+        val textDrawable=TextDrawable.builder().buildRound(tvDashboardUser.text[0].toString().toUpperCase(),R.color.PrimaryDark1)
+        ivDashboard.setImageDrawable(textDrawable)
 
 
         //for the hamburger icon
