@@ -126,6 +126,7 @@ class MainActivity : AppCompatActivity() {
                     alterDialog.setMessage("Are you sure you want to to log out?")
                     alterDialog.setPositiveButton("Yes") { _, _ ->
                         sharedPreferences.edit().clear().apply()
+                        this.deleteDatabase("restaurant-db")
                         val intent=Intent(this,LoginActivity::class.java)
                         startActivity(intent)
                         this.finish()
