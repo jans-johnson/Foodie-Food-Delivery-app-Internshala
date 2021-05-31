@@ -96,7 +96,6 @@ class HomeFragment() : Fragment() {
                             null,
                             Response.Listener {
 
-                                println("Response12 is $it")
                                 val response = it.getJSONObject("data")
                                 val success = response.getBoolean("success")
                                 if (success) {
@@ -112,10 +111,10 @@ class HomeFragment() : Fragment() {
                                                 restaurantJsonObject.getString("image_url")
                                         )
                                         restaurantList.add(restaurantObject)
-                                        homeAdapter = HomeAdapter(activity as Context,restaurantList)
-                                        recyclerViewHome.adapter = homeAdapter
-                                        recyclerViewHome.layoutManager = layoutManager
                                     }
+                                    homeAdapter = HomeAdapter(activity as Context,restaurantList)
+                                    recyclerViewHome.adapter = homeAdapter
+                                    recyclerViewHome.layoutManager = layoutManager
                                 }
                                 homeProgressBarLayout.visibility = View.INVISIBLE
                             },

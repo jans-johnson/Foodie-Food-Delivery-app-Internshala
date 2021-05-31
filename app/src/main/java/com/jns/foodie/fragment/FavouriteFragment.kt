@@ -61,7 +61,6 @@ class FavouriteFragment : Fragment() {
                         null,
                         Response.Listener {
 
-                            println("Response12 is  $it")
                             val response = it.getJSONObject("data")
                             val success = response.getBoolean("success")
 

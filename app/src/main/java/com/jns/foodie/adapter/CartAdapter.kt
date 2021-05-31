@@ -11,6 +11,8 @@ import com.jns.foodie.model.CartItems
 class CartAdapter(val cartItems:ArrayList<CartItems>) : RecyclerView.Adapter<CartAdapter.ViewHolderCart>(){
 
     class ViewHolderCart(view: View) : RecyclerView.ViewHolder(view) {
+        val tvFoodItem : TextView=view.findViewById(R.id.tvFoodItem)
+        val tvPrice:TextView=view.findViewById(R.id.tvPriceCart)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolderCart {
@@ -20,6 +22,8 @@ class CartAdapter(val cartItems:ArrayList<CartItems>) : RecyclerView.Adapter<Car
     }
 
     override fun onBindViewHolder(holder: ViewHolderCart, position: Int) {
+        holder.tvFoodItem.text=cartItems.get(position).itemName
+        holder.tvPrice.text=cartItems.get(position).itemPrice
     }
 
     override fun getItemCount(): Int {
