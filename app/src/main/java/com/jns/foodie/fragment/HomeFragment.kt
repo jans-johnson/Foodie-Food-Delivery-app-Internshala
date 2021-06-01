@@ -5,11 +5,10 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.provider.Settings
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.*
-import android.widget.RadioGroup
-import android.widget.RelativeLayout
-import android.widget.SearchView
-import android.widget.Toast
+import android.widget.*
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -34,7 +33,7 @@ class HomeFragment() : Fragment() {
     lateinit var homeAdapter: HomeAdapter
     lateinit var homeProgressBarLayout: RelativeLayout
     lateinit var cantFind: RelativeLayout
-    lateinit var searchView:SearchView
+    lateinit var etSearch: EditText
     lateinit var radioButtonView: View
 
     var restaurantList= arrayListOf<RestaurantEntity>()
@@ -49,32 +48,26 @@ class HomeFragment() : Fragment() {
         recyclerViewHome=view.findViewById(R.id.recyclerViewHome)
         homeProgressBarLayout=view.findViewById(R.id.homeProgresBarLayout)
         cantFind=view.findViewById(R.id.cantFind)
+        etSearch=view.findViewById(R.id.etSearch)
+
+        etSearch.addTextChangedListener(object : TextWatcher {
+
+            override fun afterTextChanged(strTyped: Editable?) {
+                searchFilter(strTyped.toString())
+            }
+
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+            }
+        })
 
 
 
         return view
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.menu_home, menu)
-
-        searchView = menu.findItem(R.id.action_search).actionView as SearchView
-        searchView.setMaxWidth(Int.MAX_VALUE)
-        searchView.queryHint="Search Restaurant"
-
-
-        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String): Boolean {
-                searchFilter(query)
-                return false
-            }
-
-            override fun onQueryTextChange(query: String): Boolean {
-                searchFilter(query)
-                return false
-            }
-        })
-
     }
 
 
@@ -164,7 +157,12 @@ class HomeFragment() : Fragment() {
         }
         super.onResume()
     }
-    
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu_home, menu)
+    }
+
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
         when (item.itemId) {

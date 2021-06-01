@@ -20,10 +20,33 @@
     </RelativeLayout>
 
     <RelativeLayout
+        android:id="@+id/RLSearch"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_centerHorizontal="true"
+        android:background="@color/PrimaryDark2"
+        android:padding="10dp">
+
+        <EditText
+            android:id="@+id/etSearch"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_centerInParent="true"
+            android:background="@drawable/custom_input"
+            android:drawableStart="@drawable/ic_search"
+            android:hint="  Search Restaurants"
+            android:maxLines="1"
+            android:padding="5dp"
+            android:paddingStart="12dp"
+            android:singleLine="true" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
         android:id="@+id/cantFind"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
+        android:layout_below="@id/RLSearch"
         android:background="@color/white"
         android:elevation="1dp"
         android:visibility="invisible">
@@ -41,7 +64,7 @@
         android:id="@+id/recyclerViewHome"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
+        android:layout_below="@id/RLSearch"
         android:focusable="true"
         android:focusableInTouchMode="true" />
 
