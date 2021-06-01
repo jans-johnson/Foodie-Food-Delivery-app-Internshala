@@ -16,10 +16,9 @@ import com.jns.foodie.R
 import com.jns.foodie.activity.RestaurantMenuActivity
 import com.jns.foodie.database.RestaurantDatabase
 import com.jns.foodie.database.RestaurantEntity
-import com.jns.foodie.model.Restaurant
 import com.squareup.picasso.Picasso
 
-class HomeAdapter(val context: Context,var itemList:ArrayList<Restaurant>): RecyclerView.Adapter<HomeAdapter.ViewHolderDashboard>() {
+class HomeAdapter(val context: Context, var itemList: ArrayList<RestaurantEntity>): RecyclerView.Adapter<HomeAdapter.ViewHolderDashboard>() {
 
     class ViewHolderDashboard(view: View) : RecyclerView.ViewHolder(view) {
         val ivCardRestaurant: ImageView = view.findViewById(R.id.ivCardRestaurant)
@@ -45,11 +44,11 @@ class HomeAdapter(val context: Context,var itemList:ArrayList<Restaurant>): Recy
     override fun onBindViewHolder(holder: ViewHolderDashboard, position: Int) {
 
         val restaurant=itemList[position]
-        val restaurantEntity=RestaurantEntity(restaurant.restaurantId,restaurant.restaurantName)
+        val restaurantEntity=RestaurantEntity(restaurant.restaurantId,restaurant.restaurantName,restaurant.restaurantRating,restaurant.restaurantCost,restaurant.restaurantImage)
         var fav:Boolean=false
 
         holder.tvCardName.text=restaurant.restaurantName
-        holder.tvCardPrice.text=restaurant.cost_for_one+"/person"
+        holder.tvCardPrice.text=restaurant.restaurantCost+"/person"
         holder.tvCardRating.text=restaurant.restaurantRating
 
         Picasso.get().load(restaurant.restaurantImage).error(R.drawable.restaurant_default).into(holder.ivCardRestaurant)
@@ -97,7 +96,7 @@ class HomeAdapter(val context: Context,var itemList:ArrayList<Restaurant>): Recy
     }
 
     //for the search option
-    fun filterList(filteredList: ArrayList<Restaurant>) {
+    fun filterList(filteredList: ArrayList<RestaurantEntity>) {
         itemList = filteredList
         notifyDataSetChanged()
     }

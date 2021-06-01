@@ -19,7 +19,7 @@ import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
 import com.jns.foodie.R
 import com.jns.foodie.adapter.HomeAdapter
-import com.jns.foodie.model.Restaurant
+import com.jns.foodie.database.RestaurantEntity
 import com.jns.foodie.utils.ConnectionManager
 import org.json.JSONException
 import java.util.*
@@ -37,7 +37,7 @@ class HomeFragment() : Fragment() {
     lateinit var searchView:SearchView
     lateinit var radioButtonView: View
 
-    var restaurantList= arrayListOf<Restaurant>()
+    var restaurantList= arrayListOf<RestaurantEntity>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -103,7 +103,7 @@ class HomeFragment() : Fragment() {
                                     val data = response.getJSONArray("data")
                                     for (i in 0 until data.length()) {
                                         val restaurantJsonObject = data.getJSONObject(i)
-                                        val restaurantObject = Restaurant(
+                                        val restaurantObject = RestaurantEntity(
                                                 restaurantJsonObject.getString("id"),
                                                 restaurantJsonObject.getString("name"),
                                                 restaurantJsonObject.getString("rating"),
@@ -203,7 +203,7 @@ class HomeFragment() : Fragment() {
 
     fun searchFilter(query: String)
     {
-        val filteredList = arrayListOf<Restaurant>()
+        val filteredList = arrayListOf<RestaurantEntity>()
 
         for (item in restaurantList) {
             if (item.restaurantName.toLowerCase(Locale.ROOT)
@@ -224,7 +224,7 @@ class HomeFragment() : Fragment() {
 
 
     //sort according to ratings
-    var ratingComparator = Comparator<Restaurant> { restaurant1, restaurant2 ->
+    var ratingComparator = Comparator<RestaurantEntity> { restaurant1, restaurant2 ->
 
         if (restaurant1.restaurantRating.compareTo(restaurant2.restaurantRating, true) == 0) {
             restaurant1.restaurantName.compareTo(restaurant2.restaurantName, true)
@@ -234,8 +234,8 @@ class HomeFragment() : Fragment() {
     }
 
     //sort according to cost(decreasing)
-    var costComparator = Comparator<Restaurant> { restaurant1, restaurant2 ->
+    var costComparator = Comparator<RestaurantEntity> { restaurant1, restaurant2 ->
 
-        restaurant1.cost_for_one.compareTo(restaurant2.cost_for_one, true)
+        restaurant1.restaurantCost.compareTo(restaurant2.restaurantCost, true)
     }
 }
