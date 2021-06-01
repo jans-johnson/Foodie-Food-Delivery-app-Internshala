@@ -16,6 +16,7 @@ class HistoryAdapter(val context: Context,val orderList:ArrayList<OrderHistory>)
     class ViewHolderHistory(view: View) : RecyclerView.ViewHolder(view) {
         val tvRestaurantName: TextView = view.findViewById(R.id.tvRestaurantNameOrderHistory)
         val tvOrderDate: TextView = view.findViewById(R.id.tvOrderDate)
+        val tvTotalCost: TextView=view.findViewById(R.id.tvTotalCost)
         val recyclerViewItemsHistory: RecyclerView = view.findViewById(R.id.RecyclerViewItemsHistory)
     }
 
@@ -33,6 +34,7 @@ class HistoryAdapter(val context: Context,val orderList:ArrayList<OrderHistory>)
 
         holder.tvRestaurantName.text = orderList.get(position).restaurant_name
         holder.tvOrderDate.text = orderList.get(position).order_placed_at.split(" ")[0]
+        holder.tvTotalCost.text="Rs ${orderList.get(position).total_cost}"
 
         val itemJsonList = orderList.get(position).food_items
         val itemList = ArrayList<CartItems>()
