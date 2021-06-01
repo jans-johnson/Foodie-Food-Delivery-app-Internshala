@@ -64,8 +64,6 @@ class ResetPasswordFragment(val mobileNumber: String) : Fragment() {
                                     val response = it.getJSONObject("data")
                                     if (response.getBoolean("success")) {
                                         Toast.makeText(activity, "Password Changed Successfully", Toast.LENGTH_SHORT).show()
-                                        val intent = Intent(activity, LoginActivity::class.java)
-                                        startActivity(intent)
                                         activity?.finish()
                                     }
                                     else

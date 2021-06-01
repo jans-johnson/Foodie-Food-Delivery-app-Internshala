@@ -49,8 +49,10 @@ class LoginFragment : Fragment() {
 
             if(etMobile.text.length<10)
                 etMobile.error="Enter a valid Mobile Number"
-            else
+            else if (ConnectionManager().checkConnectivity(activity as Context))
                 loginUser()
+            else
+                Toast.makeText(activity,"Check Your Connection and try again !",Toast.LENGTH_SHORT).show()
         }
 
         tvForgotPassword.setOnClickListener {
