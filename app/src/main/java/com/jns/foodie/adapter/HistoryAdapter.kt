@@ -42,10 +42,8 @@ class HistoryAdapter(val context: Context,val orderList:ArrayList<OrderHistory>)
         for (i in 0 until itemJsonList.length()) {
             val foodJsonObject = itemJsonList.getJSONObject(i)
             val orderObject = CartItems(
-                    foodJsonObject.getString("food_item_id"),
                     foodJsonObject.getString("name"),
-                    foodJsonObject.getString("cost"),
-                    orderList.get(position).order_id
+                    foodJsonObject.getString("cost")
             )
             itemList.add(orderObject)
         }

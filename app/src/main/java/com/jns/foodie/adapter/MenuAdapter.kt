@@ -2,7 +2,9 @@ package com.jns.foodie.adapter
 
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.graphics.Color
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,8 +12,12 @@ import android.widget.Button
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.google.gson.Gson
 import com.jns.foodie.R
 import com.jns.foodie.activity.CartActivity
+import com.jns.foodie.model.CartItems
+import com.jns.foodie.model.Food
+import com.jns.foodie.model.PlaceOrder
 import com.jns.foodie.model.RestaurantMenu
 
 class MenuAdapter (val context: Context,
@@ -21,8 +27,10 @@ class MenuAdapter (val context: Context,
                    val restaurantMenu: ArrayList<RestaurantMenu>) : RecyclerView.Adapter<MenuAdapter.ViewHolderMenu>(){
 
     var itemSelectedCount: Int = 0
-    lateinit var proceedToCart: Button
-    var itemsSelectedId = arrayListOf<String>()
+    var totalCost:Int=0
+    var foodItemsId = arrayListOf<Food>()
+    var cartListItems = arrayListOf<CartItems>()
+    var userId=context.getSharedPreferences("UserDetails",Context.MODE_PRIVATE).getString("user_id","user")
 
     class ViewHolderMenu(view: View): RecyclerView.ViewHolder(view)
     {
@@ -44,13 +52,13 @@ class MenuAdapter (val context: Context,
     }
     override fun onBindViewHolder(holder: ViewHolderMenu, position: Int) {
         val restaurantMenuItem = restaurantMenu[position]
-        proceedToCart = buttonProceedToCart
 
         buttonProceedToCart.setOnClickListener {
+            val placeOrder=PlaceOrder(userId.toString(),restaurantId,totalCost.toString(),foodItemsId)
             val intent = Intent(context, CartActivity::class.java)
-            intent.putExtra("restaurantId", restaurantId)
-            intent.putExtra("restaurantName", restaurantName)
-            intent.putExtra("selectedItemsId", itemsSelectedId)
+            intent.putExtra("details", Gson().toJson(placeOrder))
+            intent.putExtra("restaurantName",restaurantName)
+            intent.putExtra("cartItems", Gson().toJson(cartListItems))
             context.startActivity(intent)
         }
 
@@ -59,26 +67,37 @@ class MenuAdapter (val context: Context,
             if (holder.btnAddToCart.text.toString() == "Remove") {
 
                 itemSelectedCount--
-                itemsSelectedId.remove(holder.btnAddToCart.tag.toString())
+                val item=Food(restaurantMenuItem.id)
+                totalCost-=restaurantMenuItem.cost_for_one.toInt()
+                foodItemsId.remove(item)
+
+                val cartItem=CartItems(restaurantMenuItem.name,restaurantMenuItem.cost_for_one)
+                cartListItems.remove(cartItem)
+
                 holder.btnAddToCart.text = "Add"
                 holder.btnAddToCart.setBackgroundColor(Color.rgb(31, 171, 137))
 
             } else {
 
                 itemSelectedCount++
-                itemsSelectedId.add(holder.btnAddToCart.tag.toString())
+                val item=Food(restaurantMenuItem.id)
+                totalCost+=restaurantMenuItem.cost_for_one.toInt()
+                foodItemsId.add(item)
+
+                val cartItem=CartItems(restaurantMenuItem.name,restaurantMenuItem.cost_for_one)
+                cartListItems.add(cartItem)
+
                 holder.btnAddToCart.text = "Remove"
                 holder.btnAddToCart.setBackgroundColor( Color.rgb(255, 196, 0))
             }
 
             if (itemSelectedCount > 0) {
-                proceedToCart.visibility = View.VISIBLE
+                buttonProceedToCart.visibility = View.VISIBLE
             } else {
-                proceedToCart.visibility = View.GONE
+                buttonProceedToCart.visibility = View.GONE
             }
         }
 
-        holder.btnAddToCart.tag = restaurantMenuItem.id + ""
         holder.tvSerialNumber.text = (position + 1).toString()
         holder.tvItemName.text = restaurantMenuItem.name
         holder.tvItemPrice.text = "Rs. ${restaurantMenuItem.cost_for_one}"

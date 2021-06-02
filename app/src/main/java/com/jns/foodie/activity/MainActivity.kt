@@ -167,7 +167,9 @@ class MainActivity : AppCompatActivity() {
                 navigationView.menu.getItem(0).isChecked = true
                 openDashboard()
             }
-            else -> super.onBackPressed()
+            else -> {
+                    super.onBackPressed()
+            }
         }
     }
 

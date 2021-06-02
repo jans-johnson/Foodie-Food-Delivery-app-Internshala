@@ -155,8 +155,6 @@ class RestaurantMenuActivity : AppCompatActivity() {
                                 menuProgressLayout.visibility = View.INVISIBLE
                             },
                             Response.ErrorListener {
-                                println("Error12menu is $it")
-
                                 Toast.makeText(
                                         this,
                                         "Some Error occurred!!!",
