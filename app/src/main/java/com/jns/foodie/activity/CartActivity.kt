@@ -1,22 +1,36 @@
 package com.jns.foodie.activity
 
+import android.app.Activity
+import android.content.Context
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.Settings
 import android.util.Log
 import android.view.MenuItem
+import android.view.View
 import android.widget.Button
 import android.widget.RelativeLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
+import androidx.core.app.ActivityCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.android.volley.Response
+import com.android.volley.toolbox.JsonObjectRequest
+import com.android.volley.toolbox.Volley
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.jns.foodie.R
 import com.jns.foodie.adapter.CartAdapter
+import com.jns.foodie.adapter.HistoryAdapter
 import com.jns.foodie.model.CartItems
+import com.jns.foodie.model.OrderHistory
 import com.jns.foodie.model.PlaceOrder
+import com.jns.foodie.utils.ConnectionManager
+import org.json.JSONException
+import org.json.JSONObject
 
 class CartActivity : AppCompatActivity() {
 
@@ -46,7 +60,56 @@ class CartActivity : AppCompatActivity() {
 
         btnPlaceOrder.setOnClickListener {
 
-            Toast.makeText(this,"yes Working",Toast.LENGTH_SHORT).show()
+            if (ConnectionManager().checkConnectivity(this))
+            {
+
+                try {
+                    val queue= Volley.newRequestQueue(this)
+                    val url="http://13.235.250.119/v2/place_order/fetch_result/"
+                    val orderDetails = JSONObject(intent.getStringExtra("details")!!)
+
+                    val jsonObjectRequest=object : JsonObjectRequest(
+                        Method.POST,url,orderDetails,
+                        Response.Listener {
+                            val response=it.getJSONObject("data")
+                            if (response.getBoolean("success"))
+                                Toast.makeText(this, "Adichhuuuu mwooonaaaaa", Toast.LENGTH_SHORT).show()
+
+                        },
+                        Response.ErrorListener {
+                            Toast.makeText(this, "Some Error occurred!!!", Toast.LENGTH_SHORT).show()
+                        })
+                    {
+                        override fun getHeaders(): MutableMap<String, String> {
+                            val headers = HashMap<String, String>()
+                            headers["Content-type"] = "application/json"
+                            headers["token"] = "c1b1256d960512"
+                            return headers
+                        }
+                    }
+                    queue.add(jsonObjectRequest)
+                }
+                catch (e: JSONException)
+                {
+                    Toast.makeText(this,"Some Error Occured",Toast.LENGTH_SHORT).show()
+                }
+            }
+            else {
+
+                val alterDialog = androidx.appcompat.app.AlertDialog.Builder(this)
+                alterDialog.setTitle("No Internet")
+                alterDialog.setMessage("Check Internet Connection!")
+                alterDialog.setPositiveButton("Open Settings") { _, _ ->
+                    val settingsIntent = Intent(Settings.ACTION_SETTINGS)
+                    startActivity(settingsIntent)
+                }
+                alterDialog.setNegativeButton("Exit") { _, _ ->
+                    ActivityCompat.finishAffinity(this)
+                }
+                alterDialog.setCancelable(false)
+                alterDialog.create()
+                alterDialog.show()
+            }
 
         }
 
