@@ -1,18 +1,17 @@
 package com.jns.foodie.activity
 
-import android.app.Activity
-import android.content.Context
+import android.app.AlertDialog
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.CountDownTimer
 import android.provider.Settings
-import android.util.Log
+import android.view.LayoutInflater
 import android.view.MenuItem
-import android.view.View
 import android.widget.Button
 import android.widget.RelativeLayout
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityCompat
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -24,13 +23,12 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.jns.foodie.R
 import com.jns.foodie.adapter.CartAdapter
-import com.jns.foodie.adapter.HistoryAdapter
 import com.jns.foodie.model.CartItems
-import com.jns.foodie.model.OrderHistory
 import com.jns.foodie.model.PlaceOrder
 import com.jns.foodie.utils.ConnectionManager
 import org.json.JSONException
 import org.json.JSONObject
+
 
 class CartActivity : AppCompatActivity() {
 
@@ -69,15 +67,31 @@ class CartActivity : AppCompatActivity() {
                     val orderDetails = JSONObject(intent.getStringExtra("details")!!)
 
                     val jsonObjectRequest=object : JsonObjectRequest(
-                        Method.POST,url,orderDetails,
+                        Method.POST, url, orderDetails,
                         Response.Listener {
-                            val response=it.getJSONObject("data")
-                            if (response.getBoolean("success"))
-                                Toast.makeText(this, "Adichhuuuu mwooonaaaaa", Toast.LENGTH_SHORT).show()
+                            val response = it.getJSONObject("data")
+                            if (response.getBoolean("success")) {
+                                val dialogView = LayoutInflater.from(this).inflate(
+                                    R.layout.order_placed_dialog,
+                                    null
+                                )
+                                val builder = AlertDialog.Builder(this).setView(dialogView).show()
+
+                                //to redirect to mainActivity
+                                object : CountDownTimer(2000, 1000) {
+                                    override fun onTick(p0: Long) {}
+                                    override fun onFinish() {
+                                        val intent= Intent(this@CartActivity,MainActivity::class.java)
+                                        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                                        startActivity(intent)
+                                    }
+                                }.start()
+                            }
 
                         },
                         Response.ErrorListener {
-                            Toast.makeText(this, "Some Error occurred!!!", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(this, "Some Error occurred!!!", Toast.LENGTH_SHORT)
+                                .show()
                         })
                     {
                         override fun getHeaders(): MutableMap<String, String> {
@@ -91,7 +105,7 @@ class CartActivity : AppCompatActivity() {
                 }
                 catch (e: JSONException)
                 {
-                    Toast.makeText(this,"Some Error Occured",Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Some Error Occured", Toast.LENGTH_SHORT).show()
                 }
             }
             else {
@@ -113,11 +127,11 @@ class CartActivity : AppCompatActivity() {
 
         }
 
-        placeOrder = Gson().fromJson(intent.getStringExtra("details")!!,PlaceOrder::class.java)
+        placeOrder = Gson().fromJson(intent.getStringExtra("details")!!, PlaceOrder::class.java)
         restaurantName= intent.getStringExtra("restaurantName")!!
 
         val myType = object : TypeToken<List<CartItems>>() {}.type
-        cartListItems=Gson().fromJson(intent.getStringExtra("cartItems"),myType)
+        cartListItems=Gson().fromJson(intent.getStringExtra("cartItems"), myType)
 
         tvRestaurantName.text=restaurantName
 
