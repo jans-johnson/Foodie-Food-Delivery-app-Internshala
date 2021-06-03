@@ -8,10 +8,7 @@ import android.provider.Settings
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
-import android.widget.Button
-import android.widget.RelativeLayout
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityCompat
@@ -35,6 +32,7 @@ class CartActivity : AppCompatActivity() {
 
     lateinit var toolbarCart:Toolbar
     lateinit var tvRestaurantName: TextView
+    lateinit var tvTotal: TextView
     lateinit var cartProgressLayout: RelativeLayout
     lateinit var recyclerViewCart: RecyclerView
     lateinit var layoutManager: RecyclerView.LayoutManager
@@ -56,6 +54,7 @@ class CartActivity : AppCompatActivity() {
         recyclerViewCart=findViewById(R.id.recyclerViewCart)
         btnPlaceOrder=findViewById(R.id.btnPlaceOrder)
         recyclerViewCart = findViewById(R.id.recyclerViewCart)
+        tvTotal=findViewById(R.id.tvTotal)
 
         btnPlaceOrder.setOnClickListener {
 
@@ -139,6 +138,7 @@ class CartActivity : AppCompatActivity() {
         cartListItems=Gson().fromJson(intent.getStringExtra("cartItems"), myType)
 
         tvRestaurantName.text=restaurantName
+        tvTotal.text="Total Rs. ${placeOrder.totalCost}"
 
         setToolBar()
 

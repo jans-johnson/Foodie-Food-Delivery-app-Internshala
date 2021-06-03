@@ -77,4 +77,17 @@
         android:text="@string/place_order"
         android:translationY="5dp" />
 
+    <TextView
+        android:id="@+id/tvTotal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/btnPlaceOrder"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:text="@string/total_cost"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
 </RelativeLayout>
