@@ -41,11 +41,11 @@
 
         <TextView
             android:id="@+id/tvRating"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center_horizontal"
-            android:text="Rated 4.5"
+            android:text="@string/rated_4_5"
             android:textColor="#FFC107"
             android:textSize="18sp"
             android:textStyle="bold" />
@@ -55,7 +55,8 @@
             android:id="@+id/ivFavIcon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="10dp"
+            android:layout_marginEnd="10dp"
+            android:contentDescription="@string/favourite_icon"
             app:srcCompat="@drawable/ic_favourite_red_border" />
     </LinearLayout>
 
@@ -72,7 +73,7 @@
         android:layout_width="match_parent"
         android:layout_height="70dp"
         android:layout_alignParentBottom="true"
-        android:text="Proceed To Cart"
+        android:text="@string/proceed_to_cart"
         android:translationY="5dp"
         android:visibility="gone" />
 

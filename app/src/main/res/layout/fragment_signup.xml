@@ -19,10 +19,11 @@
         android:drawableStart="@drawable/ic_user"
         android:drawablePadding="10dp"
         android:ems="10"
-        android:hint="Name"
+        android:hint="@string/name"
         android:inputType="textPersonName"
         android:paddingLeft="20dp"
-        android:paddingRight="20dp" />
+        android:paddingRight="20dp"
+        android:importantForAutofill="no" />
 
     <EditText
         android:id="@+id/etRegEmail"
@@ -36,10 +37,11 @@
         android:drawableStart="@drawable/ic_email"
         android:drawablePadding="10dp"
         android:ems="10"
-        android:hint="Email Address"
+        android:hint="@string/email_address"
         android:inputType="textEmailAddress"
         android:paddingLeft="20dp"
-        android:paddingRight="20dp" />
+        android:paddingRight="20dp"
+        android:importantForAutofill="no" />
 
     <EditText
         android:id="@+id/etRegPhone"
@@ -53,11 +55,12 @@
         android:drawableStart="@drawable/ic_mobile"
         android:drawablePadding="10dp"
         android:ems="10"
-        android:hint="Mobile Number"
+        android:hint="@string/mobile_number"
         android:inputType="phone"
         android:maxLength="10"
         android:paddingLeft="20dp"
-        android:paddingRight="20dp" />
+        android:paddingRight="20dp"
+        android:importantForAutofill="no" />
 
     <EditText
         android:id="@+id/etRegAddress"
@@ -71,10 +74,11 @@
         android:drawableStart="@drawable/ic_location"
         android:drawablePadding="10dp"
         android:ems="10"
-        android:hint="Delivery Address"
+        android:hint="@string/delivery_address"
         android:inputType="textPersonName"
         android:paddingLeft="20dp"
-        android:paddingRight="20dp" />
+        android:paddingRight="20dp"
+        android:importantForAutofill="no" />
 
     <EditText
         android:id="@+id/etRegPassword"
@@ -88,10 +92,11 @@
         android:drawableStart="@drawable/ic_lock"
         android:drawablePadding="10dp"
         android:ems="10"
-        android:hint="Password"
+        android:hint="@string/password"
         android:inputType="numberPassword"
         android:paddingLeft="20dp"
-        android:paddingRight="20dp" />
+        android:paddingRight="20dp"
+        android:importantForAutofill="no" />
 
     <EditText
         android:id="@+id/etRegCPassword"
@@ -105,10 +110,11 @@
         android:drawableStart="@drawable/ic_lock"
         android:drawablePadding="10dp"
         android:ems="10"
-        android:hint="Confirm Password"
+        android:hint="@string/confirm_password"
         android:inputType="numberPassword"
         android:paddingLeft="20dp"
-        android:paddingRight="20dp" />
+        android:paddingRight="20dp"
+        android:importantForAutofill="no" />
 
     <Button
         android:id="@+id/btnRegister"
@@ -118,5 +124,5 @@
         android:layout_marginTop="20dp"
         android:layout_marginBottom="30dp"
         android:layout_weight="1"
-        android:text="REGISTER" />
+        android:text="@string/register" />
 </LinearLayout>

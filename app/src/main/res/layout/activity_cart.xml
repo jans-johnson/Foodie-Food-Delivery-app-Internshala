@@ -31,8 +31,9 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="end"
+            android:paddingLeft="10dp"
             android:paddingRight="10dp"
-            android:text="Ordering From:"
+            android:text="@string/ordering_from"
             android:textSize="18sp" />
 
         <TextView
@@ -40,7 +41,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="4"
-            android:text="Restauarant Name"
+            android:text="@string/restauarant_name"
             android:textSize="20sp"
             android:textStyle="bold" />
     </LinearLayout>
@@ -73,7 +74,7 @@
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_alignParentBottom="true"
-        android:text="Place Order"
+        android:text="@string/place_order"
         android:translationY="5dp" />
 
 </RelativeLayout>

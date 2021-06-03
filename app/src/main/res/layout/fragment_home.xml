@@ -34,10 +34,13 @@
             android:layout_centerInParent="true"
             android:background="@drawable/custom_input"
             android:drawableStart="@drawable/ic_search"
-            android:hint="  Search Restaurants"
+            android:hint="@string/search_restaurants"
+            android:importantForAutofill="no"
+            android:inputType="text"
             android:maxLines="1"
             android:padding="5dp"
             android:paddingStart="12dp"
+            android:paddingEnd="10dp"
             android:singleLine="true" />
 
     </RelativeLayout>
@@ -55,7 +58,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="15dp"
-            android:text="Can't Find Restaurant"
+            android:text="@string/can_t_find_restaurant"
             android:textColor="@color/black"
             android:textSize="20sp" />
     </RelativeLayout>

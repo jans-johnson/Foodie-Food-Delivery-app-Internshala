@@ -29,7 +29,7 @@
         android:gravity="center"
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
-        android:text="Your Previous Orders"
+        android:text="@string/your_previous_orders"
         android:textSize="20sp" />
 
     <androidx.recyclerview.widget.RecyclerView

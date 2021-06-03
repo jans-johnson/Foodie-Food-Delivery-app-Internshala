@@ -11,6 +11,7 @@
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:layout_gravity="center_horizontal"
+        android:contentDescription="@string/user"
         android:layout_marginTop="15dp"
         android:src="@drawable/dashboard_user" />
 
@@ -18,7 +19,7 @@
         android:id="@+id/tvDashboardUser"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="User"
+        android:text="@string/user"
         android:layout_marginTop="10dp"
         android:textColor="@color/white"
         android:textSize="25sp"
@@ -31,7 +32,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="10dp"
-        android:text="Mobile Number"
+        android:text="@string/mobile_number"
         android:textColor="@color/white"
         android:textSize="20sp"
         android:textStyle="italic" />

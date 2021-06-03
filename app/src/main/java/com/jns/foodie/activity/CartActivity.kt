@@ -7,6 +7,7 @@ import android.os.CountDownTimer
 import android.provider.Settings
 import android.view.LayoutInflater
 import android.view.MenuItem
+import android.view.View
 import android.widget.Button
 import android.widget.RelativeLayout
 import android.widget.TextView
@@ -60,6 +61,7 @@ class CartActivity : AppCompatActivity() {
 
             if (ConnectionManager().checkConnectivity(this))
             {
+                cartProgressLayout.visibility=View.VISIBLE
 
                 try {
                     val queue= Volley.newRequestQueue(this)
@@ -69,6 +71,7 @@ class CartActivity : AppCompatActivity() {
                     val jsonObjectRequest=object : JsonObjectRequest(
                         Method.POST, url, orderDetails,
                         Response.Listener {
+                            cartProgressLayout.visibility=View.GONE
                             val response = it.getJSONObject("data")
                             if (response.getBoolean("success")) {
                                 val dialogView = LayoutInflater.from(this).inflate(
@@ -90,6 +93,7 @@ class CartActivity : AppCompatActivity() {
 
                         },
                         Response.ErrorListener {
+                            cartProgressLayout.visibility=View.GONE
                             Toast.makeText(this, "Some Error occurred!!!", Toast.LENGTH_SHORT)
                                 .show()
                         })
@@ -109,6 +113,7 @@ class CartActivity : AppCompatActivity() {
                 }
             }
             else {
+                cartProgressLayout.visibility=View.GONE
 
                 val alterDialog = androidx.appcompat.app.AlertDialog.Builder(this)
                 alterDialog.setTitle("No Internet")
