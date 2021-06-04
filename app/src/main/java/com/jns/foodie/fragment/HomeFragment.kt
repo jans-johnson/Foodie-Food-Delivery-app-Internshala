@@ -105,7 +105,7 @@ class HomeFragment() : Fragment() {
                                         )
                                         restaurantList.add(restaurantObject)
                                     }
-                                    homeAdapter = HomeAdapter(activity as Context,restaurantList)
+                                    homeAdapter = HomeAdapter(activity as Context, restaurantList)
                                     recyclerViewHome.adapter = homeAdapter
                                     recyclerViewHome.layoutManager = layoutManager
                                 }
@@ -169,21 +169,21 @@ class HomeFragment() : Fragment() {
 
             R.id.action_sort -> {
                 radioButtonView = View.inflate(activity, R.layout.sort_menu, null)
-                val radioGroup=radioButtonView.findViewById<RadioGroup>(R.id.groupradio)
+                val radioGroup = radioButtonView.findViewById<RadioGroup>(R.id.groupradio)
                 androidx.appcompat.app.AlertDialog.Builder(activity as Context)
                         .setTitle("Sort By?")
                         .setView(radioButtonView)
                         .setPositiveButton("OK") { _, _ ->
-                            if (radioGroup.checkedRadioButtonId==R.id.radio_high_to_low) {
+                            if (radioGroup.checkedRadioButtonId == R.id.radio_high_to_low) {
                                 Collections.sort(restaurantList, costComparator)
                                 restaurantList.reverse()
                                 homeAdapter.notifyDataSetChanged()
                             }
-                            if (radioGroup.checkedRadioButtonId==R.id.radio_low_to_high) {
+                            if (radioGroup.checkedRadioButtonId == R.id.radio_low_to_high) {
                                 Collections.sort(restaurantList, costComparator)
                                 homeAdapter.notifyDataSetChanged()
                             }
-                            if (radioGroup.checkedRadioButtonId==R.id.radio_rating) {
+                            if (radioGroup.checkedRadioButtonId == R.id.radio_rating) {
                                 Collections.sort(restaurantList, ratingComparator)
                                 restaurantList.reverse()
                                 homeAdapter.notifyDataSetChanged()
