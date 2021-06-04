@@ -69,4 +69,5 @@
     <string name="cost_low_to_high">Cost(Low to High)</string>
     <string name="cost_high_to_low">Cost(High to Low)</string>
     <string name="rating">Rating</string>
+    <string name="noFav">You Don\'t have any Favourite Restaurants.</string>
 </resources>

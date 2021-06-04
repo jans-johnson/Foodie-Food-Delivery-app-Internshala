@@ -22,6 +22,7 @@ class FavouriteFragment : Fragment() {
     lateinit var recyclerViewFavourite: RecyclerView
     lateinit var layoutManager: RecyclerView.LayoutManager
     lateinit var favoriteProgressLayout: RelativeLayout
+    lateinit var noFavouriteLayout: RelativeLayout
     lateinit var recyclerAdapter:HomeAdapter
     var restaurantInfoList=ArrayList<RestaurantEntity>()
 
@@ -34,7 +35,18 @@ class FavouriteFragment : Fragment() {
         layoutManager=LinearLayoutManager(activity)
         recyclerViewFavourite=view.findViewById(R.id.recyclerViewFavourite)
         favoriteProgressLayout=view.findViewById(R.id.favoriteProgressLayout)
+        noFavouriteLayout=view.findViewById(R.id.noFavouriteLayout)
+
+        return view
+    }
+
+    override fun onResume() {
         restaurantInfoList= RetrieveFavourites(activity as Context).execute().get() as ArrayList<RestaurantEntity>
+
+        if (restaurantInfoList.isEmpty())
+            noFavouriteLayout.visibility=View.VISIBLE
+        else
+            noFavouriteLayout.visibility=View.GONE
 
         if(activity!=null){
             recyclerAdapter= HomeAdapter(activity as Context,restaurantInfoList)
@@ -42,7 +54,7 @@ class FavouriteFragment : Fragment() {
             recyclerViewFavourite.layoutManager=layoutManager
         }
 
-        return view
+        super.onResume()
     }
 
     class RetrieveFavourites(val context: Context): AsyncTask<Void,Void,List<RestaurantEntity>>() {
