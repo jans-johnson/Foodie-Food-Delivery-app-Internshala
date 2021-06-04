@@ -37,6 +37,8 @@ class HomeFragment() : Fragment() {
     lateinit var radioButtonView: View
 
     var restaurantList= arrayListOf<RestaurantEntity>()
+    val filteredList = arrayListOf<RestaurantEntity>()
+    var filtered=0
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -168,6 +170,13 @@ class HomeFragment() : Fragment() {
         when (item.itemId) {
 
             R.id.action_sort -> {
+                etSearch.clearFocus()
+                var restaurantList1 = arrayListOf<RestaurantEntity>()
+                if (filtered==1)
+                    restaurantList1=filteredList
+                else
+                    restaurantList1=restaurantList
+
                 radioButtonView = View.inflate(activity, R.layout.sort_menu, null)
                 val radioGroup = radioButtonView.findViewById<RadioGroup>(R.id.groupradio)
                 androidx.appcompat.app.AlertDialog.Builder(activity as Context)
@@ -175,17 +184,17 @@ class HomeFragment() : Fragment() {
                         .setView(radioButtonView)
                         .setPositiveButton("OK") { _, _ ->
                             if (radioGroup.checkedRadioButtonId == R.id.radio_high_to_low) {
-                                Collections.sort(restaurantList, costComparator)
-                                restaurantList.reverse()
+                                Collections.sort(restaurantList1, costComparator)
+                                restaurantList1.reverse()
                                 homeAdapter.notifyDataSetChanged()
                             }
                             if (radioGroup.checkedRadioButtonId == R.id.radio_low_to_high) {
-                                Collections.sort(restaurantList, costComparator)
+                                Collections.sort(restaurantList1, costComparator)
                                 homeAdapter.notifyDataSetChanged()
                             }
                             if (radioGroup.checkedRadioButtonId == R.id.radio_rating) {
-                                Collections.sort(restaurantList, ratingComparator)
-                                restaurantList.reverse()
+                                Collections.sort(restaurantList1, ratingComparator)
+                                restaurantList1.reverse()
                                 homeAdapter.notifyDataSetChanged()
                             }
                         }
@@ -201,8 +210,8 @@ class HomeFragment() : Fragment() {
 
     fun searchFilter(query: String)
     {
-        val filteredList = arrayListOf<RestaurantEntity>()
-
+        filtered=1
+        filteredList.clear()
         for (item in restaurantList) {
             if (item.restaurantName.toLowerCase(Locale.ROOT)
                             .contains(query.toLowerCase(Locale.ROOT))
