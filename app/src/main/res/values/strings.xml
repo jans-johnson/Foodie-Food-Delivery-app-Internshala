@@ -34,7 +34,7 @@
     <string name="answer8">You will see an \'Order Placed\' dialog box and also receive a Notification.</string>
     <string name="enter_your_registered_mobile_number_and_email_below">Enter your Registered mobile number and email below:</string>
     <string name="next">Next</string>
-    <string name="forgotpasswordvector">forgotpasswordvector</string>
+    <string name="forgot_password_vector">forgot</string>
     <string name="your_previous_orders">Your Previous Orders</string>
     <string name="search_restaurants">Search Restaurants</string>
     <string name="can_t_find_restaurant">Can\'t Find Restaurant</string>

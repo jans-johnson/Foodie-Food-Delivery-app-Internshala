@@ -22,6 +22,7 @@ import com.jns.foodie.R
 import com.jns.foodie.adapter.HistoryAdapter
 import com.jns.foodie.model.OrderHistory
 import com.jns.foodie.utils.ConnectionManager
+import com.jns.foodie.utils.noInternetDialogBox
 import org.json.JSONException
 
 
@@ -108,18 +109,7 @@ class HistoryFragment : Fragment() {
         }
         else {
 
-            val alterDialog = androidx.appcompat.app.AlertDialog.Builder(activity as Context)
-            alterDialog.setTitle("No Internet")
-            alterDialog.setMessage("Check Internet Connection!")
-            alterDialog.setPositiveButton("Open Settings") { _, _ ->
-                val settingsIntent = Intent(Settings.ACTION_SETTINGS)
-                startActivity(settingsIntent)
-            }
-            alterDialog.setNegativeButton("Exit") { _, _ ->
-                ActivityCompat.finishAffinity(activity as Activity)
-            }
-            alterDialog.setCancelable(false)
-            alterDialog.create()
+            val alterDialog = noInternetDialogBox(activity as Context)
             alterDialog.show()
         }
 

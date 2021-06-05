@@ -26,6 +26,7 @@ import com.jns.foodie.adapter.CartAdapter
 import com.jns.foodie.model.CartItems
 import com.jns.foodie.model.PlaceOrder
 import com.jns.foodie.utils.ConnectionManager
+import com.jns.foodie.utils.noInternetDialogBox
 import org.json.JSONException
 import org.json.JSONObject
 
@@ -114,18 +115,7 @@ class CartActivity : AppCompatActivity() {
             else {
                 cartProgressLayout.visibility=View.GONE
 
-                val alterDialog = androidx.appcompat.app.AlertDialog.Builder(this)
-                alterDialog.setTitle("No Internet")
-                alterDialog.setMessage("Check Internet Connection!")
-                alterDialog.setPositiveButton("Open Settings") { _, _ ->
-                    val settingsIntent = Intent(Settings.ACTION_SETTINGS)
-                    startActivity(settingsIntent)
-                }
-                alterDialog.setNegativeButton("Exit") { _, _ ->
-                    ActivityCompat.finishAffinity(this)
-                }
-                alterDialog.setCancelable(false)
-                alterDialog.create()
+                val alterDialog = noInternetDialogBox(this)
                 alterDialog.show()
             }
 

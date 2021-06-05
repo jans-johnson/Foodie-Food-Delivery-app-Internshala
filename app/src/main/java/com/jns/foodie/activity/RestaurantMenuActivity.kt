@@ -17,6 +17,7 @@ import com.jns.foodie.R
 import com.jns.foodie.adapter.MenuAdapter
 import com.jns.foodie.model.RestaurantMenu
 import com.jns.foodie.utils.ConnectionManager
+import com.jns.foodie.utils.noInternetDialogBox
 import org.json.JSONException
 
 class RestaurantMenuActivity : AppCompatActivity() {
@@ -180,18 +181,7 @@ class RestaurantMenuActivity : AppCompatActivity() {
             }
         } else {
 
-            val alterDialog = androidx.appcompat.app.AlertDialog.Builder(this)
-            alterDialog.setTitle("No Internet")
-            alterDialog.setMessage("Check Internet Connection!")
-            alterDialog.setPositiveButton("Open Settings") { _, _ ->
-                val settingsIntent = Intent(Settings.ACTION_SETTINGS)
-                startActivity(settingsIntent)
-            }
-            alterDialog.setNegativeButton("Exit") { _, _ ->
-                finishAffinity()
-            }
-            alterDialog.setCancelable(false)
-            alterDialog.create()
+            val alterDialog = noInternetDialogBox(this)
             alterDialog.show()
         }
         super.onResume()
