@@ -171,7 +171,7 @@ class HomeFragment() : Fragment() {
 
             R.id.action_sort -> {
                 etSearch.clearFocus()
-                var restaurantList1 = arrayListOf<RestaurantEntity>()
+                val restaurantList1: ArrayList<RestaurantEntity>
                 if (filtered==1)
                     restaurantList1=filteredList
                 else

@@ -4,7 +4,9 @@ import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import android.os.CountDownTimer
+import android.os.Handler
 import android.provider.Settings
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
@@ -66,6 +68,7 @@ class CartActivity : AppCompatActivity() {
                     val queue= Volley.newRequestQueue(this)
                     val url="http://13.235.250.119/v2/place_order/fetch_result/"
                     val orderDetails = JSONObject(intent.getStringExtra("details")!!)
+                    Log.d("please",orderDetails.toString())
 
                     val jsonObjectRequest=object : JsonObjectRequest(
                         Method.POST, url, orderDetails,
@@ -80,14 +83,11 @@ class CartActivity : AppCompatActivity() {
                                 val builder = AlertDialog.Builder(this).setView(dialogView).show()
 
                                 //to redirect to mainActivity
-                                object : CountDownTimer(2000, 1000) {
-                                    override fun onTick(p0: Long) {}
-                                    override fun onFinish() {
-                                        val intent= Intent(this@CartActivity,MainActivity::class.java)
-                                        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                                        startActivity(intent)
-                                    }
-                                }.start()
+                                Handler().postDelayed({
+                                    val intent= Intent(this@CartActivity,MainActivity::class.java)
+                                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                                    startActivity(intent)
+                                }, 2000)
                             }
 
                         },
