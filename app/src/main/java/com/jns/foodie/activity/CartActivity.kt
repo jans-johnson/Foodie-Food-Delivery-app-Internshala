@@ -88,6 +88,7 @@ class CartActivity : AppCompatActivity() {
                                     val intent= Intent(this@CartActivity,MainActivity::class.java)
                                     intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                                     startActivity(intent)
+                                    builder.dismiss()
                                 }, 2000)
                             }
 

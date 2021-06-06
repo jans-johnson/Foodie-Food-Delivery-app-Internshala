@@ -6,10 +6,7 @@ import android.os.AsyncTask
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
 import androidx.room.Room
 import com.jns.foodie.R
@@ -25,7 +22,7 @@ class HomeAdapter(val context: Context, var itemList: ArrayList<RestaurantEntity
         val tvCardName: TextView = view.findViewById(R.id.tvCardName)
         val tvCardPrice: TextView = view.findViewById(R.id.tvCardPrice)
         val tvCardRating: TextView = view.findViewById(R.id.tvCardRating)
-        val llContent: LinearLayout = view.findViewById(R.id.llContent)
+        val llContent: RelativeLayout = view.findViewById(R.id.llContent)
         val ivCardFavorite: ImageView = view.findViewById(R.id.ivCardFavourite)
 
     }
@@ -48,7 +45,7 @@ class HomeAdapter(val context: Context, var itemList: ArrayList<RestaurantEntity
         var fav:Boolean=false
 
         holder.tvCardName.text=restaurant.restaurantName
-        holder.tvCardPrice.text=restaurant.restaurantCost+"/person"
+        holder.tvCardPrice.text="₹ "+restaurant.restaurantCost+"/person"
         holder.tvCardRating.text=restaurant.restaurantRating
 
         Picasso.get().load(restaurant.restaurantImage).error(R.drawable.restaurant_default).into(holder.ivCardRestaurant)
