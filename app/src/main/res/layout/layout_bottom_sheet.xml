@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/groupradio"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_centerInParent="true"
-    android:layout_marginTop="40dp">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/bottomSheetContainer"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <RadioGroup android:id="@+id/groupradio"
+        android:background="@drawable/bottom_sheet_background"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp">
 
     <RadioButton
         android:id="@+id/radio_low_to_high"
@@ -35,5 +39,7 @@
         android:padding="4dp"
         android:text="@string/rating"
         android:textSize="16sp" />
+    </RadioGroup>
 
-</RadioGroup>
+
+</LinearLayout>

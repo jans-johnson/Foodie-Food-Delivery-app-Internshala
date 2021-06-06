@@ -1,21 +1,18 @@
 package com.jns.foodie.fragment
 
-import android.app.Activity
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
-import android.provider.Settings
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.*
 import android.widget.*
-import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.volley.Response
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.jns.foodie.R
 import com.jns.foodie.adapter.HomeAdapter
 import com.jns.foodie.database.RestaurantEntity
@@ -162,37 +159,39 @@ class HomeFragment() : Fragment() {
             R.id.action_sort -> {
                 etSearch.clearFocus()
                 val restaurantList1: ArrayList<RestaurantEntity>
-                if (filtered==1)
-                    restaurantList1=filteredList
+                if (filtered == 1)
+                    restaurantList1 = filteredList
                 else
-                    restaurantList1=restaurantList
+                    restaurantList1 = restaurantList
 
-                radioButtonView = View.inflate(activity, R.layout.sort_menu, null)
-                val radioGroup = radioButtonView.findViewById<RadioGroup>(R.id.groupradio)
-                androidx.appcompat.app.AlertDialog.Builder(activity as Context)
-                        .setTitle("Sort By?")
-                        .setView(radioButtonView)
-                        .setPositiveButton("OK") { _, _ ->
-                            if (radioGroup.checkedRadioButtonId == R.id.radio_high_to_low) {
-                                Collections.sort(restaurantList1, costComparator)
-                                restaurantList1.reverse()
-                                homeAdapter.notifyDataSetChanged()
-                            }
-                            if (radioGroup.checkedRadioButtonId == R.id.radio_low_to_high) {
-                                Collections.sort(restaurantList1, costComparator)
-                                homeAdapter.notifyDataSetChanged()
-                            }
-                            if (radioGroup.checkedRadioButtonId == R.id.radio_rating) {
-                                Collections.sort(restaurantList1, ratingComparator)
-                                restaurantList1.reverse()
-                                homeAdapter.notifyDataSetChanged()
-                            }
-                        }
-                        .setNegativeButton("Cancel") { _, _ ->
+                val bottomSheetDialog = BottomSheetDialog(activity as Context, R.style.BottomSheetDialogTheme)
 
-                        }
-                        .create()
-                        .show()
+                val bottomSheetView = LayoutInflater.from(activity).inflate(
+                        R.layout.layout_bottom_sheet,
+                        requireActivity().findViewById(R.id.bottomSheetContainer)
+                )
+
+                val radioGroup = bottomSheetView.findViewById<RadioGroup>(R.id.groupradio)
+                radioGroup.setOnCheckedChangeListener { group, checkedId ->
+                    if (checkedId == R.id.radio_high_to_low) {
+                        Collections.sort(restaurantList1, costComparator)
+                        restaurantList1.reverse()
+                        homeAdapter.notifyDataSetChanged()
+                    }
+                    if (checkedId == R.id.radio_low_to_high) {
+                        Collections.sort(restaurantList1, costComparator)
+                        homeAdapter.notifyDataSetChanged()
+                    }
+                    if (checkedId == R.id.radio_rating) {
+                        Collections.sort(restaurantList1, ratingComparator)
+                        restaurantList1.reverse()
+                        homeAdapter.notifyDataSetChanged()
+                    }
+                    bottomSheetDialog.dismiss()
+                }
+
+                bottomSheetDialog.setContentView(bottomSheetView)
+                bottomSheetDialog.show()
             }
         }
         return super.onOptionsItemSelected(item)
