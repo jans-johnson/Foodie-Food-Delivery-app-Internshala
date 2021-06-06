@@ -89,7 +89,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center|start"
                     android:text="@string/_100_person"
-                    android:textColor="@color/PrimaryDark1" />
+                    android:textColor="@color/PrimaryDark2" />
             </LinearLayout>
 
             <TextView
