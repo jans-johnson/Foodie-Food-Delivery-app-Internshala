@@ -60,7 +60,10 @@
             android:background="@color/white"
             android:elevation="1dp"
             android:orientation="horizontal"
-            android:padding="10dp">
+            android:paddingStart="10dp"
+            android:paddingTop="5dp"
+            android:paddingEnd="10dp"
+            android:paddingBottom="5dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -76,6 +79,7 @@
                     android:layout_gravity="center|start"
                     android:gravity="center|start"
                     android:text="@string/restauarant_name"
+                    android:textColor="@color/PrimaryDark1"
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
@@ -84,18 +88,20 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center|start"
-                    android:text="@string/_100_person" />
+                    android:text="@string/_100_person"
+                    android:textColor="@color/PrimaryDark1" />
             </LinearLayout>
 
             <TextView
                 android:id="@+id/tvCardRating"
-                android:layout_width="50dp"
+                android:layout_width="70dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:drawableLeft="@drawable/ic_star"
                 android:gravity="center"
                 android:text="@string/_4_5"
-                android:textColor="#FFEB3B"
-                android:textSize="18sp" />
+                android:textColor="#FFC107"
+                android:textSize="16sp" />
 
         </LinearLayout>
     </RelativeLayout>
