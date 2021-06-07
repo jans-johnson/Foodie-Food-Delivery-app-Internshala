@@ -14,18 +14,23 @@ class SplashScreenActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash_screen)
 
-        if (sharedPreferences.getBoolean("isLoggedIn", false)) {
-            Handler().postDelayed({
-                val intent = Intent(this, MainActivity::class.java)
+        Handler().postDelayed({
+            if (!sharedPreferences.getBoolean("isNotFirstTime",false))
+            {
+                intent = Intent(this, OnBoardingActivity::class.java)
                 startActivity(intent)
-                finish()
-            }, 1000)
-        } else {
-            Handler().postDelayed({
-                val intent = Intent(this, LoginActivity::class.java)
+            }
+            else if (sharedPreferences.getBoolean("isLoggedIn", false)) {
+                intent = Intent(this, MainActivity::class.java)
                 startActivity(intent)
-                finish()
-            }, 1000)
+            }else {
+                intent = Intent(this, LoginActivity::class.java)
+                startActivity(intent)
+            }
+            finish()
+        }, 1000)
+
+
+
         }
-    }
 }

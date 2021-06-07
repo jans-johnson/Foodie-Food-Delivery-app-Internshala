@@ -25,7 +25,7 @@ import com.jns.foodie.utils.noInternetDialogBox
 import org.json.JSONException
 
 
-class HistoryFragment(val navigationView: NavigationView,val supportFragmentManager: FragmentManager) : Fragment() {
+class HistoryFragment(private val navigationView: NavigationView, private val supportFragmentManager: FragmentManager) : Fragment() {
 
     lateinit var recyclerViewOrderHistory: RecyclerView
     lateinit var historyProgressLayout: RelativeLayout
