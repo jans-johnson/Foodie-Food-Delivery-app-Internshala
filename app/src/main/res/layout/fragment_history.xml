@@ -3,19 +3,62 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragment.HistoryFragment">
 
     <RelativeLayout
+        android:id="@+id/noOrdersLayout"
         android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/PrimaryLight1"
+        android:elevation="1dp"
+        android:visibility="invisible">
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/ivFav"
+            android:layout_width="250dp"
+            android:layout_height="250dp"
+            android:layout_centerInParent="true"
+            android:translationY="-150dp"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            app:lottie_rawRes="@raw/no_orders" />
+
+        <TextView
+            android:id="@+id/textView12"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/ivFav"
+            android:layout_centerInParent="true"
+            android:fontFamily="@font/roboto"
+            android:gravity="center"
+            android:text="@string/you_don_t_have_any_orders_yet"
+            android:textSize="18sp"
+            android:translationY="-130dp" />
+
+        <Button
+            android:id="@+id/btnBrowseRestaurant"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textView12"
+            android:layout_centerInParent="true"
+            android:text="@string/browse_restaurants"
+            android:translationY="-100dp" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
         android:id="@+id/historyProgressLayout"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/white"
-        android:visibility="invisible"
-        android:elevation="1dp">
+        android:elevation="2dp"
+        android:visibility="invisible">
+
         <ProgressBar
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"/>
+            android:layout_centerInParent="true" />
 
     </RelativeLayout>
 

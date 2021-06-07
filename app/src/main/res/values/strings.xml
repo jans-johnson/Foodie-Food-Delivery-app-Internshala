@@ -70,4 +70,7 @@
     <string name="cost_high_to_low">Cost(High to Low)</string>
     <string name="rating">Rating</string>
     <string name="noFav">You Don\'t have any Favourite Restaurants.</string>
+    <string name="sort_by">Sort By:</string>
+    <string name="you_don_t_have_any_orders_yet">You Don\'t Have any Orders Yet</string>
+    <string name="browse_restaurants">Browse Restaurants</string>
 </resources>

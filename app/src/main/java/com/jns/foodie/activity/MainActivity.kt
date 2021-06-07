@@ -3,23 +3,19 @@ package com.jns.foodie.activity
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
-import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.coordinatorlayout.widget.CoordinatorLayout
-import androidx.core.app.ActivityCompat
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.amulyakhare.textdrawable.TextDrawable
 import com.google.android.material.navigation.NavigationView
 import com.jns.foodie.R
-import com.jns.foodie.adapter.HomeAdapter
 import com.jns.foodie.fragment.*
 
 class MainActivity : AppCompatActivity() {
@@ -113,7 +109,7 @@ class MainActivity : AppCompatActivity() {
                     supportFragmentManager.beginTransaction()
                         .replace(
                             R.id.frameLayout,
-                            HistoryFragment()
+                            HistoryFragment(navigationView,supportFragmentManager)
                         ).commit()
 
                     supportActionBar?.title = "Order History"

@@ -1,23 +1,22 @@
 package com.jns.foodie.fragment
 
-import android.app.Activity
 import android.content.Context
-import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.provider.Settings
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.RelativeLayout
 import android.widget.Toast
-import androidx.core.app.ActivityCompat
+import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.volley.Response
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
+import com.google.android.material.navigation.NavigationView
 import com.jns.foodie.R
 import com.jns.foodie.adapter.HistoryAdapter
 import com.jns.foodie.model.OrderHistory
@@ -26,10 +25,12 @@ import com.jns.foodie.utils.noInternetDialogBox
 import org.json.JSONException
 
 
-class HistoryFragment : Fragment() {
+class HistoryFragment(val navigationView: NavigationView,val supportFragmentManager: FragmentManager) : Fragment() {
 
     lateinit var recyclerViewOrderHistory: RecyclerView
     lateinit var historyProgressLayout: RelativeLayout
+    lateinit var noOrdersLayout: RelativeLayout
+    lateinit var btnBrowseRestaurant: Button
     lateinit var sharedPreferences:SharedPreferences
     lateinit var userId: String
     lateinit var historyAdapter: HistoryAdapter
@@ -46,7 +47,18 @@ class HistoryFragment : Fragment() {
 
         recyclerViewOrderHistory=view.findViewById(R.id.RecyclerViewOrderHistory)
         historyProgressLayout=view.findViewById(R.id.historyProgressLayout)
+        noOrdersLayout=view.findViewById(R.id.noOrdersLayout)
         layoutManager= LinearLayoutManager(activity)
+        btnBrowseRestaurant=view.findViewById(R.id.btnBrowseRestaurant)
+
+        btnBrowseRestaurant.setOnClickListener {
+            supportFragmentManager.beginTransaction()
+                    .replace(
+                            R.id.frameLayout,
+                            HomeFragment()
+                    ).commit()
+            navigationView.setCheckedItem(R.id.itemHome)
+        }
 
 
         return view
@@ -80,6 +92,9 @@ class HistoryFragment : Fragment() {
                             )
                             orderList.add(orderObject)
                         }
+                        if (orderList.isEmpty())
+                            noOrdersLayout.visibility=View.VISIBLE
+
                         historyAdapter=HistoryAdapter(activity as Context,orderList)
                         recyclerViewOrderHistory.adapter=historyAdapter
                         recyclerViewOrderHistory.layoutManager=layoutManager
