@@ -32,11 +32,11 @@ class HomeFragment() : Fragment() {
     lateinit var homeProgressBarLayout: RelativeLayout
     lateinit var cantFind: RelativeLayout
     lateinit var etSearch: EditText
-    lateinit var radioButtonView: View
 
     var restaurantList= arrayListOf<RestaurantEntity>()
     val filteredList = arrayListOf<RestaurantEntity>()
     var filtered=0
+    var checkId=0
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -172,6 +172,9 @@ class HomeFragment() : Fragment() {
                 )
 
                 val radioGroup = bottomSheetView.findViewById<RadioGroup>(R.id.groupradio)
+
+                if(checkId!=0)
+                    radioGroup.check(checkId)
                 radioGroup.setOnCheckedChangeListener { group, checkedId ->
                     if (checkedId == R.id.radio_high_to_low) {
                         Collections.sort(restaurantList1, costComparator)
@@ -187,6 +190,7 @@ class HomeFragment() : Fragment() {
                         restaurantList1.reverse()
                         homeAdapter.notifyDataSetChanged()
                     }
+                    checkId=checkedId
                     bottomSheetDialog.dismiss()
                 }
 

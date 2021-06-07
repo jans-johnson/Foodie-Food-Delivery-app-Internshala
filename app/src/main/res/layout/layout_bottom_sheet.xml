@@ -1,44 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/bottomSheetContainer"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <RadioGroup android:id="@+id/groupradio"
-        android:background="@drawable/bottom_sheet_background"
+    android:layout_height="match_parent"
+    android:background="@drawable/bottom_sheet_background"
+    android:orientation="vertical"
+    android:paddingBottom="10dp">
+
+    <TextView
+        android:id="@+id/textView13"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp">
+        android:paddingStart="20dp"
+        android:paddingTop="20dp"
+        android:paddingEnd="20dp"
+        android:text="Sort By:"
+        android:textColor="@color/PrimaryDark1"
+        android:textSize="20sp" />
 
-    <RadioButton
-        android:id="@+id/radio_low_to_high"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="10dp"
-        android:padding="4dp"
-        android:text="@string/cost_low_to_high"
-        android:textSize="16sp" />
+    <RadioGroup
+        android:id="@+id/groupradio"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-    <RadioButton
-        android:id="@+id/radio_high_to_low"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="5dp"
-        android:padding="4dp"
-        android:text="@string/cost_high_to_low"
-        android:textSize="16sp" />
+        <RadioButton
+            android:id="@+id/radio_low_to_high"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="10dp"
+            android:padding="4dp"
+            android:text="@string/cost_low_to_high"
+            android:textSize="16sp" />
 
-    <RadioButton
-        android:id="@+id/radio_rating"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="5dp"
-        android:padding="4dp"
-        android:text="@string/rating"
-        android:textSize="16sp" />
+        <RadioButton
+            android:id="@+id/radio_high_to_low"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="5dp"
+            android:padding="4dp"
+            android:text="@string/cost_high_to_low"
+            android:textSize="16sp" />
+
+        <RadioButton
+            android:id="@+id/radio_rating"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="5dp"
+            android:padding="4dp"
+            android:text="@string/rating"
+            android:textSize="16sp" />
     </RadioGroup>
 
 
