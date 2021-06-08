@@ -61,7 +61,7 @@ class OnBoardingActivity : AppCompatActivity() {
                 OnboardingItems(
                     R.drawable.ic_onboarding3,
                     "Sit Back And Relax",
-                "Wait a few minutes for our super fast delivery agents to deliver the food at your doorstep"
+                "Wait a few minutes for our agents to deliver the food at your doorstep"
                 )
             )
         )
