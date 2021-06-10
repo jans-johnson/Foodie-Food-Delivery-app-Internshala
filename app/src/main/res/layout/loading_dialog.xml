@@ -7,12 +7,9 @@
     android:paddingTop="20dp"
     android:paddingBottom="20dp">
 
-    <com.airbnb.lottie.LottieAnimationView
+    <ProgressBar
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:layout_gravity="center"
-        app:lottie_autoPlay="true"
-        app:lottie_loop="true"
-        app:lottie_rawRes="@raw/loading_animation" />
+        android:layout_gravity="center" />
 
 </LinearLayout>
