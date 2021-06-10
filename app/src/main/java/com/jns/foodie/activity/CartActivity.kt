@@ -1,7 +1,11 @@
 package com.jns.foodie.activity
 
 import android.app.AlertDialog
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.os.Handler
@@ -14,6 +18,8 @@ import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityCompat
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.volley.Response
@@ -82,6 +88,8 @@ class CartActivity : AppCompatActivity() {
                                     null
                                 )
                                 val builder = AlertDialog.Builder(this).setView(dialogView).show()
+                                builder.setCanceledOnTouchOutside(false)
+                                createNotification()
 
                                 //to redirect to mainActivity
                                 Handler().postDelayed({
@@ -155,5 +163,35 @@ class CartActivity : AppCompatActivity() {
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    fun createNotification() {
+        val notificationId = 1;
+        val channelId = "personal_notification"
+        val notificationBuilder = NotificationCompat.Builder(this, channelId)
+        notificationBuilder.setSmallIcon(R.drawable.logo)
+        notificationBuilder.setContentTitle("Order Placed")
+        notificationBuilder.setContentText("Your order has been successfully placed!")
+        notificationBuilder.setStyle(
+            NotificationCompat.BigTextStyle()
+                .bigText("Ordered from ${restaurantName}. Please pay Rs.${placeOrder.totalCost}")
+        )
+
+        notificationBuilder.priority = NotificationCompat.PRIORITY_DEFAULT
+        val notificationManagerCompat = NotificationManagerCompat.from(this)
+        notificationManagerCompat.notify(notificationId, notificationBuilder.build())
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val name = "Order Placed"
+            val description = "Your order has been successfully placed!"
+            val importance = NotificationManager.IMPORTANCE_DEFAULT
+            val notificationChannel = NotificationChannel(channelId, name, importance)
+            notificationChannel.description = description
+
+            val notificationManager =
+                (getSystemService(Context.NOTIFICATION_SERVICE)) as NotificationManager
+
+            notificationManager.createNotificationChannel(notificationChannel)
+        }
     }
 }
