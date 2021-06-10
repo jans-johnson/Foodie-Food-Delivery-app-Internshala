@@ -169,7 +169,7 @@ class CartActivity : AppCompatActivity() {
         val notificationId = 1;
         val channelId = "personal_notification"
         val notificationBuilder = NotificationCompat.Builder(this, channelId)
-        notificationBuilder.setSmallIcon(R.drawable.logo)
+        notificationBuilder.setSmallIcon(R.mipmap.ic_logo)
         notificationBuilder.setContentTitle("Order Placed")
         notificationBuilder.setContentText("Your order has been successfully placed!")
         notificationBuilder.setStyle(
