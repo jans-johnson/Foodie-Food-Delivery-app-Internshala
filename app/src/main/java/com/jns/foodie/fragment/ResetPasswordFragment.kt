@@ -1,5 +1,6 @@
 package com.jns.foodie.fragment
 
+import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -16,6 +17,7 @@ import com.android.volley.toolbox.Volley
 import com.jns.foodie.R
 import com.jns.foodie.activity.LoginActivity
 import com.jns.foodie.utils.ConnectionManager
+import com.jns.foodie.utils.noInternetDialogBox
 import org.json.JSONException
 import org.json.JSONObject
 import java.lang.reflect.Method
@@ -50,6 +52,10 @@ class ResetPasswordFragment(val mobileNumber: String) : Fragment() {
             } else {
                 if (ConnectionManager().checkConnectivity(activity as Context)) {
                     try {
+                        val dialogView = LayoutInflater.from(activity).inflate(R.layout.loading_dialog, null)
+                        val builder = AlertDialog.Builder(activity).setView(dialogView).show()
+                        builder.setCanceledOnTouchOutside(false)
+
                         val details = JSONObject()
                         details.put("mobile_number", mobileNumber)
                         details.put("password", etPasswordFP.text.toString())
@@ -61,6 +67,7 @@ class ResetPasswordFragment(val mobileNumber: String) : Fragment() {
 
                         val jsonObjectRequest = object : JsonObjectRequest(Method.POST, url, details,
                                 Response.Listener {
+                                    builder.dismiss()
                                     val response = it.getJSONObject("data")
                                     if (response.getBoolean("success")) {
                                         Toast.makeText(activity, "Password Changed Successfully", Toast.LENGTH_SHORT).show()
@@ -73,6 +80,7 @@ class ResetPasswordFragment(val mobileNumber: String) : Fragment() {
                                     }
                                 },
                                 Response.ErrorListener {
+                                    builder.dismiss()
                                     Toast.makeText(activity, "Unexpected Error Occured", Toast.LENGTH_SHORT).show()
                                 }) {
                             override fun getHeaders(): MutableMap<String, String> {
@@ -86,6 +94,10 @@ class ResetPasswordFragment(val mobileNumber: String) : Fragment() {
                     }catch (e: JSONException) {
                         Toast.makeText(activity, "Some unexpected error occurred!!", Toast.LENGTH_SHORT).show()
                     }
+                }else {
+
+                    val alterDialog = noInternetDialogBox(activity as Context)
+                    alterDialog.show()
                 }
             }
         }

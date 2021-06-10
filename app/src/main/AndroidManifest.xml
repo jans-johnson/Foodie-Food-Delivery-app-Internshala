@@ -14,7 +14,10 @@
         android:roundIcon="@mipmap/ic_logo_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Foodie">
-        <activity android:name=".activity.OnBoardingActivity"></activity>
+        <activity android:name=".activity.OnBoardingActivity"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="portrait">
+        </activity>
         <activity
             android:name=".activity.CartActivity"
             android:configChanges="orientation|screenSize"

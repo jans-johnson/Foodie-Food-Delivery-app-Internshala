@@ -1,5 +1,6 @@
 package com.jns.foodie.fragment
 
+import android.app.AlertDialog
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
@@ -16,6 +17,7 @@ import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
 import com.jns.foodie.R
 import com.jns.foodie.utils.ConnectionManager
+import com.jns.foodie.utils.noInternetDialogBox
 import org.json.JSONException
 import org.json.JSONObject
 
@@ -41,9 +43,9 @@ class ForgotPasswordFragment(val fm: FragmentManager) : Fragment() {
 
             if(etPhoneFP.text.length<10)
                 etPhoneFP.error="Enter a valid Mobile Number"
-            else
+            else {
                 sendRequest()
-
+            }
         }
 
         return view
@@ -53,6 +55,10 @@ class ForgotPasswordFragment(val fm: FragmentManager) : Fragment() {
     {
         if(ConnectionManager().checkConnectivity(activity as Context))
         {
+            val dialogView = LayoutInflater.from(activity).inflate(R.layout.loading_dialog, null)
+            val builder = AlertDialog.Builder(activity).setView(dialogView).show()
+            builder.setCanceledOnTouchOutside(false)
+
             val details = JSONObject()
 
             details.put("mobile_number",etPhoneFP.text)
@@ -67,6 +73,7 @@ class ForgotPasswordFragment(val fm: FragmentManager) : Fragment() {
                 details,
             Response.Listener {
                 try {
+                    builder.dismiss()
                     val response=it.getJSONObject("data")
                     val success = response.getBoolean("success")
                     if (success)
@@ -83,7 +90,7 @@ class ForgotPasswordFragment(val fm: FragmentManager) : Fragment() {
                         }
                         else
                         {
-                            Toast.makeText(activity,"OTP already sent Once", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(activity,"OTP already sent", Toast.LENGTH_SHORT).show()
                             fm.beginTransaction()
                                 .replace(
                                     R.id.frameForgotPassword,
@@ -106,10 +113,12 @@ class ForgotPasswordFragment(val fm: FragmentManager) : Fragment() {
                 }
                 catch (e: JSONException)
                 {
+                    builder.dismiss()
                     Toast.makeText(activity, "Some unexpected error occurred!!", Toast.LENGTH_SHORT).show()
                 }
             },
             Response.ErrorListener {
+                builder.dismiss()
                 Toast.makeText(activity, "Some Error occurred!!", Toast.LENGTH_SHORT).show()
             }) {
                 override fun getHeaders(): MutableMap<String, String> {
@@ -121,6 +130,11 @@ class ForgotPasswordFragment(val fm: FragmentManager) : Fragment() {
             }
             queue.add(jsonObjectRequest)
     }
+        else {
+
+            val alterDialog = noInternetDialogBox(activity as Context)
+            alterDialog.show()
+        }
 
 }
 }
