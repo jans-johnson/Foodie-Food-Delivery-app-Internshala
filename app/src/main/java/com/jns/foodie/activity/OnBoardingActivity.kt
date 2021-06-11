@@ -4,19 +4,15 @@ import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.ViewGroup
 import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
-import androidx.recyclerview.widget.RecyclerView
-import androidx.viewpager.widget.ViewPager
 import androidx.viewpager2.widget.ViewPager2
 import com.jns.foodie.R
 import com.jns.foodie.adapter.OnboardingItemsAdapter
 import com.jns.foodie.model.OnboardingItems
-import java.text.FieldPosition
 
 class OnBoardingActivity : AppCompatActivity() {
 
