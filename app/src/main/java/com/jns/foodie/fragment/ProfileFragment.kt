@@ -11,6 +11,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.amulyakhare.textdrawable.TextDrawable
 import com.jns.foodie.R
+import java.util.*
 
 
 class ProfileFragment() : Fragment() {
@@ -26,7 +27,6 @@ class ProfileFragment() : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         val view= inflater.inflate(R.layout.fragment_profile, container, false)
 
         ivProfile=view.findViewById(R.id.ivProfile)
@@ -42,7 +42,8 @@ class ProfileFragment() : Fragment() {
         tvProfileMobile.text=sharedPreferences?.getString("mobile_number","mobile")
         tvProfileAddress.text=sharedPreferences?.getString("address","address")
 
-        val textDrawable=TextDrawable.builder().buildRound(tvProfileName.text[0].toString().toUpperCase(), Color.rgb(11, 94, 74))
+        val textDrawable=TextDrawable.builder().buildRound(tvProfileName.text[0].toString()
+            .toUpperCase(Locale.ROOT), Color.rgb(11, 94, 74))
         ivProfile.setImageDrawable(textDrawable)
 
         return view

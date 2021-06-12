@@ -1,13 +1,12 @@
 package com.jns.foodie.adapter
 
-import android.content.Context
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import com.jns.foodie.fragment.LoginFragment
 import com.jns.foodie.fragment.SignupFragment
 
-class LoginAdapter(private val myContext: Context,fm:FragmentManager,var totalTabs:Int):FragmentPagerAdapter(fm) {
+class LoginAdapter(fm: FragmentManager, private var totalTabs: Int):FragmentPagerAdapter(fm) {
     override fun getCount(): Int {
         return totalTabs
     }

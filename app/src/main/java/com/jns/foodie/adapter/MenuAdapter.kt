@@ -18,10 +18,10 @@ import com.jns.foodie.model.PlaceOrder
 import com.jns.foodie.model.RestaurantMenu
 
 class MenuAdapter (val context: Context,
-                   val restaurantId: String,
-                   val restaurantName: String,
-                   val buttonProceedToCart: Button,
-                   val restaurantMenu: ArrayList<RestaurantMenu>) : RecyclerView.Adapter<MenuAdapter.ViewHolderMenu>(){
+                   private val restaurantId: String,
+                   private val restaurantName: String,
+                   private val buttonProceedToCart: Button,
+                   private val restaurantMenu: ArrayList<RestaurantMenu>) : RecyclerView.Adapter<MenuAdapter.ViewHolderMenu>(){
 
     var itemSelectedCount: Int = 0
     var totalCost:Int=0
@@ -71,7 +71,7 @@ class MenuAdapter (val context: Context,
                 val cartItem=CartItems(restaurantMenuItem.name,restaurantMenuItem.cost_for_one)
                 cartListItems.remove(cartItem)
 
-                holder.btnAddToCart.text = "Add"
+                "Add".also { holder.btnAddToCart.text = it }
                 holder.btnAddToCart.setBackgroundColor(Color.rgb(31, 171, 137))
 
             } else {
@@ -84,7 +84,7 @@ class MenuAdapter (val context: Context,
                 val cartItem=CartItems(restaurantMenuItem.name,restaurantMenuItem.cost_for_one)
                 cartListItems.add(cartItem)
 
-                holder.btnAddToCart.text = "Remove"
+                "Remove".also { holder.btnAddToCart.text = it }
                 holder.btnAddToCart.setBackgroundColor( Color.rgb(255, 196, 0))
             }
 
@@ -97,7 +97,7 @@ class MenuAdapter (val context: Context,
 
         holder.tvSerialNumber.text = (position + 1).toString()
         holder.tvItemName.text = restaurantMenuItem.name
-        holder.tvItemPrice.text = "Rs. ${restaurantMenuItem.cost_for_one}"
+        "Rs. ${restaurantMenuItem.cost_for_one}".also { holder.tvItemPrice.text = it }
     }
 
     fun getSelectedItemCount(): Int {

@@ -11,7 +11,7 @@ import com.jns.foodie.R
 import com.jns.foodie.model.CartItems
 import com.jns.foodie.model.OrderHistory
 
-class HistoryAdapter(val context: Context,val orderList:ArrayList<OrderHistory>) : RecyclerView.Adapter<HistoryAdapter.ViewHolderHistory>() {
+class HistoryAdapter(val context: Context, private val orderList:ArrayList<OrderHistory>) : RecyclerView.Adapter<HistoryAdapter.ViewHolderHistory>() {
 
     class ViewHolderHistory(view: View) : RecyclerView.ViewHolder(view) {
         val tvRestaurantName: TextView = view.findViewById(R.id.tvRestaurantNameOrderHistory)
@@ -32,11 +32,11 @@ class HistoryAdapter(val context: Context,val orderList:ArrayList<OrderHistory>)
 
     override fun onBindViewHolder(holder: ViewHolderHistory, position: Int) {
 
-        holder.tvRestaurantName.text = orderList.get(position).restaurant_name
-        holder.tvOrderDate.text = orderList.get(position).order_placed_at.split(" ")[0]
-        holder.tvTotalCost.text="Rs ${orderList.get(position).total_cost}"
+        holder.tvRestaurantName.text = orderList[position].restaurant_name
+        holder.tvOrderDate.text = orderList[position].order_placed_at.split(" ")[0]
+        "Rs ${orderList[position].total_cost}".also { holder.tvTotalCost.text = it }
 
-        val itemJsonList = orderList.get(position).food_items
+        val itemJsonList = orderList[position].food_items
         val itemList = ArrayList<CartItems>()
 
         for (i in 0 until itemJsonList.length()) {

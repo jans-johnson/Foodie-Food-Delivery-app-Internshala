@@ -36,8 +36,8 @@ import org.json.JSONObject
 
 class CartActivity : AppCompatActivity() {
 
-    lateinit var toolbarCart:Toolbar
-    lateinit var tvRestaurantName: TextView
+    private lateinit var toolbarCart:Toolbar
+    private lateinit var tvRestaurantName: TextView
     lateinit var tvTotal: TextView
     lateinit var cartProgressLayout: RelativeLayout
     lateinit var recyclerViewCart: RecyclerView
@@ -115,7 +115,7 @@ class CartActivity : AppCompatActivity() {
                 }
                 catch (e: JSONException)
                 {
-                    Toast.makeText(this, "Some Error Occured", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Some Error Occurred", Toast.LENGTH_SHORT).show()
                 }
             }
             else {
@@ -134,7 +134,7 @@ class CartActivity : AppCompatActivity() {
         cartListItems=Gson().fromJson(intent.getStringExtra("cartItems"), myType)
 
         tvRestaurantName.text=restaurantName
-        tvTotal.text="Total Rs. ${placeOrder.totalCost}"
+        "Total Rs. ${placeOrder.totalCost}".also { tvTotal.text = it }
 
         setToolBar()
 
@@ -145,7 +145,7 @@ class CartActivity : AppCompatActivity() {
         recyclerViewCart.adapter=cartAdapter
     }
 
-    fun setToolBar() {
+    private fun setToolBar() {
         setSupportActionBar(toolbarCart)
         supportActionBar?.title = "My Cart"
         supportActionBar?.setHomeButtonEnabled(true)
@@ -163,7 +163,7 @@ class CartActivity : AppCompatActivity() {
     }
 
     fun createNotification() {
-        val notificationId = 1;
+        val notificationId = 1
         val channelId = "personal_notification"
         val notificationBuilder = NotificationCompat.Builder(this, channelId)
         notificationBuilder.setSmallIcon(R.mipmap.ic_logo)

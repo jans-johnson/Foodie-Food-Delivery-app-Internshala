@@ -31,7 +31,6 @@ class ResetPasswordFragment(val mobileNumber: String) : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         val view= inflater.inflate(R.layout.fragment_reset_password, container, false)
 
         etOtp=view.findViewById(R.id.etOtp)
@@ -44,7 +43,7 @@ class ResetPasswordFragment(val mobileNumber: String) : Fragment() {
                 etOtp.error = "Enter OTP to continue"
             } else if (etPasswordFP.text.length < 5)
                 etPasswordFP.error = "Password Length Should be more than 5"
-            else if (!etPasswordFP.text.toString().equals(etCPasswordFP.text.toString())) {
+            else if (etPasswordFP.text.toString() != etCPasswordFP.text.toString()) {
                 etCPasswordFP.error = "Passwords Do not match"
             } else {
                 if (ConnectionManager().checkConnectivity(activity as Context)) {
@@ -78,7 +77,7 @@ class ResetPasswordFragment(val mobileNumber: String) : Fragment() {
                                 },
                                 Response.ErrorListener {
                                     builder.dismiss()
-                                    Toast.makeText(activity, "Unexpected Error Occured", Toast.LENGTH_SHORT).show()
+                                    Toast.makeText(activity, "Unexpected Error Occurred", Toast.LENGTH_SHORT).show()
                                 }) {
                             override fun getHeaders(): MutableMap<String, String> {
                                 val headers = HashMap<String, String>()

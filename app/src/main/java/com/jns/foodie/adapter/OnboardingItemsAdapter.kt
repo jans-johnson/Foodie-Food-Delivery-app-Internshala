@@ -9,14 +9,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.jns.foodie.R
 import com.jns.foodie.model.OnboardingItems
 
-class OnboardingItemsAdapter (private val onboardingItems: List<OnboardingItems>):
+class OnboardingItemsAdapter (private val onBoardingItems: List<OnboardingItems>):
     RecyclerView.Adapter<OnboardingItemsAdapter.OnboardingItemViewHolder>() {
 
     class OnboardingItemViewHolder(view:View) : RecyclerView.ViewHolder(view)
     {
-        val ivOnBoarding=view.findViewById<ImageView>(R.id.ivOnBoarding)
-        val tvOnBoardingTitle=view.findViewById<TextView>(R.id.tvOnBoardingTitle)
-        val tvOnBoardingDescription=view.findViewById<TextView>(R.id.tvOnBoardingDescription)
+        val ivOnBoarding: ImageView =view.findViewById(R.id.ivOnBoarding)
+        val tvOnBoardingTitle: TextView =view.findViewById(R.id.tvOnBoardingTitle)
+        val tvOnBoardingDescription: TextView =view.findViewById(R.id.tvOnBoardingDescription)
 
     }
 
@@ -31,12 +31,12 @@ class OnboardingItemsAdapter (private val onboardingItems: List<OnboardingItems>
     }
 
     override fun onBindViewHolder(holder: OnboardingItemViewHolder, position: Int) {
-        holder.ivOnBoarding.setImageResource(onboardingItems[position].onboardingImage)
-        holder.tvOnBoardingTitle.text=onboardingItems[position].title
-        holder.tvOnBoardingDescription.text=onboardingItems[position].description
+        holder.ivOnBoarding.setImageResource(onBoardingItems[position].onboardingImage)
+        holder.tvOnBoardingTitle.text=onBoardingItems[position].title
+        holder.tvOnBoardingDescription.text=onBoardingItems[position].description
     }
 
     override fun getItemCount(): Int {
-        return onboardingItems.size
+        return onBoardingItems.size
     }
 }

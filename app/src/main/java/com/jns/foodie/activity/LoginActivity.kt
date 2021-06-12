@@ -23,7 +23,7 @@ class LoginActivity : AppCompatActivity() {
         tlLogin.addTab(tlLogin.newTab().setText("SIGNUP"))
         tlLogin.tabGravity=TabLayout.GRAVITY_FILL
 
-        val adapter=LoginAdapter(this,supportFragmentManager,tlLogin.tabCount)
+        val adapter=LoginAdapter(supportFragmentManager, tlLogin.tabCount)
         vpLogin.adapter=adapter
 
         vpLogin.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(tlLogin))
@@ -43,6 +43,7 @@ class LoginActivity : AppCompatActivity() {
             }
         })
     }
+    //for calling from the Login Fragment, if the user clicks on Sign Up TextView
     fun selectSignup()
     {
         val tab = tlLogin.getTabAt(1)

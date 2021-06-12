@@ -16,8 +16,8 @@ import com.jns.foodie.model.OnboardingItems
 
 class OnBoardingActivity : AppCompatActivity() {
 
-    lateinit var onboardingItemsAdapter: OnboardingItemsAdapter
-    lateinit var llIndicators: LinearLayout
+    private lateinit var onBoardingItemsAdapter: OnboardingItemsAdapter
+    private lateinit var llIndicators: LinearLayout
     lateinit var ivNext: ImageView
     lateinit var btnGetStarted: Button
 
@@ -30,7 +30,7 @@ class OnBoardingActivity : AppCompatActivity() {
         val onBoardingViewPager=findViewById<ViewPager2>(R.id.onBoardingViewPager)
 
         ivNext.setOnClickListener{
-            if (onBoardingViewPager.currentItem+1<onboardingItemsAdapter.itemCount)
+            if (onBoardingViewPager.currentItem+1<onBoardingItemsAdapter.itemCount)
             {
                 onBoardingViewPager.currentItem+=1
             }
@@ -42,7 +42,7 @@ class OnBoardingActivity : AppCompatActivity() {
             goToLogin()
         }
 
-        onboardingItemsAdapter= OnboardingItemsAdapter(
+        onBoardingItemsAdapter= OnboardingItemsAdapter(
             listOf(
                 OnboardingItems(
                     R.drawable.ic_onboarding1,
@@ -61,7 +61,7 @@ class OnBoardingActivity : AppCompatActivity() {
                 )
             )
         )
-        onBoardingViewPager.adapter=onboardingItemsAdapter
+        onBoardingViewPager.adapter=onBoardingItemsAdapter
         onBoardingViewPager.registerOnPageChangeCallback(object :
         ViewPager2.OnPageChangeCallback(){
             override fun onPageSelected(position: Int) {
@@ -70,7 +70,7 @@ class OnBoardingActivity : AppCompatActivity() {
             }
         })
 
-        val indicators= arrayOfNulls<ImageView>(onboardingItemsAdapter.itemCount)
+        val indicators= arrayOfNulls<ImageView>(onBoardingItemsAdapter.itemCount)
         val layoutParams=LinearLayout.LayoutParams(WRAP_CONTENT, WRAP_CONTENT)
         layoutParams.setMargins(8,0,8,0)
 

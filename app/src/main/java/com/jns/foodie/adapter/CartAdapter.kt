@@ -22,8 +22,8 @@ class CartAdapter(val cartItems:ArrayList<CartItems>) : RecyclerView.Adapter<Car
     }
 
     override fun onBindViewHolder(holder: ViewHolderCart, position: Int) {
-        holder.tvFoodItem.text=cartItems.get(position).itemName
-        holder.tvPrice.text=cartItems.get(position).itemPrice
+        holder.tvFoodItem.text= cartItems[position].itemName
+        holder.tvPrice.text= cartItems[position].itemPrice
     }
 
     override fun getItemCount(): Int {

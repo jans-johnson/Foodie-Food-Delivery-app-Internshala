@@ -118,7 +118,7 @@ class HistoryFragment(private val navigationView: NavigationView, private val su
             }
             catch (e:JSONException)
             {
-                Toast.makeText(activity,"Some Error Occured",Toast.LENGTH_SHORT).show()
+                Toast.makeText(activity,"Some Error Occurred",Toast.LENGTH_SHORT).show()
             }
         }
         else {

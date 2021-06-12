@@ -17,6 +17,7 @@ import com.amulyakhare.textdrawable.TextDrawable
 import com.google.android.material.navigation.NavigationView
 import com.jns.foodie.R
 import com.jns.foodie.fragment.*
+import java.util.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -30,7 +31,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var ivDashboard: ImageView
     lateinit var sharedPreferences: SharedPreferences
 
-    var previousMenuItemSelected: MenuItem? = null
+    var previousMenuItemSelected: MenuItem? = null              //to keep the navigationMenu item checked
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -56,7 +57,9 @@ class MainActivity : AppCompatActivity() {
         tvDashboardUser.text=sharedPreferences.getString("name","UserName")
         tvDashboardMobile.text=sharedPreferences.getString("mobile_number","9999999999")
 
-        val textDrawable=TextDrawable.builder().buildRound(tvDashboardUser.text[0].toString().toUpperCase(),R.color.PrimaryDark1)
+        //for the profile image on the dashboard (using Text Drawable Library)
+        val textDrawable=TextDrawable.builder().buildRound(tvDashboardUser.text[0].toString()
+            .toUpperCase(Locale.ROOT),R.color.PrimaryDark1)
         ivDashboard.setImageDrawable(textDrawable)
 
 
@@ -169,14 +172,14 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun setToolBar() {
+    private fun setToolBar() {
         setSupportActionBar(toolbar)
         supportActionBar?.title = "All Restaurants"
         supportActionBar?.setHomeButtonEnabled(true)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
-    fun openDashboard() {
+    private fun openDashboard() {
         supportFragmentManager.beginTransaction().replace(
             R.id.frameLayout,
             HomeFragment()

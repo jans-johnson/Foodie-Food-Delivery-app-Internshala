@@ -22,7 +22,7 @@ class ForgotPasswordActivity : AppCompatActivity() {
 
         setSupportActionBar(tbForgotPassword)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.setTitle("Forgot Password")
+        supportActionBar?.title = "Forgot Password"
 
         supportFragmentManager.beginTransaction()
             .replace(

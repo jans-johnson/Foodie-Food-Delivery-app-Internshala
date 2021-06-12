@@ -19,6 +19,7 @@ import com.jns.foodie.activity.ForgotPasswordActivity
 import com.jns.foodie.activity.LoginActivity
 import com.jns.foodie.activity.MainActivity
 import com.jns.foodie.utils.ConnectionManager
+import com.jns.foodie.utils.noInternetDialogBox
 import org.json.JSONException
 import org.json.JSONObject
 
@@ -35,7 +36,6 @@ class LoginFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         val view=inflater.inflate(R.layout.fragment_login, container, false)
 
         etMobile=view.findViewById(R.id.etMobile)
@@ -65,7 +65,7 @@ class LoginFragment : Fragment() {
 
         return view
     }
-    fun loginUser()
+    private fun loginUser()
     {
         val sharedPreferences= activity?.getSharedPreferences(
             "UserDetails",
@@ -139,6 +139,10 @@ class LoginFragment : Fragment() {
                     }
                 }
                 queue.add(jsonObjectRequest)
-            }
+            }else {
+
+            val alterDialog = noInternetDialogBox(activity as Context)
+            alterDialog.show()
+        }
         }
     }

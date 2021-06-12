@@ -34,9 +34,9 @@ class HomeFragment() : Fragment() {
     lateinit var etSearch: EditText
 
     var restaurantList= arrayListOf<RestaurantEntity>()
-    val filteredList = arrayListOf<RestaurantEntity>()
-    var filtered=0
-    var checkId=0
+    private val filteredList = arrayListOf<RestaurantEntity>()  //for adjusting the list, when searchbar is used
+    var filtered=0                                              //a flag for checking if searchbar was used
+    var checkId=0                                               //to store the checked item inside sort menu
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {

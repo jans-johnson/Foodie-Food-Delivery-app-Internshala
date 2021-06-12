@@ -53,7 +53,7 @@ class RestaurantMenuActivity : AppCompatActivity() {
         {
             ivFavIcon.setImageResource(R.drawable.ic_favourite_fill)
         }
-        tvRating.text="Rated $restaurantRating"
+        "Rated $restaurantRating".also { tvRating.text = it }
 
         setToolBar()
 
@@ -101,7 +101,7 @@ class RestaurantMenuActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-    fun setToolBar() {
+    private fun setToolBar() {
         setSupportActionBar(toolbarMenu)
         supportActionBar?.title = restaurantName
         supportActionBar?.setHomeButtonEnabled(true)

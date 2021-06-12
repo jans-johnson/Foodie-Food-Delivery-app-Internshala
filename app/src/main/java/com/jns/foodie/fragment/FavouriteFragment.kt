@@ -15,6 +15,7 @@ import com.jns.foodie.R
 import com.jns.foodie.adapter.HomeAdapter
 import com.jns.foodie.database.RestaurantDatabase
 import com.jns.foodie.database.RestaurantEntity
+import java.lang.ref.WeakReference
 
 
 class FavouriteFragment : Fragment() {
@@ -41,7 +42,8 @@ class FavouriteFragment : Fragment() {
     }
 
     override fun onResume() {
-        restaurantInfoList= RetrieveFavourites(activity as Context).execute().get() as ArrayList<RestaurantEntity>
+
+        restaurantInfoList= RetrieveFavourites(WeakReference(activity as Context)).execute().get() as ArrayList<RestaurantEntity>
 
         if (restaurantInfoList.isEmpty())
             noFavouriteLayout.visibility=View.VISIBLE
@@ -57,10 +59,11 @@ class FavouriteFragment : Fragment() {
         super.onResume()
     }
 
-    class RetrieveFavourites(val context: Context): AsyncTask<Void,Void,List<RestaurantEntity>>() {
+    //weakReference to prevent Memory Leak
+    private class RetrieveFavourites(val context: WeakReference<Context>): AsyncTask<Void,Void,List<RestaurantEntity>>() {
         override fun doInBackground(vararg p0: Void?): List<RestaurantEntity> {
 
-            val db = Room.databaseBuilder(context, RestaurantDatabase::class.java, "restaurant-db").build()
+            val db = Room.databaseBuilder(context.get()!!, RestaurantDatabase::class.java, "restaurant-db").build()
 
             return db.restaurantDao().getRestaurants()
 

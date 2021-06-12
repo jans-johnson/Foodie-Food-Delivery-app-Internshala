@@ -127,7 +127,7 @@ class ForgotPasswordFragment(val fm: FragmentManager) : Fragment() {
                 }
             }
             queue.add(jsonObjectRequest)
-    }
+        }
         else {
 
             val alterDialog = noInternetDialogBox(activity as Context)

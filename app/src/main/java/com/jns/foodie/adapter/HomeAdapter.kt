@@ -14,6 +14,7 @@ import com.jns.foodie.activity.RestaurantMenuActivity
 import com.jns.foodie.database.RestaurantDatabase
 import com.jns.foodie.database.RestaurantEntity
 import com.squareup.picasso.Picasso
+import java.lang.ref.WeakReference
 
 class HomeAdapter(val context: Context, var itemList: ArrayList<RestaurantEntity>): RecyclerView.Adapter<HomeAdapter.ViewHolderDashboard>() {
 
@@ -42,15 +43,15 @@ class HomeAdapter(val context: Context, var itemList: ArrayList<RestaurantEntity
 
         val restaurant=itemList[position]
         val restaurantEntity=RestaurantEntity(restaurant.restaurantId,restaurant.restaurantName,restaurant.restaurantRating,restaurant.restaurantCost,restaurant.restaurantImage)
-        var fav:Boolean=false
+        var fav: Boolean
 
         holder.tvCardName.text=restaurant.restaurantName
-        holder.tvCardPrice.text="₹ "+restaurant.restaurantCost+"/person"
+        ("₹ "+restaurant.restaurantCost+"/person").also { holder.tvCardPrice.text = it }
         holder.tvCardRating.text=restaurant.restaurantRating
 
         Picasso.get().load(restaurant.restaurantImage).error(R.drawable.restaurant_default).into(holder.ivCardRestaurant)
 
-        if(DBAsyncTask( context,restaurantEntity,1 ).execute().get()) {
+        if(DBAsyncTask(WeakReference(context),restaurantEntity,1 ).execute().get()) {
             holder.ivCardFavorite.setImageResource(R.drawable.ic_favourite_fill)
             fav=true
         }
@@ -69,8 +70,8 @@ class HomeAdapter(val context: Context, var itemList: ArrayList<RestaurantEntity
 
 
         holder.ivCardFavorite.setOnClickListener{
-            if(!DBAsyncTask( context,restaurantEntity,1 ).execute().get()){
-                val result=DBAsyncTask(context,restaurantEntity,2).execute().get()
+            if(!DBAsyncTask( WeakReference(context),restaurantEntity,1 ).execute().get()){
+                val result=DBAsyncTask(WeakReference(context),restaurantEntity,2).execute().get()
 
                 if (result) {
                     holder.ivCardFavorite.setImageResource(R.drawable.ic_favourite_fill)
@@ -81,7 +82,7 @@ class HomeAdapter(val context: Context, var itemList: ArrayList<RestaurantEntity
             }
             //if it was already added to favourites
             else {
-                val result = DBAsyncTask(context, restaurantEntity, 3).execute().get()
+                val result = DBAsyncTask(WeakReference(context), restaurantEntity, 3).execute().get()
                 if (result) {
                     holder.ivCardFavorite.setImageResource(R.drawable.ic_favourite_red_border)
                     fav=false
@@ -99,10 +100,10 @@ class HomeAdapter(val context: Context, var itemList: ArrayList<RestaurantEntity
     }
 
 
-    class DBAsyncTask(val context: Context, val restaurantEntity: RestaurantEntity, val mode: Int) :
+    class DBAsyncTask(val context: WeakReference<Context>, private val restaurantEntity: RestaurantEntity, private val mode: Int) :
             AsyncTask<Void, Void, Boolean>() {
 
-        val db = Room.databaseBuilder(context, RestaurantDatabase::class.java, "restaurant-db").build()
+        val db = Room.databaseBuilder(context.get()!!, RestaurantDatabase::class.java, "restaurant-db").build()
 
         override fun doInBackground(vararg p0: Void?): Boolean {
 

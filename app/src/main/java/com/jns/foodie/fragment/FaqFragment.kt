@@ -47,13 +47,13 @@ class FaqFragment : Fragment() {
             {
                 tvFAQ1.tag="open"
                 tvFAQA1.visibility=View.VISIBLE
-                tvFAQ1.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.ic_arrow_up,0);
+                tvFAQ1.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.ic_arrow_up,0)
             }
             else
             {
                 tvFAQ1.tag="closed"
                 tvFAQA1.visibility=View.GONE
-                tvFAQ1.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.ic_arrow_down, 0);
+                tvFAQ1.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.ic_arrow_down, 0)
             }
         }
 
@@ -62,13 +62,13 @@ class FaqFragment : Fragment() {
             {
                 tvFAQ2.tag="open"
                 tvFAQA2.visibility=View.VISIBLE
-                tvFAQ2.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.ic_arrow_up,0);
+                tvFAQ2.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.ic_arrow_up,0)
             }
             else
             {
                 tvFAQ2.tag="closed"
                 tvFAQA2.visibility=View.GONE
-                tvFAQ2.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.ic_arrow_down, 0);
+                tvFAQ2.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.ic_arrow_down, 0)
             }
         }
 
@@ -77,13 +77,13 @@ class FaqFragment : Fragment() {
             {
                 tvFAQ3.tag="open"
                 tvFAQA3.visibility=View.VISIBLE
-                tvFAQ3.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.ic_arrow_up,0);
+                tvFAQ3.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.ic_arrow_up,0)
             }
             else
             {
                 tvFAQ3.tag="closed"
                 tvFAQA3.visibility=View.GONE
-                tvFAQ3.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.ic_arrow_down, 0);
+                tvFAQ3.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.ic_arrow_down, 0)
             }
         }
 
@@ -92,13 +92,13 @@ class FaqFragment : Fragment() {
             {
                 tvFAQ4.tag="open"
                 tvFAQA4.visibility=View.VISIBLE
-                tvFAQ4.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.ic_arrow_up,0);
+                tvFAQ4.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.ic_arrow_up,0)
             }
             else
             {
                 tvFAQ4.tag="closed"
                 tvFAQA4.visibility=View.GONE
-                tvFAQ4.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.ic_arrow_down, 0);
+                tvFAQ4.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.ic_arrow_down, 0)
             }
         }
 
@@ -107,13 +107,13 @@ class FaqFragment : Fragment() {
             {
                 tvFAQ5.tag="open"
                 tvFAQA5.visibility=View.VISIBLE
-                tvFAQ5.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.ic_arrow_up,0);
+                tvFAQ5.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.ic_arrow_up,0)
             }
             else
             {
                 tvFAQ5.tag="closed"
                 tvFAQA5.visibility=View.GONE
-                tvFAQ5.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.ic_arrow_down, 0);
+                tvFAQ5.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.ic_arrow_down, 0)
             }
         }
 
@@ -122,13 +122,13 @@ class FaqFragment : Fragment() {
             {
                 tvFAQ6.tag="open"
                 tvFAQA6.visibility=View.VISIBLE
-                tvFAQ6.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.ic_arrow_up,0);
+                tvFAQ6.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.ic_arrow_up,0)
             }
             else
             {
                 tvFAQ6.tag="closed"
                 tvFAQA6.visibility=View.GONE
-                tvFAQ6.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.ic_arrow_down, 0);
+                tvFAQ6.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.ic_arrow_down, 0)
             }
         }
 
@@ -137,13 +137,13 @@ class FaqFragment : Fragment() {
             {
                 tvFAQ7.tag="open"
                 tvFAQA7.visibility=View.VISIBLE
-                tvFAQ7.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.ic_arrow_up,0);
+                tvFAQ7.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.ic_arrow_up,0)
             }
             else
             {
                 tvFAQ7.tag="closed"
                 tvFAQA7.visibility=View.GONE
-                tvFAQ7.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.ic_arrow_down, 0);
+                tvFAQ7.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.ic_arrow_down, 0)
             }
         }
 
@@ -152,13 +152,13 @@ class FaqFragment : Fragment() {
             {
                 tvFAQ8.tag="open"
                 tvFAQA8.visibility=View.VISIBLE
-                tvFAQ8.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.ic_arrow_up,0);
+                tvFAQ8.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.ic_arrow_up,0)
             }
             else
             {
                 tvFAQ8.tag="closed"
                 tvFAQA8.visibility=View.GONE
-                tvFAQ8.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.ic_arrow_down, 0);
+                tvFAQ8.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.ic_arrow_down, 0)
             }
         }
 
