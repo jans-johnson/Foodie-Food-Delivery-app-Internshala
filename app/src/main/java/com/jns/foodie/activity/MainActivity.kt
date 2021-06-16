@@ -112,7 +112,7 @@ class MainActivity : AppCompatActivity() {
                     supportFragmentManager.beginTransaction()
                         .replace(
                             R.id.frameLayout,
-                            HistoryFragment(navigationView,supportFragmentManager)
+                            HistoryFragment(navigationView,supportFragmentManager, supportActionBar!!)
                         ).commit()
 
                     supportActionBar?.title = "Order History"

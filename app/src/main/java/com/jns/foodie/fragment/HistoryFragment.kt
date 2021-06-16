@@ -25,7 +25,7 @@ import com.jns.foodie.utils.noInternetDialogBox
 import org.json.JSONException
 
 
-class HistoryFragment(private val navigationView: NavigationView, private val supportFragmentManager: FragmentManager) : Fragment() {
+class HistoryFragment(private val navigationView: NavigationView, private val supportFragmentManager: FragmentManager,private val supportActionBar: androidx.appcompat.app.ActionBar) : Fragment() {
 
     lateinit var recyclerViewOrderHistory: RecyclerView
     lateinit var historyProgressLayout: RelativeLayout
@@ -57,6 +57,7 @@ class HistoryFragment(private val navigationView: NavigationView, private val su
                             HomeFragment()
                     ).commit()
             navigationView.setCheckedItem(R.id.itemHome)
+            supportActionBar.title="All Restaurants"
         }
 
 
