@@ -134,7 +134,20 @@ class LoginFragment : Fragment() {
                     },
                     Response.ErrorListener {
                         builder.dismiss()
-                        Toast.makeText(activity, "Some Error occurred!!", Toast.LENGTH_SHORT).show()
+                        if (it.toString()=="com.android.volley.TimeoutError")
+                        {
+                            Toast.makeText(
+                                activity as Context,
+                                "Cannot Connect to Internet !!",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                        else
+                            Toast.makeText(
+                                activity as Context,
+                                "Some Error occurred!!!",
+                                Toast.LENGTH_SHORT
+                            ).show()
                     }) {
 
                     override fun getHeaders(): MutableMap<String, String> {

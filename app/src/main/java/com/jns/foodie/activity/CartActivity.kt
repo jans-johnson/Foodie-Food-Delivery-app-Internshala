@@ -100,8 +100,20 @@ class CartActivity : AppCompatActivity() {
                         },
                         Response.ErrorListener {
                             cartProgressLayout.visibility=View.GONE
-                            Toast.makeText(this, "Some Error occurred!!!", Toast.LENGTH_SHORT)
-                                .show()
+                            if (it.toString()=="com.android.volley.TimeoutError")
+                            {
+                                Toast.makeText(
+                                    this,
+                                    "Cannot Connect to Internet !!",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
+                            else
+                                Toast.makeText(
+                                    this,
+                                    "Some Error occurred!!!",
+                                    Toast.LENGTH_SHORT
+                                ).show()
                         })
                     {
                         override fun getHeaders(): MutableMap<String, String> {

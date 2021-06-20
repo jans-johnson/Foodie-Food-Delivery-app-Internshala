@@ -1,5 +1,6 @@
 package com.jns.foodie.activity
 
+import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
@@ -154,12 +155,21 @@ class RestaurantMenuActivity : AppCompatActivity() {
                                 menuProgressLayout.visibility = View.INVISIBLE
                             },
                             Response.ErrorListener {
-                                Toast.makeText(
+                                menuProgressLayout.visibility = View.INVISIBLE
+                                if (it.toString()=="com.android.volley.TimeoutError")
+                                {
+                                    Toast.makeText(
+                                        this,
+                                        "Cannot Connect to Internet !!",
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                }
+                                else
+                                    Toast.makeText(
                                         this,
                                         "Some Error occurred!!!",
                                         Toast.LENGTH_SHORT
-                                ).show()
-                                menuProgressLayout.visibility = View.INVISIBLE
+                                    ).show()
                             }) {
                         override fun getHeaders(): MutableMap<String, String> {
                             val headers = HashMap<String, String>()
