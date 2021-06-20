@@ -1,5 +1,6 @@
 package com.jns.foodie.fragment
 
+import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -56,6 +57,10 @@ class SignupFragment : Fragment() {
             else if (!etRegCPassword.text.toString().equals(etRegPassword.text.toString()))
                 etRegCPassword.error = "Passwords Do not Match"
             else {
+                val dialogView = LayoutInflater.from(activity).inflate(R.layout.loading_dialog, null)
+                val builder = AlertDialog.Builder(activity).setView(dialogView).show()
+                builder.setCanceledOnTouchOutside(false)
+
                 val sharedPreferences = activity?.getSharedPreferences(
                         "UserDetails",
                         Context.MODE_PRIVATE
@@ -77,6 +82,7 @@ class SignupFragment : Fragment() {
                         val jsonObjectRequest = object : JsonObjectRequest(Method.POST, url, registerUser, Response.Listener {
                             val response = it.getJSONObject("data")
                             if (response.getBoolean("success")) {
+                                builder.dismiss()
                                 val data = response.getJSONObject("data")
                                 sharedPreferences?.edit()?.putBoolean("isLoggedIn", true)?.apply()
 
@@ -98,6 +104,7 @@ class SignupFragment : Fragment() {
                             }
                         },
                                 Response.ErrorListener {
+                                    builder.dismiss()
                                     Toast.makeText(activity, "Some Error occurred!!", Toast.LENGTH_SHORT).show()
                                 }) {
                             override fun getHeaders(): MutableMap<String, String> {

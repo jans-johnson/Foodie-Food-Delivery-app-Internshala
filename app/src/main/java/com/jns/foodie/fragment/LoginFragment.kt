@@ -1,5 +1,6 @@
 package com.jns.foodie.fragment
 
+import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -73,6 +74,9 @@ class LoginFragment : Fragment() {
         )
         if(ConnectionManager().checkConnectivity(activity as Context)) {
                 val loginUser = JSONObject()
+                val dialogView = LayoutInflater.from(activity).inflate(R.layout.loading_dialog, null)
+                val builder = AlertDialog.Builder(activity).setView(dialogView).show()
+                builder.setCanceledOnTouchOutside(false)
 
                 loginUser.put("mobile_number", etMobile.text)
                 loginUser.put("password", etPassword.text)
@@ -86,6 +90,7 @@ class LoginFragment : Fragment() {
                     loginUser,
                     Response.Listener {
                         try {
+                            builder.dismiss()
                             val response = it.getJSONObject("data")
                             val success = response.getBoolean("success")
                             if (success) {
@@ -128,6 +133,7 @@ class LoginFragment : Fragment() {
                         }
                     },
                     Response.ErrorListener {
+                        builder.dismiss()
                         Toast.makeText(activity, "Some Error occurred!!", Toast.LENGTH_SHORT).show()
                     }) {
 
