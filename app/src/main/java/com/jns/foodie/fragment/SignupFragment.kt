@@ -98,6 +98,7 @@ class SignupFragment : Fragment() {
                                 Toast.makeText(activity, "Registered Successfully", Toast.LENGTH_SHORT).show()
                                 activity?.finish()
                             } else {
+                                builder.dismiss()
                                 val responseMessageServer =
                                         response.getString("errorMessage")
                                 Toast.makeText(activity, responseMessageServer, Toast.LENGTH_SHORT).show()
