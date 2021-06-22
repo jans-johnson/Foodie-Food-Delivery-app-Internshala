@@ -73,4 +73,10 @@
     <string name="sort_by">Sort By:</string>
     <string name="you_don_t_have_any_orders_yet">You Don\'t Have any Orders Yet</string>
     <string name="browse_restaurants">Browse Restaurants</string>
+    <string name="home">Home</string>
+    <string name="profile">Profile</string>
+    <string name="favourite_restaurants">Favourite Restaurants</string>
+    <string name="order_history">Order History</string>
+    <string name="faqs">FAQs</string>
+    <string name="log_out">Log Out</string>
 </resources>

@@ -6,27 +6,27 @@
         <item
             android:id="@+id/itemHome"
             android:icon="@drawable/ic_home"
-            android:title="Home"/>
+            android:title="@string/home"/>
         <item
             android:id="@+id/itemProfile"
             android:icon="@drawable/ic_user"
-            android:title="Profile"/>
+            android:title="@string/profile"/>
         <item
             android:id="@+id/itemFavourite"
             android:icon="@drawable/ic_favourite_black"
-            android:title="Favourite Restaurants"/>
+            android:title="@string/favourite_restaurants"/>
         <item
             android:id="@+id/itemHistory"
             android:icon="@drawable/ic_history"
-            android:title="Order History"/>
+            android:title="@string/order_history"/>
         <item
             android:id="@+id/itemFAQ"
             android:icon="@drawable/ic_faq"
-            android:title="FAQs"/>
+            android:title="@string/faqs"/>
         <item
             android:id="@+id/itemLogout"
             android:icon="@drawable/ic_logout"
-            android:title="Log Out"/>
+            android:title="@string/log_out"/>
 
     </group>
 
