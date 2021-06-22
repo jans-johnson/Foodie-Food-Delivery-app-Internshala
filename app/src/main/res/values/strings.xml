@@ -79,4 +79,5 @@
     <string name="order_history">Order History</string>
     <string name="faqs">FAQs</string>
     <string name="log_out">Log Out</string>
+    <string name="total_orders_n25">Total Orders : 25</string>
 </resources>

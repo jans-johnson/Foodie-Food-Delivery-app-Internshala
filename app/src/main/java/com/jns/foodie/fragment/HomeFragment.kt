@@ -25,7 +25,7 @@ import kotlin.Comparator
 import kotlin.collections.HashMap
 
 
-class HomeFragment() : Fragment() {
+class HomeFragment : Fragment() {
 
     lateinit var recyclerViewHome: RecyclerView
     lateinit var layoutManager: RecyclerView.LayoutManager
@@ -175,7 +175,7 @@ class HomeFragment() : Fragment() {
 
                 if (checkId != 0)
                     radioGroup.check(checkId)
-                radioGroup.setOnCheckedChangeListener { group, checkedId ->
+                radioGroup.setOnCheckedChangeListener { _, checkedId ->
                     if (checkedId == R.id.radio_high_to_low) {
                         Collections.sort(restaurantList1, costComparator)
                         restaurantList1.reverse()
