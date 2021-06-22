@@ -30,6 +30,7 @@ import com.jns.foodie.model.CartItems
 import com.jns.foodie.model.PlaceOrder
 import com.jns.foodie.utils.ConnectionManager
 import com.jns.foodie.utils.noInternetDialogBox
+import com.jns.foodie.utils.responseErrorToast
 import org.json.JSONException
 import org.json.JSONObject
 
@@ -100,20 +101,7 @@ class CartActivity : AppCompatActivity() {
                         },
                         Response.ErrorListener {
                             cartProgressLayout.visibility=View.GONE
-                            if (it.toString()=="com.android.volley.TimeoutError")
-                            {
-                                Toast.makeText(
-                                    this,
-                                    "Cannot Connect to Internet !!",
-                                    Toast.LENGTH_SHORT
-                                ).show()
-                            }
-                            else
-                                Toast.makeText(
-                                    this,
-                                    "Some Error occurred!!!",
-                                    Toast.LENGTH_SHORT
-                                ).show()
+                            responseErrorToast(this,it.toString())
                         })
                     {
                         override fun getHeaders(): MutableMap<String, String> {

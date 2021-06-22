@@ -21,6 +21,7 @@ import com.jns.foodie.activity.LoginActivity
 import com.jns.foodie.activity.MainActivity
 import com.jns.foodie.utils.ConnectionManager
 import com.jns.foodie.utils.noInternetDialogBox
+import com.jns.foodie.utils.responseErrorToast
 import org.json.JSONException
 import org.json.JSONObject
 
@@ -134,20 +135,7 @@ class LoginFragment : Fragment() {
                     },
                     Response.ErrorListener {
                         builder.dismiss()
-                        if (it.toString()=="com.android.volley.TimeoutError")
-                        {
-                            Toast.makeText(
-                                activity as Context,
-                                "Cannot Connect to Internet !!",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                        }
-                        else
-                            Toast.makeText(
-                                activity as Context,
-                                "Some Error occurred!!!",
-                                Toast.LENGTH_SHORT
-                            ).show()
+                        responseErrorToast(activity as Context,it.toString())
                     }) {
 
                     override fun getHeaders(): MutableMap<String, String> {

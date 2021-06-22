@@ -17,6 +17,7 @@ import com.jns.foodie.adapter.MenuAdapter
 import com.jns.foodie.model.RestaurantMenu
 import com.jns.foodie.utils.ConnectionManager
 import com.jns.foodie.utils.noInternetDialogBox
+import com.jns.foodie.utils.responseErrorToast
 import org.json.JSONException
 
 class RestaurantMenuActivity : AppCompatActivity() {
@@ -156,20 +157,7 @@ class RestaurantMenuActivity : AppCompatActivity() {
                             },
                             Response.ErrorListener {
                                 menuProgressLayout.visibility = View.INVISIBLE
-                                if (it.toString()=="com.android.volley.TimeoutError")
-                                {
-                                    Toast.makeText(
-                                        this,
-                                        "Cannot Connect to Internet !!",
-                                        Toast.LENGTH_SHORT
-                                    ).show()
-                                }
-                                else
-                                    Toast.makeText(
-                                        this,
-                                        "Some Error occurred!!!",
-                                        Toast.LENGTH_SHORT
-                                    ).show()
+                                responseErrorToast(this,it.toString())
                             }) {
                         override fun getHeaders(): MutableMap<String, String> {
                             val headers = HashMap<String, String>()

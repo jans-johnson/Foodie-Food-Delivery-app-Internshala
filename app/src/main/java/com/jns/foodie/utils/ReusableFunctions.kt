@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.provider.Settings
+import android.widget.Toast
 import androidx.core.app.ActivityCompat
 
 fun noInternetDialogBox(context: Context): androidx.appcompat.app.AlertDialog.Builder
@@ -21,4 +22,22 @@ fun noInternetDialogBox(context: Context): androidx.appcompat.app.AlertDialog.Bu
     alterDialog.setCancelable(false)
     alterDialog.create()
     return alterDialog
+}
+
+fun responseErrorToast(context: Context, it: String)
+{
+    if (it=="com.android.volley.TimeoutError")
+    {
+        Toast.makeText(
+            context,
+            "Connection Timeout !!",
+            Toast.LENGTH_SHORT
+        ).show()
+    }
+    else
+        Toast.makeText(
+            context,
+            "Some Error occurred!!!",
+            Toast.LENGTH_SHORT
+        ).show()
 }

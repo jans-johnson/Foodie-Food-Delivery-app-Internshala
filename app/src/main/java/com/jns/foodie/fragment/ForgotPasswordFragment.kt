@@ -17,6 +17,7 @@ import com.android.volley.toolbox.Volley
 import com.jns.foodie.R
 import com.jns.foodie.utils.ConnectionManager
 import com.jns.foodie.utils.noInternetDialogBox
+import com.jns.foodie.utils.responseErrorToast
 import org.json.JSONException
 import org.json.JSONObject
 
@@ -117,20 +118,7 @@ class ForgotPasswordFragment(val fm: FragmentManager) : Fragment() {
             },
             Response.ErrorListener {
                 builder.dismiss()
-                if (it.toString()=="com.android.volley.TimeoutError")
-                {
-                    Toast.makeText(
-                        activity as Context,
-                        "Cannot Connect to Internet !!",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
-                else
-                    Toast.makeText(
-                        activity as Context,
-                        "Some Error occurred!!!",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                responseErrorToast(activity as Context,it.toString())
             }) {
                 override fun getHeaders(): MutableMap<String, String> {
                     val headers = HashMap<String, String>()
