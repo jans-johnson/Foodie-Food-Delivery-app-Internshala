@@ -27,23 +27,25 @@ class ProfileFragment() : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view= inflater.inflate(R.layout.fragment_profile, container, false)
+        val view = inflater.inflate(R.layout.fragment_profile, container, false)
 
-        ivProfile=view.findViewById(R.id.ivProfile)
-        tvProfileName=view.findViewById(R.id.tvProfileName)
-        tvProfileMobile=view.findViewById(R.id.tvProfileMobile)
-        tvProfileEmail=view.findViewById(R.id.tvProfileEmail)
-        tvProfileAddress=view.findViewById(R.id.tvProfileAddress)
+        ivProfile = view.findViewById(R.id.ivProfile)
+        tvProfileName = view.findViewById(R.id.tvProfileName)
+        tvProfileMobile = view.findViewById(R.id.tvProfileMobile)
+        tvProfileEmail = view.findViewById(R.id.tvProfileEmail)
+        tvProfileAddress = view.findViewById(R.id.tvProfileAddress)
 
-        val sharedPreferences= activity?.getSharedPreferences("UserDetails", Context.MODE_PRIVATE)
+        val sharedPreferences = activity?.getSharedPreferences("UserDetails", Context.MODE_PRIVATE)
 
-        tvProfileName.text=sharedPreferences?.getString("name","UserName")
-        tvProfileEmail.text=sharedPreferences?.getString("email","UserEmail")
-        tvProfileMobile.text=sharedPreferences?.getString("mobile_number","mobile")
-        tvProfileAddress.text=sharedPreferences?.getString("address","address")
+        tvProfileName.text = sharedPreferences?.getString("name", "UserName")
+        tvProfileEmail.text = sharedPreferences?.getString("email", "UserEmail")
+        tvProfileMobile.text = sharedPreferences?.getString("mobile_number", "mobile")
+        tvProfileAddress.text = sharedPreferences?.getString("address", "address")
 
-        val textDrawable=TextDrawable.builder().buildRound(tvProfileName.text[0].toString()
-            .toUpperCase(Locale.ROOT), Color.rgb(11, 94, 74))
+        val textDrawable = TextDrawable.builder().buildRound(
+            tvProfileName.text[0].toString()
+                .toUpperCase(Locale.ROOT), Color.rgb(11, 94, 74)
+        )
         ivProfile.setImageDrawable(textDrawable)
 
         return view

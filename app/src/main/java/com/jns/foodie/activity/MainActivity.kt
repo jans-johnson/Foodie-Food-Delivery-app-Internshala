@@ -31,7 +31,8 @@ class MainActivity : AppCompatActivity() {
     lateinit var ivDashboard: ImageView
     lateinit var sharedPreferences: SharedPreferences
 
-    var previousMenuItemSelected: MenuItem? = null              //to keep the navigationMenu item checked
+    var previousMenuItemSelected: MenuItem? =
+        null              //to keep the navigationMenu item checked
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,38 +45,40 @@ class MainActivity : AppCompatActivity() {
         navigationView = findViewById(R.id.navigationView)
         drawerLayout = findViewById(R.id.drawerLayout)
 
-        val headerView=navigationView.getHeaderView(0)
-        tvDashboardUser=headerView.findViewById(R.id.tvDashboardUser)
-        tvDashboardMobile=headerView.findViewById(R.id.tvDashboardMobile)
-        ivDashboard=headerView.findViewById(R.id.ivDashboard)
+        val headerView = navigationView.getHeaderView(0)
+        tvDashboardUser = headerView.findViewById(R.id.tvDashboardUser)
+        tvDashboardMobile = headerView.findViewById(R.id.tvDashboardMobile)
+        ivDashboard = headerView.findViewById(R.id.ivDashboard)
 
 
-        sharedPreferences=getSharedPreferences("UserDetails",Context.MODE_PRIVATE)
+        sharedPreferences = getSharedPreferences("UserDetails", Context.MODE_PRIVATE)
 
         setToolBar()
 
-        tvDashboardUser.text=sharedPreferences.getString("name","UserName")
-        tvDashboardMobile.text=sharedPreferences.getString("mobile_number","9999999999")
+        tvDashboardUser.text = sharedPreferences.getString("name", "UserName")
+        tvDashboardMobile.text = sharedPreferences.getString("mobile_number", "9999999999")
 
         //for the profile image on the dashboard (using Text Drawable Library)
-        val textDrawable=TextDrawable.builder().buildRound(tvDashboardUser.text[0].toString()
-            .toUpperCase(Locale.ROOT),R.color.PrimaryDark1)
+        val textDrawable = TextDrawable.builder().buildRound(
+            tvDashboardUser.text[0].toString()
+                .toUpperCase(Locale.ROOT), R.color.PrimaryDark1
+        )
         ivDashboard.setImageDrawable(textDrawable)
 
 
         //for the hamburger icon
         val actionBarDrawerToggle = ActionBarDrawerToggle(
-                this,
-                drawerLayout,
-                R.string.open_drawer,
-                R.string.close_drawer
+            this,
+            drawerLayout,
+            R.string.open_drawer,
+            R.string.close_drawer
         )
         drawerLayout.addDrawerListener(actionBarDrawerToggle)
         actionBarDrawerToggle.syncState()
 
         navigationView.setNavigationItemSelectedListener {
-            if (previousMenuItemSelected!=null){
-                previousMenuItemSelected?.isChecked=false
+            if (previousMenuItemSelected != null) {
+                previousMenuItemSelected?.isChecked = false
             }
 
             previousMenuItemSelected = it
@@ -112,7 +115,11 @@ class MainActivity : AppCompatActivity() {
                     supportFragmentManager.beginTransaction()
                         .replace(
                             R.id.frameLayout,
-                            HistoryFragment(navigationView,supportFragmentManager, supportActionBar!!)
+                            HistoryFragment(
+                                navigationView,
+                                supportFragmentManager,
+                                supportActionBar!!
+                            )
                         ).commit()
 
                     supportActionBar?.title = "Order History"
@@ -136,7 +143,7 @@ class MainActivity : AppCompatActivity() {
                     alterDialog.setPositiveButton("Yes") { _, _ ->
                         sharedPreferences.edit().clear().apply()
                         this.deleteDatabase("restaurant-db")
-                        val intent=Intent(this,LoginActivity::class.java)
+                        val intent = Intent(this, LoginActivity::class.java)
                         startActivity(intent)
                         this.finish()
                     }
@@ -167,7 +174,7 @@ class MainActivity : AppCompatActivity() {
                 openDashboard()
             }
             else -> {
-                    super.onBackPressed()
+                super.onBackPressed()
             }
         }
     }

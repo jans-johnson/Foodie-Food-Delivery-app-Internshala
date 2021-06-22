@@ -24,17 +24,15 @@ class OnBoardingActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_on_boarding)
-        llIndicators=findViewById(R.id.llIndicators)
-        ivNext=findViewById(R.id.ivNext)
-        btnGetStarted=findViewById(R.id.btnGetStarted)
-        val onBoardingViewPager=findViewById<ViewPager2>(R.id.onBoardingViewPager)
+        llIndicators = findViewById(R.id.llIndicators)
+        ivNext = findViewById(R.id.ivNext)
+        btnGetStarted = findViewById(R.id.btnGetStarted)
+        val onBoardingViewPager = findViewById<ViewPager2>(R.id.onBoardingViewPager)
 
-        ivNext.setOnClickListener{
-            if (onBoardingViewPager.currentItem+1<onBoardingItemsAdapter.itemCount)
-            {
-                onBoardingViewPager.currentItem+=1
-            }
-            else
+        ivNext.setOnClickListener {
+            if (onBoardingViewPager.currentItem + 1 < onBoardingItemsAdapter.itemCount) {
+                onBoardingViewPager.currentItem += 1
+            } else
                 goToLogin()
         }
 
@@ -42,7 +40,7 @@ class OnBoardingActivity : AppCompatActivity() {
             goToLogin()
         }
 
-        onBoardingItemsAdapter= OnboardingItemsAdapter(
+        onBoardingItemsAdapter = OnboardingItemsAdapter(
             listOf(
                 OnboardingItems(
                     R.drawable.ic_onboarding1,
@@ -57,25 +55,25 @@ class OnBoardingActivity : AppCompatActivity() {
                 OnboardingItems(
                     R.drawable.ic_onboarding3,
                     "Sit Back And Relax",
-                "Wait a few minutes for our agents to deliver the food at your doorstep"
+                    "Wait a few minutes for our agents to deliver the food at your doorstep"
                 )
             )
         )
-        onBoardingViewPager.adapter=onBoardingItemsAdapter
+        onBoardingViewPager.adapter = onBoardingItemsAdapter
         onBoardingViewPager.registerOnPageChangeCallback(object :
-        ViewPager2.OnPageChangeCallback(){
+            ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
                 setCurrentPosition(position)
             }
         })
 
-        val indicators= arrayOfNulls<ImageView>(onBoardingItemsAdapter.itemCount)
-        val layoutParams=LinearLayout.LayoutParams(WRAP_CONTENT, WRAP_CONTENT)
-        layoutParams.setMargins(8,0,8,0)
+        val indicators = arrayOfNulls<ImageView>(onBoardingItemsAdapter.itemCount)
+        val layoutParams = LinearLayout.LayoutParams(WRAP_CONTENT, WRAP_CONTENT)
+        layoutParams.setMargins(8, 0, 8, 0)
 
-        for (i in indicators.indices){
-            indicators[i]= ImageView(applicationContext)
+        for (i in indicators.indices) {
+            indicators[i] = ImageView(applicationContext)
             indicators[i]?.let {
                 it.setImageDrawable(
                     ContextCompat.getDrawable(
@@ -83,48 +81,44 @@ class OnBoardingActivity : AppCompatActivity() {
                         R.drawable.indicator__inactive_onboarding
                     )
                 )
-                it.layoutParams=layoutParams
+                it.layoutParams = layoutParams
                 llIndicators.addView(it)
             }
         }
         setCurrentPosition(0)
 
 
-
-
     }
 
-    fun setCurrentPosition(position: Int){
-        val childCount=llIndicators.childCount
-        for (i in 0 until childCount){
-            val imageView=llIndicators.getChildAt(i) as ImageView
-            if (i == position){
+    fun setCurrentPosition(position: Int) {
+        val childCount = llIndicators.childCount
+        for (i in 0 until childCount) {
+            val imageView = llIndicators.getChildAt(i) as ImageView
+            if (i == position) {
                 imageView.setImageDrawable(
-                        ContextCompat.getDrawable(
-                                applicationContext,
-                                R.drawable.indicator_active_onboarding
-                        )
+                    ContextCompat.getDrawable(
+                        applicationContext,
+                        R.drawable.indicator_active_onboarding
+                    )
                 )
-            }
-            else
+            } else
                 imageView.setImageDrawable(
-                        ContextCompat.getDrawable(
-                                applicationContext,
-                                R.drawable.indicator__inactive_onboarding
-                        )
+                    ContextCompat.getDrawable(
+                        applicationContext,
+                        R.drawable.indicator__inactive_onboarding
+                    )
                 )
 
         }
     }
 
-    fun goToLogin()
-    {
-        val sharedPreferences= getSharedPreferences(
-                "UserDetails",
-                Context.MODE_PRIVATE
+    fun goToLogin() {
+        val sharedPreferences = getSharedPreferences(
+            "UserDetails",
+            Context.MODE_PRIVATE
         )
         sharedPreferences?.edit()?.putBoolean("isNotFirstTime", true)?.apply()
-        val intent=Intent(this,LoginActivity::class.java)
+        val intent = Intent(this, LoginActivity::class.java)
         startActivity(intent)
         finish()
     }

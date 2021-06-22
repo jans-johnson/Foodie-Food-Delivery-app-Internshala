@@ -7,8 +7,7 @@ import android.provider.Settings
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 
-fun noInternetDialogBox(context: Context): androidx.appcompat.app.AlertDialog.Builder
-{
+fun noInternetDialogBox(context: Context): androidx.appcompat.app.AlertDialog.Builder {
     val alterDialog = androidx.appcompat.app.AlertDialog.Builder(context)
     alterDialog.setTitle("No Internet")
     alterDialog.setMessage("Check Internet Connection!")
@@ -24,17 +23,14 @@ fun noInternetDialogBox(context: Context): androidx.appcompat.app.AlertDialog.Bu
     return alterDialog
 }
 
-fun responseErrorToast(context: Context, it: String)
-{
-    if (it=="com.android.volley.TimeoutError")
-    {
+fun responseErrorToast(context: Context, it: String) {
+    if (it == "com.android.volley.TimeoutError") {
         Toast.makeText(
             context,
             "Connection Timeout !!",
             Toast.LENGTH_SHORT
         ).show()
-    }
-    else
+    } else
         Toast.makeText(
             context,
             "Some Error occurred!!!",

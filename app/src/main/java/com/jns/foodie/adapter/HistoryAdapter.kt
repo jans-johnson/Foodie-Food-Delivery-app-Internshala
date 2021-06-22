@@ -11,17 +11,20 @@ import com.jns.foodie.R
 import com.jns.foodie.model.CartItems
 import com.jns.foodie.model.OrderHistory
 
-class HistoryAdapter(val context: Context, private val orderList:ArrayList<OrderHistory>) : RecyclerView.Adapter<HistoryAdapter.ViewHolderHistory>() {
+class HistoryAdapter(val context: Context, private val orderList: ArrayList<OrderHistory>) :
+    RecyclerView.Adapter<HistoryAdapter.ViewHolderHistory>() {
 
     class ViewHolderHistory(view: View) : RecyclerView.ViewHolder(view) {
         val tvRestaurantName: TextView = view.findViewById(R.id.tvRestaurantNameOrderHistory)
         val tvOrderDate: TextView = view.findViewById(R.id.tvOrderDate)
-        val tvTotalCost: TextView=view.findViewById(R.id.tvTotalCost)
-        val recyclerViewItemsHistory: RecyclerView = view.findViewById(R.id.RecyclerViewItemsHistory)
+        val tvTotalCost: TextView = view.findViewById(R.id.tvTotalCost)
+        val recyclerViewItemsHistory: RecyclerView =
+            view.findViewById(R.id.RecyclerViewItemsHistory)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolderHistory {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.order_history_single_row, parent, false)
+        val view = LayoutInflater.from(parent.context)
+            .inflate(R.layout.order_history_single_row, parent, false)
 
         return ViewHolderHistory(view)
     }
@@ -42,13 +45,13 @@ class HistoryAdapter(val context: Context, private val orderList:ArrayList<Order
         for (i in 0 until itemJsonList.length()) {
             val foodJsonObject = itemJsonList.getJSONObject(i)
             val orderObject = CartItems(
-                    foodJsonObject.getString("name"),
-                    foodJsonObject.getString("cost")
+                foodJsonObject.getString("name"),
+                foodJsonObject.getString("cost")
             )
             itemList.add(orderObject)
         }
-        val cartAdapter=CartAdapter(itemList)
-        holder.recyclerViewItemsHistory.adapter=cartAdapter
-        holder.recyclerViewItemsHistory.layoutManager= LinearLayoutManager(context)
+        val cartAdapter = CartAdapter(itemList)
+        holder.recyclerViewItemsHistory.adapter = cartAdapter
+        holder.recyclerViewItemsHistory.layoutManager = LinearLayoutManager(context)
     }
 }

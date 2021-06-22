@@ -16,7 +16,8 @@ import com.jns.foodie.database.RestaurantEntity
 import com.squareup.picasso.Picasso
 import java.lang.ref.WeakReference
 
-class HomeAdapter(val context: Context, var itemList: ArrayList<RestaurantEntity>): RecyclerView.Adapter<HomeAdapter.ViewHolderDashboard>() {
+class HomeAdapter(val context: Context, var itemList: ArrayList<RestaurantEntity>) :
+    RecyclerView.Adapter<HomeAdapter.ViewHolderDashboard>() {
 
     class ViewHolderDashboard(view: View) : RecyclerView.ViewHolder(view) {
         val ivCardRestaurant: ImageView = view.findViewById(R.id.ivCardRestaurant)
@@ -29,7 +30,8 @@ class HomeAdapter(val context: Context, var itemList: ArrayList<RestaurantEntity
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolderDashboard {
-        val view=LayoutInflater.from(parent.context).inflate(R.layout.home_recycler_view_single_row,parent,false)
+        val view = LayoutInflater.from(parent.context)
+            .inflate(R.layout.home_recycler_view_single_row, parent, false)
 
         return ViewHolderDashboard(view)
     }
@@ -41,51 +43,59 @@ class HomeAdapter(val context: Context, var itemList: ArrayList<RestaurantEntity
 
     override fun onBindViewHolder(holder: ViewHolderDashboard, position: Int) {
 
-        val restaurant=itemList[position]
-        val restaurantEntity=RestaurantEntity(restaurant.restaurantId,restaurant.restaurantName,restaurant.restaurantRating,restaurant.restaurantCost,restaurant.restaurantImage)
+        val restaurant = itemList[position]
+        val restaurantEntity = RestaurantEntity(
+            restaurant.restaurantId,
+            restaurant.restaurantName,
+            restaurant.restaurantRating,
+            restaurant.restaurantCost,
+            restaurant.restaurantImage
+        )
         var fav: Boolean
 
-        holder.tvCardName.text=restaurant.restaurantName
-        ("₹ "+restaurant.restaurantCost+"/person").also { holder.tvCardPrice.text = it }
-        holder.tvCardRating.text=restaurant.restaurantRating
+        holder.tvCardName.text = restaurant.restaurantName
+        ("₹ " + restaurant.restaurantCost + "/person").also { holder.tvCardPrice.text = it }
+        holder.tvCardRating.text = restaurant.restaurantRating
 
-        Picasso.get().load(restaurant.restaurantImage).error(R.drawable.restaurant_default).into(holder.ivCardRestaurant)
+        Picasso.get().load(restaurant.restaurantImage).error(R.drawable.restaurant_default)
+            .into(holder.ivCardRestaurant)
 
-        if(DBAsyncTask(WeakReference(context),restaurantEntity,1 ).execute().get()) {
+        if (DBAsyncTask(WeakReference(context), restaurantEntity, 1).execute().get()) {
             holder.ivCardFavorite.setImageResource(R.drawable.ic_favourite_fill)
-            fav=true
-        }
-            else {
+            fav = true
+        } else {
             holder.ivCardFavorite.setImageResource(R.drawable.ic_favourite_red_border)
-            fav=false
+            fav = false
         }
         holder.llContent.setOnClickListener {
             val intent = Intent(context, RestaurantMenuActivity::class.java)
             intent.putExtra("restaurantName", holder.tvCardName.text.toString())
             intent.putExtra("restaurantId", restaurant.restaurantId)
-            intent.putExtra("restaurantRating",restaurant.restaurantRating)
-            intent.putExtra("isFav",fav)
+            intent.putExtra("restaurantRating", restaurant.restaurantRating)
+            intent.putExtra("isFav", fav)
             context.startActivity(intent)
         }
 
 
-        holder.ivCardFavorite.setOnClickListener{
-            if(!DBAsyncTask( WeakReference(context),restaurantEntity,1 ).execute().get()){
-                val result=DBAsyncTask(WeakReference(context),restaurantEntity,2).execute().get()
+        holder.ivCardFavorite.setOnClickListener {
+            if (!DBAsyncTask(WeakReference(context), restaurantEntity, 1).execute().get()) {
+                val result =
+                    DBAsyncTask(WeakReference(context), restaurantEntity, 2).execute().get()
 
                 if (result) {
                     holder.ivCardFavorite.setImageResource(R.drawable.ic_favourite_fill)
-                    fav=true
+                    fav = true
                 } else {
                     Toast.makeText(context, "Some error occurred", Toast.LENGTH_SHORT).show()
                 }
             }
             //if it was already added to favourites
             else {
-                val result = DBAsyncTask(WeakReference(context), restaurantEntity, 3).execute().get()
+                val result =
+                    DBAsyncTask(WeakReference(context), restaurantEntity, 3).execute().get()
                 if (result) {
                     holder.ivCardFavorite.setImageResource(R.drawable.ic_favourite_red_border)
-                    fav=false
+                    fav = false
                 } else {
                     Toast.makeText(context, "Some error occurred", Toast.LENGTH_SHORT).show()
                 }
@@ -100,10 +110,16 @@ class HomeAdapter(val context: Context, var itemList: ArrayList<RestaurantEntity
     }
 
 
-    class DBAsyncTask(val context: WeakReference<Context>, private val restaurantEntity: RestaurantEntity, private val mode: Int) :
-            AsyncTask<Void, Void, Boolean>() {
+    class DBAsyncTask(
+        val context: WeakReference<Context>,
+        private val restaurantEntity: RestaurantEntity,
+        private val mode: Int
+    ) :
+        AsyncTask<Void, Void, Boolean>() {
 
-        val db = Room.databaseBuilder(context.get()!!, RestaurantDatabase::class.java, "restaurant-db").build()
+        val db =
+            Room.databaseBuilder(context.get()!!, RestaurantDatabase::class.java, "restaurant-db")
+                .build()
 
         override fun doInBackground(vararg p0: Void?): Boolean {
 
@@ -114,7 +130,7 @@ class HomeAdapter(val context: Context, var itemList: ArrayList<RestaurantEntity
             when (mode) {
                 1 -> {
                     val restaurant: RestaurantEntity? = db.restaurantDao()
-                            .getRestaurantById(restaurantEntity.restaurantId)
+                        .getRestaurantById(restaurantEntity.restaurantId)
                     db.close()
                     return restaurant != null
                 }

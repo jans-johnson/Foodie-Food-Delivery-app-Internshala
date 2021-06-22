@@ -37,7 +37,7 @@ import org.json.JSONObject
 
 class CartActivity : AppCompatActivity() {
 
-    private lateinit var toolbarCart:Toolbar
+    private lateinit var toolbarCart: Toolbar
     private lateinit var tvRestaurantName: TextView
     lateinit var tvTotal: TextView
     lateinit var cartProgressLayout: RelativeLayout
@@ -47,7 +47,7 @@ class CartActivity : AppCompatActivity() {
 
 
     lateinit var placeOrder: PlaceOrder
-    lateinit var restaurantName:String
+    lateinit var restaurantName: String
 
     var cartListItems = arrayListOf<CartItems>()
 
@@ -55,30 +55,29 @@ class CartActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_cart)
 
-        toolbarCart=findViewById(R.id.toolbarCart)
-        tvRestaurantName=findViewById(R.id.tvRestaurantName)
-        cartProgressLayout=findViewById(R.id.cartProgressLayout)
-        recyclerViewCart=findViewById(R.id.recyclerViewCart)
-        btnPlaceOrder=findViewById(R.id.btnPlaceOrder)
+        toolbarCart = findViewById(R.id.toolbarCart)
+        tvRestaurantName = findViewById(R.id.tvRestaurantName)
+        cartProgressLayout = findViewById(R.id.cartProgressLayout)
         recyclerViewCart = findViewById(R.id.recyclerViewCart)
-        tvTotal=findViewById(R.id.tvTotal)
+        btnPlaceOrder = findViewById(R.id.btnPlaceOrder)
+        recyclerViewCart = findViewById(R.id.recyclerViewCart)
+        tvTotal = findViewById(R.id.tvTotal)
 
         btnPlaceOrder.setOnClickListener {
 
-            if (ConnectionManager().checkConnectivity(this))
-            {
-                cartProgressLayout.visibility=View.VISIBLE
+            if (ConnectionManager().checkConnectivity(this)) {
+                cartProgressLayout.visibility = View.VISIBLE
 
                 try {
-                    val queue= Volley.newRequestQueue(this)
-                    val url="http://13.235.250.119/v2/place_order/fetch_result/"
+                    val queue = Volley.newRequestQueue(this)
+                    val url = "http://13.235.250.119/v2/place_order/fetch_result/"
                     val orderDetails = JSONObject(intent.getStringExtra("details")!!)
-                    Log.d("please",orderDetails.toString())
+                    Log.d("please", orderDetails.toString())
 
-                    val jsonObjectRequest=object : JsonObjectRequest(
+                    val jsonObjectRequest = object : JsonObjectRequest(
                         Method.POST, url, orderDetails,
                         Response.Listener {
-                            cartProgressLayout.visibility=View.GONE
+                            cartProgressLayout.visibility = View.GONE
                             val response = it.getJSONObject("data")
                             if (response.getBoolean("success")) {
                                 val dialogView = LayoutInflater.from(this).inflate(
@@ -91,8 +90,9 @@ class CartActivity : AppCompatActivity() {
 
                                 //to redirect to mainActivity
                                 Handler().postDelayed({
-                                    val intent= Intent(this@CartActivity,MainActivity::class.java)
-                                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                                    val intent = Intent(this@CartActivity, MainActivity::class.java)
+                                    intent.flags =
+                                        Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                                     startActivity(intent)
                                     builder.dismiss()
                                 }, 2000)
@@ -100,10 +100,9 @@ class CartActivity : AppCompatActivity() {
 
                         },
                         Response.ErrorListener {
-                            cartProgressLayout.visibility=View.GONE
-                            responseErrorToast(this,it.toString())
-                        })
-                    {
+                            cartProgressLayout.visibility = View.GONE
+                            responseErrorToast(this, it.toString())
+                        }) {
                         override fun getHeaders(): MutableMap<String, String> {
                             val headers = HashMap<String, String>()
                             headers["Content-type"] = "application/json"
@@ -112,14 +111,11 @@ class CartActivity : AppCompatActivity() {
                         }
                     }
                     queue.add(jsonObjectRequest)
-                }
-                catch (e: JSONException)
-                {
+                } catch (e: JSONException) {
                     Toast.makeText(this, "Some Error Occurred", Toast.LENGTH_SHORT).show()
                 }
-            }
-            else {
-                cartProgressLayout.visibility=View.GONE
+            } else {
+                cartProgressLayout.visibility = View.GONE
 
                 val alterDialog = noInternetDialogBox(this)
                 alterDialog.show()
@@ -128,21 +124,21 @@ class CartActivity : AppCompatActivity() {
         }
 
         placeOrder = Gson().fromJson(intent.getStringExtra("details")!!, PlaceOrder::class.java)
-        restaurantName= intent.getStringExtra("restaurantName")!!
+        restaurantName = intent.getStringExtra("restaurantName")!!
 
         val myType = object : TypeToken<List<CartItems>>() {}.type
-        cartListItems=Gson().fromJson(intent.getStringExtra("cartItems"), myType)
+        cartListItems = Gson().fromJson(intent.getStringExtra("cartItems"), myType)
 
-        tvRestaurantName.text=restaurantName
+        tvRestaurantName.text = restaurantName
         "Total Rs. ${placeOrder.totalCost}".also { tvTotal.text = it }
 
         setToolBar()
 
-        val cartAdapter=CartAdapter(cartListItems)
+        val cartAdapter = CartAdapter(cartListItems)
         layoutManager = LinearLayoutManager(this)
 
-        recyclerViewCart.layoutManager=layoutManager
-        recyclerViewCart.adapter=cartAdapter
+        recyclerViewCart.layoutManager = layoutManager
+        recyclerViewCart.adapter = cartAdapter
     }
 
     private fun setToolBar() {

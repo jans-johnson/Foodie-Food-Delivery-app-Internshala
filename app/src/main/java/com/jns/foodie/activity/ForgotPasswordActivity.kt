@@ -10,15 +10,15 @@ import com.jns.foodie.fragment.ForgotPasswordFragment
 
 class ForgotPasswordActivity : AppCompatActivity() {
     lateinit var frameForgotPassword: FrameLayout
-    lateinit var tbForgotPassword:Toolbar
+    lateinit var tbForgotPassword: Toolbar
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_forgot_password)
 
-        frameForgotPassword=findViewById(R.id.frameForgotPassword)
+        frameForgotPassword = findViewById(R.id.frameForgotPassword)
 
-        tbForgotPassword=findViewById(R.id.tbForgotPassword)
+        tbForgotPassword = findViewById(R.id.tbForgotPassword)
 
         setSupportActionBar(tbForgotPassword)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -34,10 +34,11 @@ class ForgotPasswordActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId)
-        {
-            android.R.id.home->{onBackPressed()
-                return true}
+        when (item.itemId) {
+            android.R.id.home -> {
+                onBackPressed()
+                return true
+            }
 
         }
         return super.onOptionsItemSelected(item)

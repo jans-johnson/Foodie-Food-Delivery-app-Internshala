@@ -6,7 +6,7 @@ import androidx.fragment.app.FragmentPagerAdapter
 import com.jns.foodie.fragment.LoginFragment
 import com.jns.foodie.fragment.SignupFragment
 
-class LoginAdapter(fm: FragmentManager, private var totalTabs: Int):FragmentPagerAdapter(fm) {
+class LoginAdapter(fm: FragmentManager, private var totalTabs: Int) : FragmentPagerAdapter(fm) {
     override fun getCount(): Int {
         return totalTabs
     }

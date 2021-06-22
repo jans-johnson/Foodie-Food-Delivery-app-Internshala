@@ -17,20 +17,22 @@ import com.jns.foodie.model.Food
 import com.jns.foodie.model.PlaceOrder
 import com.jns.foodie.model.RestaurantMenu
 
-class MenuAdapter (val context: Context,
-                   private val restaurantId: String,
-                   private val restaurantName: String,
-                   private val buttonProceedToCart: Button,
-                   private val restaurantMenu: ArrayList<RestaurantMenu>) : RecyclerView.Adapter<MenuAdapter.ViewHolderMenu>(){
+class MenuAdapter(
+    val context: Context,
+    private val restaurantId: String,
+    private val restaurantName: String,
+    private val buttonProceedToCart: Button,
+    private val restaurantMenu: ArrayList<RestaurantMenu>
+) : RecyclerView.Adapter<MenuAdapter.ViewHolderMenu>() {
 
     var itemSelectedCount: Int = 0
-    var totalCost:Int=0
+    var totalCost: Int = 0
     var foodItemsId = arrayListOf<Food>()
     var cartListItems = arrayListOf<CartItems>()
-    var userId=context.getSharedPreferences("UserDetails",Context.MODE_PRIVATE).getString("user_id","user")
+    var userId = context.getSharedPreferences("UserDetails", Context.MODE_PRIVATE)
+        .getString("user_id", "user")
 
-    class ViewHolderMenu(view: View): RecyclerView.ViewHolder(view)
-    {
+    class ViewHolderMenu(view: View) : RecyclerView.ViewHolder(view) {
         val tvSerialNumber: TextView = view.findViewById(R.id.tvSerialNumber)
         val tvItemName: TextView = view.findViewById(R.id.tvItemName)
         val tvItemPrice: TextView = view.findViewById(R.id.tvItemPrice)
@@ -47,14 +49,16 @@ class MenuAdapter (val context: Context,
     override fun getItemCount(): Int {
         return restaurantMenu.size
     }
+
     override fun onBindViewHolder(holder: ViewHolderMenu, position: Int) {
         val restaurantMenuItem = restaurantMenu[position]
 
         buttonProceedToCart.setOnClickListener {
-            val placeOrder=PlaceOrder(userId.toString(),restaurantId,totalCost.toString(),foodItemsId)
+            val placeOrder =
+                PlaceOrder(userId.toString(), restaurantId, totalCost.toString(), foodItemsId)
             val intent = Intent(context, CartActivity::class.java)
             intent.putExtra("details", Gson().toJson(placeOrder))
-            intent.putExtra("restaurantName",restaurantName)
+            intent.putExtra("restaurantName", restaurantName)
             intent.putExtra("cartItems", Gson().toJson(cartListItems))
             context.startActivity(intent)
         }
@@ -64,11 +68,11 @@ class MenuAdapter (val context: Context,
             if (holder.btnAddToCart.text.toString() == "Remove") {
 
                 itemSelectedCount--
-                val item=Food(restaurantMenuItem.id)
-                totalCost-=restaurantMenuItem.cost_for_one.toInt()
+                val item = Food(restaurantMenuItem.id)
+                totalCost -= restaurantMenuItem.cost_for_one.toInt()
                 foodItemsId.remove(item)
 
-                val cartItem=CartItems(restaurantMenuItem.name,restaurantMenuItem.cost_for_one)
+                val cartItem = CartItems(restaurantMenuItem.name, restaurantMenuItem.cost_for_one)
                 cartListItems.remove(cartItem)
 
                 "Add".also { holder.btnAddToCart.text = it }
@@ -77,15 +81,15 @@ class MenuAdapter (val context: Context,
             } else {
 
                 itemSelectedCount++
-                val item=Food(restaurantMenuItem.id)
-                totalCost+=restaurantMenuItem.cost_for_one.toInt()
+                val item = Food(restaurantMenuItem.id)
+                totalCost += restaurantMenuItem.cost_for_one.toInt()
                 foodItemsId.add(item)
 
-                val cartItem=CartItems(restaurantMenuItem.name,restaurantMenuItem.cost_for_one)
+                val cartItem = CartItems(restaurantMenuItem.name, restaurantMenuItem.cost_for_one)
                 cartListItems.add(cartItem)
 
                 "Remove".also { holder.btnAddToCart.text = it }
-                holder.btnAddToCart.setBackgroundColor( Color.rgb(255, 196, 0))
+                holder.btnAddToCart.setBackgroundColor(Color.rgb(255, 196, 0))
             }
 
             if (itemSelectedCount > 0) {

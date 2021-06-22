@@ -34,22 +34,27 @@ class HomeFragment() : Fragment() {
     lateinit var cantFind: RelativeLayout
     lateinit var etSearch: EditText
 
-    var restaurantList= arrayListOf<RestaurantEntity>()
-    private val filteredList = arrayListOf<RestaurantEntity>()  //for adjusting the list, when searchbar is used
-    var filtered=0                                              //a flag for checking if searchbar was used
-    var checkId=0                                               //to store the checked item inside sort menu
+    var restaurantList = arrayListOf<RestaurantEntity>()
+    private val filteredList =
+        arrayListOf<RestaurantEntity>()  //for adjusting the list, when searchbar is used
+    var filtered =
+        0                                              //a flag for checking if searchbar was used
+    var checkId =
+        0                                               //to store the checked item inside sort menu
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         setHasOptionsMenu(true)
 
-        val view= inflater.inflate(R.layout.fragment_home, container, false)
+        val view = inflater.inflate(R.layout.fragment_home, container, false)
 
-        layoutManager=LinearLayoutManager(activity)
-        recyclerViewHome=view.findViewById(R.id.recyclerViewHome)
-        homeProgressBarLayout=view.findViewById(R.id.homeProgresBarLayout)
-        cantFind=view.findViewById(R.id.cantFind)
-        etSearch=view.findViewById(R.id.etSearch)
+        layoutManager = LinearLayoutManager(activity)
+        recyclerViewHome = view.findViewById(R.id.recyclerViewHome)
+        homeProgressBarLayout = view.findViewById(R.id.homeProgresBarLayout)
+        cantFind = view.findViewById(R.id.cantFind)
+        etSearch = view.findViewById(R.id.etSearch)
 
         etSearch.addTextChangedListener(object : TextWatcher {
 
@@ -72,52 +77,49 @@ class HomeFragment() : Fragment() {
     }
 
 
-
-    override fun onResume()
-    {
+    override fun onResume() {
 
         if (ConnectionManager().checkConnectivity(activity as Context)) {
-            if (restaurantList.isEmpty())
-            {
+            if (restaurantList.isEmpty()) {
                 homeProgressBarLayout.visibility = View.VISIBLE
                 try {
                     val queue = Volley.newRequestQueue(activity as Context)
                     val url = "http://13.235.250.119/v2/restaurants/fetch_result"
 
                     val jsonObjectRequest = object : JsonObjectRequest(
-                            Method.GET,
-                            url,
-                            null,
-                            Response.Listener {
+                        Method.GET,
+                        url,
+                        null,
+                        Response.Listener {
 
-                                val response = it.getJSONObject("data")
-                                val success = response.getBoolean("success")
-                                if (success) {
+                            val response = it.getJSONObject("data")
+                            val success = response.getBoolean("success")
+                            if (success) {
 
-                                    val data = response.getJSONArray("data")
-                                    for (i in 0 until data.length()) {
-                                        val restaurantJsonObject = data.getJSONObject(i)
-                                        val restaurantObject = RestaurantEntity(
-                                                restaurantJsonObject.getString("id"),
-                                                restaurantJsonObject.getString("name"),
-                                                restaurantJsonObject.getString("rating"),
-                                                restaurantJsonObject.getString("cost_for_one"),
-                                                restaurantJsonObject.getString("image_url")
-                                        )
-                                        restaurantList.add(restaurantObject)
-                                    }
-                                    homeAdapter = HomeAdapter(activity as Context, restaurantList)
-                                    recyclerViewHome.adapter = homeAdapter
-                                    recyclerViewHome.layoutManager = layoutManager
+                                val data = response.getJSONArray("data")
+                                for (i in 0 until data.length()) {
+                                    val restaurantJsonObject = data.getJSONObject(i)
+                                    val restaurantObject = RestaurantEntity(
+                                        restaurantJsonObject.getString("id"),
+                                        restaurantJsonObject.getString("name"),
+                                        restaurantJsonObject.getString("rating"),
+                                        restaurantJsonObject.getString("cost_for_one"),
+                                        restaurantJsonObject.getString("image_url")
+                                    )
+                                    restaurantList.add(restaurantObject)
                                 }
-                                homeProgressBarLayout.visibility = View.INVISIBLE
-                            },
-                            Response.ErrorListener {
+                                homeAdapter = HomeAdapter(activity as Context, restaurantList)
+                                recyclerViewHome.adapter = homeAdapter
+                                recyclerViewHome.layoutManager = layoutManager
+                            }
+                            homeProgressBarLayout.visibility = View.INVISIBLE
+                        },
+                        Response.ErrorListener {
 
-                                homeProgressBarLayout.visibility = View.INVISIBLE
+                            homeProgressBarLayout.visibility = View.INVISIBLE
 
-                                responseErrorToast(activity as Context,it.toString())
-                            }) {
+                            responseErrorToast(activity as Context, it.toString())
+                        }) {
                         override fun getHeaders(): MutableMap<String, String> {
                             val headers = HashMap<String, String>()
                             headers["Content-type"] = "application/json"
@@ -130,9 +132,9 @@ class HomeFragment() : Fragment() {
 
                 } catch (e: JSONException) {
                     Toast.makeText(
-                            activity as Context,
-                            "Some Unexpected error occurred!!!",
-                            Toast.LENGTH_SHORT
+                        activity as Context,
+                        "Some Unexpected error occurred!!!",
+                        Toast.LENGTH_SHORT
                     ).show()
                 }
             }
@@ -161,16 +163,17 @@ class HomeFragment() : Fragment() {
                 else
                     restaurantList1 = restaurantList
 
-                val bottomSheetDialog = BottomSheetDialog(activity as Context, R.style.BottomSheetDialogTheme)
+                val bottomSheetDialog =
+                    BottomSheetDialog(activity as Context, R.style.BottomSheetDialogTheme)
 
                 val bottomSheetView = LayoutInflater.from(activity).inflate(
-                        R.layout.layout_bottom_sheet,
-                        requireActivity().findViewById(R.id.bottomSheetContainer)
+                    R.layout.layout_bottom_sheet,
+                    requireActivity().findViewById(R.id.bottomSheetContainer)
                 )
 
                 val radioGroup = bottomSheetView.findViewById<RadioGroup>(R.id.groupradio)
 
-                if(checkId!=0)
+                if (checkId != 0)
                     radioGroup.check(checkId)
                 radioGroup.setOnCheckedChangeListener { group, checkedId ->
                     if (checkedId == R.id.radio_high_to_low) {
@@ -187,7 +190,7 @@ class HomeFragment() : Fragment() {
                         restaurantList1.reverse()
                         homeAdapter.notifyDataSetChanged()
                     }
-                    checkId=checkedId
+                    checkId = checkedId
                     bottomSheetDialog.dismiss()
                 }
 
@@ -198,13 +201,12 @@ class HomeFragment() : Fragment() {
         return super.onOptionsItemSelected(item)
     }
 
-    fun searchFilter(query: String)
-    {
-        filtered=1
+    fun searchFilter(query: String) {
+        filtered = 1
         filteredList.clear()
         for (item in restaurantList) {
             if (item.restaurantName.toLowerCase(Locale.ROOT)
-                            .contains(query.toLowerCase(Locale.ROOT))
+                    .contains(query.toLowerCase(Locale.ROOT))
             ) {
                 filteredList.add(item)
             }

@@ -26,39 +26,43 @@ import com.jns.foodie.utils.responseErrorToast
 import org.json.JSONException
 
 
-class HistoryFragment(private val navigationView: NavigationView, private val supportFragmentManager: FragmentManager,private val supportActionBar: androidx.appcompat.app.ActionBar) : Fragment() {
+class HistoryFragment(
+    private val navigationView: NavigationView,
+    private val supportFragmentManager: FragmentManager,
+    private val supportActionBar: androidx.appcompat.app.ActionBar
+) : Fragment() {
 
     lateinit var recyclerViewOrderHistory: RecyclerView
     lateinit var historyProgressLayout: RelativeLayout
     lateinit var noOrdersLayout: RelativeLayout
     lateinit var btnBrowseRestaurant: Button
-    lateinit var sharedPreferences:SharedPreferences
+    lateinit var sharedPreferences: SharedPreferences
     lateinit var userId: String
     lateinit var historyAdapter: HistoryAdapter
     lateinit var layoutManager: RecyclerView.LayoutManager
 
-    var orderList= arrayListOf<OrderHistory>()
+    var orderList = arrayListOf<OrderHistory>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view= inflater.inflate(R.layout.fragment_history, container, false)
+        val view = inflater.inflate(R.layout.fragment_history, container, false)
 
-        recyclerViewOrderHistory=view.findViewById(R.id.RecyclerViewOrderHistory)
-        historyProgressLayout=view.findViewById(R.id.historyProgressLayout)
-        noOrdersLayout=view.findViewById(R.id.noOrdersLayout)
-        layoutManager= LinearLayoutManager(activity)
-        btnBrowseRestaurant=view.findViewById(R.id.btnBrowseRestaurant)
+        recyclerViewOrderHistory = view.findViewById(R.id.RecyclerViewOrderHistory)
+        historyProgressLayout = view.findViewById(R.id.historyProgressLayout)
+        noOrdersLayout = view.findViewById(R.id.noOrdersLayout)
+        layoutManager = LinearLayoutManager(activity)
+        btnBrowseRestaurant = view.findViewById(R.id.btnBrowseRestaurant)
 
         btnBrowseRestaurant.setOnClickListener {
             supportFragmentManager.beginTransaction()
-                    .replace(
-                            R.id.frameLayout,
-                            HomeFragment()
-                    ).commit()
+                .replace(
+                    R.id.frameLayout,
+                    HomeFragment()
+                ).commit()
             navigationView.setCheckedItem(R.id.itemHome)
-            supportActionBar.title="All Restaurants"
+            supportActionBar.title = "All Restaurants"
         }
 
 
@@ -66,48 +70,46 @@ class HistoryFragment(private val navigationView: NavigationView, private val su
     }
 
     override fun onResume() {
-        sharedPreferences= activity?.getSharedPreferences("UserDetails",Context.MODE_PRIVATE)!!
-        userId =sharedPreferences.getString("user_id","user_id")!!
+        sharedPreferences = activity?.getSharedPreferences("UserDetails", Context.MODE_PRIVATE)!!
+        userId = sharedPreferences.getString("user_id", "user_id")!!
 
-        if (ConnectionManager().checkConnectivity(activity as Context))
-        {
-            historyProgressLayout.visibility=View.VISIBLE
+        if (ConnectionManager().checkConnectivity(activity as Context)) {
+            historyProgressLayout.visibility = View.VISIBLE
 
             try {
-                val queue=Volley.newRequestQueue(activity as Context)
-                val url="http://13.235.250.119/v2/orders/fetch_result/$userId"
+                val queue = Volley.newRequestQueue(activity as Context)
+                val url = "http://13.235.250.119/v2/orders/fetch_result/$userId"
 
-                val jsonObjectRequest=object : JsonObjectRequest(Method.GET,url,null,
-                Response.Listener {
-                    val response=it.getJSONObject("data")
-                    if (response.getBoolean("success")) {
-                        val data = response.getJSONArray("data")
-                        for (i in 0 until data.length()) {
-                            val orderJsonObject=data.getJSONObject(i)
-                            val orderObject=OrderHistory(
+                val jsonObjectRequest = object : JsonObjectRequest(Method.GET, url, null,
+                    Response.Listener {
+                        val response = it.getJSONObject("data")
+                        if (response.getBoolean("success")) {
+                            val data = response.getJSONArray("data")
+                            for (i in 0 until data.length()) {
+                                val orderJsonObject = data.getJSONObject(i)
+                                val orderObject = OrderHistory(
                                     orderJsonObject.getString("order_id"),
                                     orderJsonObject.getString("restaurant_name"),
                                     orderJsonObject.getString("total_cost"),
                                     orderJsonObject.getString("order_placed_at"),
                                     orderJsonObject.getJSONArray("food_items")
-                            )
-                            orderList.add(orderObject)
+                                )
+                                orderList.add(orderObject)
+                            }
+                            if (orderList.isEmpty())
+                                noOrdersLayout.visibility = View.VISIBLE
+
+                            historyAdapter = HistoryAdapter(activity as Context, orderList)
+                            recyclerViewOrderHistory.adapter = historyAdapter
+                            recyclerViewOrderHistory.layoutManager = layoutManager
                         }
-                        if (orderList.isEmpty())
-                            noOrdersLayout.visibility=View.VISIBLE
+                        historyProgressLayout.visibility = View.INVISIBLE
+                    },
+                    Response.ErrorListener {
+                        historyProgressLayout.visibility = View.INVISIBLE
 
-                        historyAdapter=HistoryAdapter(activity as Context,orderList)
-                        recyclerViewOrderHistory.adapter=historyAdapter
-                        recyclerViewOrderHistory.layoutManager=layoutManager
-                    }
-                    historyProgressLayout.visibility=View.INVISIBLE
-                },
-                Response.ErrorListener {
-                    historyProgressLayout.visibility = View.INVISIBLE
-
-                    responseErrorToast(activity as Context,it.toString())
-                })
-                {
+                        responseErrorToast(activity as Context, it.toString())
+                    }) {
                     override fun getHeaders(): MutableMap<String, String> {
                         val headers = HashMap<String, String>()
                         headers["Content-type"] = "application/json"
@@ -116,14 +118,11 @@ class HistoryFragment(private val navigationView: NavigationView, private val su
                     }
                 }
                 queue.add(jsonObjectRequest)
-                historyProgressLayout.visibility=View.INVISIBLE
+                historyProgressLayout.visibility = View.INVISIBLE
+            } catch (e: JSONException) {
+                Toast.makeText(activity, "Some Error Occurred", Toast.LENGTH_SHORT).show()
             }
-            catch (e:JSONException)
-            {
-                Toast.makeText(activity,"Some Error Occurred",Toast.LENGTH_SHORT).show()
-            }
-        }
-        else {
+        } else {
 
             val alterDialog = noInternetDialogBox(activity as Context)
             alterDialog.show()

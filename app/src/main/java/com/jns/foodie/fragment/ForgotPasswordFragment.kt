@@ -27,21 +27,23 @@ class ForgotPasswordFragment(val fm: FragmentManager) : Fragment() {
     lateinit var etPhoneFP: EditText
     lateinit var etEmailAddressFP: EditText
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
-        val view= inflater.inflate(R.layout.fragment_forgot_password, container, false)
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        val view = inflater.inflate(R.layout.fragment_forgot_password, container, false)
 
 
-        btnNext=view.findViewById(R.id.btnNext)
-        etPhoneFP=view.findViewById(R.id.etPhone)
-        etEmailAddressFP=view.findViewById(R.id.etEmailAddress)
+        btnNext = view.findViewById(R.id.btnNext)
+        etPhoneFP = view.findViewById(R.id.etPhone)
+        etEmailAddressFP = view.findViewById(R.id.etEmailAddress)
 
 
 
         btnNext.setOnClickListener {
 
-            if(etPhoneFP.text.length<10)
-                etPhoneFP.error="Enter a valid Mobile Number"
+            if (etPhoneFP.text.length < 10)
+                etPhoneFP.error = "Enter a valid Mobile Number"
             else {
                 sendRequest()
             }
@@ -50,76 +52,70 @@ class ForgotPasswordFragment(val fm: FragmentManager) : Fragment() {
         return view
     }
 
-    fun sendRequest()
-    {
-        if(ConnectionManager().checkConnectivity(activity as Context))
-        {
+    fun sendRequest() {
+        if (ConnectionManager().checkConnectivity(activity as Context)) {
             val dialogView = LayoutInflater.from(activity).inflate(R.layout.loading_dialog, null)
             val builder = AlertDialog.Builder(activity).setView(dialogView).show()
             builder.setCanceledOnTouchOutside(false)
 
             val details = JSONObject()
 
-            details.put("mobile_number",etPhoneFP.text)
-            details.put("email",etEmailAddressFP.text)
+            details.put("mobile_number", etPhoneFP.text)
+            details.put("email", etEmailAddressFP.text)
 
-            val queue=Volley.newRequestQueue(activity as Context)
-            val url="http://13.235.250.119/v2/forgot_password/fetch_result"
+            val queue = Volley.newRequestQueue(activity as Context)
+            val url = "http://13.235.250.119/v2/forgot_password/fetch_result"
 
-            val jsonObjectRequest=object : JsonObjectRequest(
+            val jsonObjectRequest = object : JsonObjectRequest(
                 Method.POST,
                 url,
                 details,
-            Response.Listener {
-                try {
-                    builder.dismiss()
-                    val response=it.getJSONObject("data")
-                    val success = response.getBoolean("success")
-                    if (success)
-                    {
-                        val first=response.getBoolean("first_try")
-                        if (first)
-                        {
-                            Toast.makeText(activity,"OTP sent to email", Toast.LENGTH_SHORT).show()
-                            fm.beginTransaction()
-                                .replace(
-                                    R.id.frameForgotPassword,
-                                    ResetPasswordFragment(etPhoneFP.text.toString())
-                                ).commit()
+                Response.Listener {
+                    try {
+                        builder.dismiss()
+                        val response = it.getJSONObject("data")
+                        val success = response.getBoolean("success")
+                        if (success) {
+                            val first = response.getBoolean("first_try")
+                            if (first) {
+                                Toast.makeText(activity, "OTP sent to email", Toast.LENGTH_SHORT)
+                                    .show()
+                                fm.beginTransaction()
+                                    .replace(
+                                        R.id.frameForgotPassword,
+                                        ResetPasswordFragment(etPhoneFP.text.toString())
+                                    ).commit()
+                            } else {
+                                Toast.makeText(activity, "OTP already sent", Toast.LENGTH_SHORT)
+                                    .show()
+                                fm.beginTransaction()
+                                    .replace(
+                                        R.id.frameForgotPassword,
+                                        ResetPasswordFragment(etPhoneFP.text.toString())
+                                    ).commit()
+                            }
+                        } else {
+                            val error = response.getString("errorMessage")
+                            if (error.equals("No user found!")) {
+                                Toast.makeText(activity, "User not Found !", Toast.LENGTH_SHORT)
+                                    .show()
+                            } else if (error.equals("Invalid data")) {
+                                Toast.makeText(activity, "Invalid Data", Toast.LENGTH_SHORT).show()
+                            }
                         }
-                        else
-                        {
-                            Toast.makeText(activity,"OTP already sent", Toast.LENGTH_SHORT).show()
-                            fm.beginTransaction()
-                                .replace(
-                                    R.id.frameForgotPassword,
-                                    ResetPasswordFragment(etPhoneFP.text.toString())
-                                ).commit()
-                        }
+                    } catch (e: JSONException) {
+                        builder.dismiss()
+                        Toast.makeText(
+                            activity,
+                            "Some unexpected error occurred!!",
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
-                    else
-                    {
-                        val error=response.getString("errorMessage")
-                        if (error.equals("No user found!"))
-                        {
-                            Toast.makeText(activity,"User not Found !", Toast.LENGTH_SHORT).show()
-                        }
-                        else if(error.equals("Invalid data"))
-                        {
-                            Toast.makeText(activity,"Invalid Data", Toast.LENGTH_SHORT).show()
-                        }
-                    }
-                }
-                catch (e: JSONException)
-                {
+                },
+                Response.ErrorListener {
                     builder.dismiss()
-                    Toast.makeText(activity, "Some unexpected error occurred!!", Toast.LENGTH_SHORT).show()
-                }
-            },
-            Response.ErrorListener {
-                builder.dismiss()
-                responseErrorToast(activity as Context,it.toString())
-            }) {
+                    responseErrorToast(activity as Context, it.toString())
+                }) {
                 override fun getHeaders(): MutableMap<String, String> {
                     val headers = HashMap<String, String>()
                     headers["Content-type"] = "application/json"
@@ -128,12 +124,11 @@ class ForgotPasswordFragment(val fm: FragmentManager) : Fragment() {
                 }
             }
             queue.add(jsonObjectRequest)
-        }
-        else {
+        } else {
 
             val alterDialog = noInternetDialogBox(activity as Context)
             alterDialog.show()
         }
 
-}
+    }
 }

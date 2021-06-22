@@ -32,12 +32,12 @@ class ResetPasswordFragment(val mobileNumber: String) : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view= inflater.inflate(R.layout.fragment_reset_password, container, false)
+        val view = inflater.inflate(R.layout.fragment_reset_password, container, false)
 
-        etOtp=view.findViewById(R.id.etOtp)
-        etPasswordFP=view.findViewById(R.id.etPasswordFP)
-        etCPasswordFP=view.findViewById(R.id.etCPasswordFP)
-        btnSubmit=view.findViewById(R.id.btnSubmit)
+        etOtp = view.findViewById(R.id.etOtp)
+        etPasswordFP = view.findViewById(R.id.etPasswordFP)
+        etCPasswordFP = view.findViewById(R.id.etCPasswordFP)
+        btnSubmit = view.findViewById(R.id.btnSubmit)
 
         btnSubmit.setOnClickListener {
             if (etOtp.text.isEmpty()) {
@@ -49,7 +49,8 @@ class ResetPasswordFragment(val mobileNumber: String) : Fragment() {
             } else {
                 if (ConnectionManager().checkConnectivity(activity as Context)) {
                     try {
-                        val dialogView = LayoutInflater.from(activity).inflate(R.layout.loading_dialog, null)
+                        val dialogView =
+                            LayoutInflater.from(activity).inflate(R.layout.loading_dialog, null)
                         val builder = AlertDialog.Builder(activity).setView(dialogView).show()
                         builder.setCanceledOnTouchOutside(false)
 
@@ -62,36 +63,43 @@ class ResetPasswordFragment(val mobileNumber: String) : Fragment() {
 
                         val url = "http://13.235.250.119/v2/reset_password/fetch_result"
 
-                        val jsonObjectRequest = object : JsonObjectRequest(Method.POST, url, details,
+                        val jsonObjectRequest =
+                            object : JsonObjectRequest(Method.POST, url, details,
                                 Response.Listener {
                                     builder.dismiss()
                                     val response = it.getJSONObject("data")
                                     if (response.getBoolean("success")) {
-                                        Toast.makeText(activity, "Password Changed Successfully", Toast.LENGTH_SHORT).show()
+                                        Toast.makeText(
+                                            activity,
+                                            "Password Changed Successfully",
+                                            Toast.LENGTH_SHORT
+                                        ).show()
                                         activity?.finish()
-                                    }
-                                    else
-                                    {
-                                        val error=response.getString("errorMessage")
-                                        Toast.makeText(activity,error,Toast.LENGTH_SHORT).show()
+                                    } else {
+                                        val error = response.getString("errorMessage")
+                                        Toast.makeText(activity, error, Toast.LENGTH_SHORT).show()
                                     }
                                 },
                                 Response.ErrorListener {
                                     builder.dismiss()
-                                    responseErrorToast(activity as Context,it.toString())
+                                    responseErrorToast(activity as Context, it.toString())
                                 }) {
-                            override fun getHeaders(): MutableMap<String, String> {
-                                val headers = HashMap<String, String>()
-                                headers["Content-type"] = "application/json"
-                                headers["token"] = "c1b1256d960512"
-                                return headers
+                                override fun getHeaders(): MutableMap<String, String> {
+                                    val headers = HashMap<String, String>()
+                                    headers["Content-type"] = "application/json"
+                                    headers["token"] = "c1b1256d960512"
+                                    return headers
+                                }
                             }
-                        }
                         queue.add(jsonObjectRequest)
-                    }catch (e: JSONException) {
-                        Toast.makeText(activity, "Some unexpected error occurred!!", Toast.LENGTH_SHORT).show()
+                    } catch (e: JSONException) {
+                        Toast.makeText(
+                            activity,
+                            "Some unexpected error occurred!!",
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
-                }else {
+                } else {
 
                     val alterDialog = noInternetDialogBox(activity as Context)
                     alterDialog.show()

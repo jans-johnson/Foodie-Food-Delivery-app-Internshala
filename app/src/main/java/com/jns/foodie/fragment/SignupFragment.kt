@@ -35,14 +35,14 @@ class SignupFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view= inflater.inflate(R.layout.fragment_signup, container, false)
-        etRegName=view.findViewById(R.id.etRegName)
-        etRegEmail=view.findViewById(R.id.etRegEmail)
-        etRegPhone=view.findViewById(R.id.etRegPhone)
-        etRegAddress=view.findViewById(R.id.etRegAddress)
-        etRegPassword=view.findViewById(R.id.etRegPassword)
-        etRegCPassword=view.findViewById(R.id.etRegCPassword )
-        btnRegister=view.findViewById(R.id.btnRegister)
+        val view = inflater.inflate(R.layout.fragment_signup, container, false)
+        etRegName = view.findViewById(R.id.etRegName)
+        etRegEmail = view.findViewById(R.id.etRegEmail)
+        etRegPhone = view.findViewById(R.id.etRegPhone)
+        etRegAddress = view.findViewById(R.id.etRegAddress)
+        etRegPassword = view.findViewById(R.id.etRegPassword)
+        etRegCPassword = view.findViewById(R.id.etRegCPassword)
+        btnRegister = view.findViewById(R.id.btnRegister)
 
         btnRegister.setOnClickListener {
             if (etRegName.text.isBlank())
@@ -58,13 +58,14 @@ class SignupFragment : Fragment() {
             else if (!etRegCPassword.text.toString().equals(etRegPassword.text.toString()))
                 etRegCPassword.error = "Passwords Do not Match"
             else {
-                val dialogView = LayoutInflater.from(activity).inflate(R.layout.loading_dialog, null)
+                val dialogView =
+                    LayoutInflater.from(activity).inflate(R.layout.loading_dialog, null)
                 val builder = AlertDialog.Builder(activity).setView(dialogView).show()
                 builder.setCanceledOnTouchOutside(false)
 
                 val sharedPreferences = activity?.getSharedPreferences(
-                        "UserDetails",
-                        Context.MODE_PRIVATE
+                    "UserDetails",
+                    Context.MODE_PRIVATE
                 )
 
                 if (ConnectionManager().checkConnectivity(activity as Context)) {
@@ -80,34 +81,51 @@ class SignupFragment : Fragment() {
 
                         val url = "http://13.235.250.119/v2/register/fetch_result"
 
-                        val jsonObjectRequest = object : JsonObjectRequest(Method.POST, url, registerUser, Response.Listener {
-                            val response = it.getJSONObject("data")
-                            if (response.getBoolean("success")) {
-                                builder.dismiss()
-                                val data = response.getJSONObject("data")
-                                sharedPreferences?.edit()?.putBoolean("isLoggedIn", true)?.apply()
+                        val jsonObjectRequest = object :
+                            JsonObjectRequest(Method.POST, url, registerUser, Response.Listener {
+                                val response = it.getJSONObject("data")
+                                if (response.getBoolean("success")) {
+                                    builder.dismiss()
+                                    val data = response.getJSONObject("data")
+                                    sharedPreferences?.edit()?.putBoolean("isLoggedIn", true)
+                                        ?.apply()
 
-                                sharedPreferences?.edit()?.putString("user_id", data.getString("user_id"))?.apply()
-                                sharedPreferences?.edit()?.putString("name", data.getString("name"))?.apply()
-                                sharedPreferences?.edit()?.putString("email", data.getString("email"))?.apply()
-                                sharedPreferences?.edit()?.putString("mobile_number", data.getString("mobile_number"))?.apply()
-                                sharedPreferences?.edit()?.putString("address", data.getString("address"))?.apply()
+                                    sharedPreferences?.edit()
+                                        ?.putString("user_id", data.getString("user_id"))?.apply()
+                                    sharedPreferences?.edit()
+                                        ?.putString("name", data.getString("name"))?.apply()
+                                    sharedPreferences?.edit()
+                                        ?.putString("email", data.getString("email"))?.apply()
+                                    sharedPreferences?.edit()?.putString(
+                                        "mobile_number",
+                                        data.getString("mobile_number")
+                                    )?.apply()
+                                    sharedPreferences?.edit()
+                                        ?.putString("address", data.getString("address"))?.apply()
 
-                                val intent = Intent(activity, MainActivity::class.java)
-                                startActivity(intent)
+                                    val intent = Intent(activity, MainActivity::class.java)
+                                    startActivity(intent)
 
-                                Toast.makeText(activity, "Registered Successfully", Toast.LENGTH_SHORT).show()
-                                activity?.finish()
-                            } else {
-                                builder.dismiss()
-                                val responseMessageServer =
+                                    Toast.makeText(
+                                        activity,
+                                        "Registered Successfully",
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                    activity?.finish()
+                                } else {
+                                    builder.dismiss()
+                                    val responseMessageServer =
                                         response.getString("errorMessage")
-                                Toast.makeText(activity, responseMessageServer, Toast.LENGTH_SHORT).show()
-                            }
-                        },
+                                    Toast.makeText(
+                                        activity,
+                                        responseMessageServer,
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                }
+                            },
                                 Response.ErrorListener {
                                     builder.dismiss()
-                                    responseErrorToast(activity as Context,it.toString())
+                                    responseErrorToast(activity as Context, it.toString())
                                 }) {
                             override fun getHeaders(): MutableMap<String, String> {
                                 val headers = HashMap<String, String>()
@@ -119,7 +137,11 @@ class SignupFragment : Fragment() {
 
                         queue.add(jsonObjectRequest)
                     } catch (e: JSONException) {
-                        Toast.makeText(activity, "Some unexpected error occurred!!!", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(
+                            activity,
+                            "Some unexpected error occurred!!!",
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
                 }
             }

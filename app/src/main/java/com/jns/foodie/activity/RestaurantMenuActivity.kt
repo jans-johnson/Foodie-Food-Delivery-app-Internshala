@@ -1,6 +1,5 @@
 package com.jns.foodie.activity
 
-import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
@@ -25,10 +24,10 @@ class RestaurantMenuActivity : AppCompatActivity() {
     lateinit var toolbarMenu: Toolbar
     lateinit var recyclerViewMenu: RecyclerView
     lateinit var layoutManager: RecyclerView.LayoutManager
-    lateinit var ivFavIcon:ImageView
-    lateinit var tvRating:TextView
+    lateinit var ivFavIcon: ImageView
+    lateinit var tvRating: TextView
     lateinit var btnProceedToCart: Button
-    lateinit var menuProgressLayout:RelativeLayout
+    lateinit var menuProgressLayout: RelativeLayout
     lateinit var menuAdapter: MenuAdapter
 
     lateinit var restaurantId: String
@@ -39,20 +38,19 @@ class RestaurantMenuActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_restaurant_menu)
 
-        ivFavIcon=findViewById(R.id.ivFavIcon)
-        tvRating=findViewById(R.id.tvRating)
-        toolbarMenu=findViewById(R.id.toolbarMenu)
-        btnProceedToCart=findViewById(R.id.btnProceedToCart)
-        menuProgressLayout=findViewById(R.id.menuProgressLayout)
-        recyclerViewMenu=findViewById(R.id.RecyclerViewMenu)
+        ivFavIcon = findViewById(R.id.ivFavIcon)
+        tvRating = findViewById(R.id.tvRating)
+        toolbarMenu = findViewById(R.id.toolbarMenu)
+        btnProceedToCart = findViewById(R.id.btnProceedToCart)
+        menuProgressLayout = findViewById(R.id.menuProgressLayout)
+        recyclerViewMenu = findViewById(R.id.RecyclerViewMenu)
         layoutManager = LinearLayoutManager(this)
 
         restaurantId = intent.getStringExtra("restaurantId")!!
         restaurantName = intent.getStringExtra("restaurantName")!!
-        val restaurantRating=intent.getStringExtra("restaurantRating")
-        val fav=intent.getBooleanExtra("isFav",false)
-        if (fav)
-        {
+        val restaurantRating = intent.getStringExtra("restaurantRating")
+        val fav = intent.getBooleanExtra("isFav", false)
+        if (fav) {
             ivFavIcon.setImageResource(R.drawable.ic_favourite_fill)
         }
         "Rated $restaurantRating".also { tvRating.text = it }
@@ -113,52 +111,52 @@ class RestaurantMenuActivity : AppCompatActivity() {
     override fun onResume() {
 
         if (ConnectionManager().checkConnectivity(this)) {
-            if (restaurantMenuList.isEmpty()){
-                menuProgressLayout.visibility= View.VISIBLE
+            if (restaurantMenuList.isEmpty()) {
+                menuProgressLayout.visibility = View.VISIBLE
 
                 try {
-                    val queue=Volley.newRequestQueue(this)
-                    val url="http://13.235.250.119/v2/restaurants/fetch_result/$restaurantId"
+                    val queue = Volley.newRequestQueue(this)
+                    val url = "http://13.235.250.119/v2/restaurants/fetch_result/$restaurantId"
 
                     val jsonObjectRequest = object : JsonObjectRequest(
-                            Method.GET,
-                            url,
-                            null,
-                            Response.Listener {
-                                val response = it.getJSONObject("data")
-                                val success = response.getBoolean("success")
+                        Method.GET,
+                        url,
+                        null,
+                        Response.Listener {
+                            val response = it.getJSONObject("data")
+                            val success = response.getBoolean("success")
 
-                                if (success) {
-                                    restaurantMenuList.clear()
-                                    val data = response.getJSONArray("data")
+                            if (success) {
+                                restaurantMenuList.clear()
+                                val data = response.getJSONArray("data")
 
-                                    for (i in 0 until data.length()) {
-                                        val restaurant = data.getJSONObject(i)
-                                        val menuObject = RestaurantMenu(
-                                                restaurant.getString("id"),
-                                                restaurant.getString("name"),
-                                                restaurant.getString("cost_for_one")
-                                        )
+                                for (i in 0 until data.length()) {
+                                    val restaurant = data.getJSONObject(i)
+                                    val menuObject = RestaurantMenu(
+                                        restaurant.getString("id"),
+                                        restaurant.getString("name"),
+                                        restaurant.getString("cost_for_one")
+                                    )
 
-                                        restaurantMenuList.add(menuObject)
-                                        menuAdapter = MenuAdapter(
-                                                this,
-                                                restaurantId,
-                                                restaurantName,
-                                                btnProceedToCart,
-                                                restaurantMenuList
-                                        )
+                                    restaurantMenuList.add(menuObject)
+                                    menuAdapter = MenuAdapter(
+                                        this,
+                                        restaurantId,
+                                        restaurantName,
+                                        btnProceedToCart,
+                                        restaurantMenuList
+                                    )
 
-                                        recyclerViewMenu.adapter = menuAdapter
-                                        recyclerViewMenu.layoutManager = layoutManager
-                                    }
+                                    recyclerViewMenu.adapter = menuAdapter
+                                    recyclerViewMenu.layoutManager = layoutManager
                                 }
-                                menuProgressLayout.visibility = View.INVISIBLE
-                            },
-                            Response.ErrorListener {
-                                menuProgressLayout.visibility = View.INVISIBLE
-                                responseErrorToast(this,it.toString())
-                            }) {
+                            }
+                            menuProgressLayout.visibility = View.INVISIBLE
+                        },
+                        Response.ErrorListener {
+                            menuProgressLayout.visibility = View.INVISIBLE
+                            responseErrorToast(this, it.toString())
+                        }) {
                         override fun getHeaders(): MutableMap<String, String> {
                             val headers = HashMap<String, String>()
                             headers["Content-type"] = "application/json"
@@ -167,11 +165,11 @@ class RestaurantMenuActivity : AppCompatActivity() {
                         }
                     }
                     queue.add(jsonObjectRequest)
-                }catch (e: JSONException) {
+                } catch (e: JSONException) {
                     Toast.makeText(
-                            this,
-                            "Some Unexpected error occurred!!!",
-                            Toast.LENGTH_SHORT
+                        this,
+                        "Some Unexpected error occurred!!!",
+                        Toast.LENGTH_SHORT
                     ).show()
                 }
             }
