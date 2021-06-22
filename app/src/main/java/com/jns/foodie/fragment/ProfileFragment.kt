@@ -52,7 +52,7 @@ class ProfileFragment : Fragment() {
         tvProfileEmail.text = sharedPreferences?.getString("email", "UserEmail")
         tvProfileMobile.text = sharedPreferences?.getString("mobile_number", "mobile")
         tvProfileAddress.text = sharedPreferences?.getString("address", "address")
-        "Total Orders :\n...".also { tvTotalOrders.text = it }
+        "Total Orders : ...".also { tvTotalOrders.text = it }
 
         val textDrawable = TextDrawable.builder().buildRound(
             tvProfileName.text[0].toString()
@@ -81,7 +81,7 @@ class ProfileFragment : Fragment() {
                         if (response.getBoolean("success")) {
                             val data = response.getJSONArray("data")
                             total = data.length()
-                            "Total Orders :\n$total".also { tvTotalOrders.text = it }
+                            "Total Orders : $total".also { tvTotalOrders.text = it }
                         }
                     },
                     Response.ErrorListener {
